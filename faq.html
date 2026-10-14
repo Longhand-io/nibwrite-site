@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Longhand FAQ</title>
+<title>Nibwrite FAQ</title>
 <meta name="description" content="Binder, snapshots with side-by-side compare, inspector, corkboard, timeline, research, and compile for Obsidian. Files you own, git underneath.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="Longhand FAQ">
+<meta property="og:title" content="Nibwrite FAQ">
 <meta property="og:description" content="Binder, snapshots with side-by-side compare, inspector, corkboard, research, and compile. Files you own.">
 <meta property="og:image" content="https://longhand-io.github.io/longhand-site/brand/social/social-preview.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -325,7 +325,7 @@
 <body>
 <div class="wrap">
   <header>
-    <a class="name" href="index.html" style="text-decoration:none"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M18 78 C 38 64, 58 36, 60 16 C 61 8, 51 8, 49 18 C 46 40, 45 62, 47 76 C 48 86, 57 86, 63 78 C 69 71, 77 73, 86 80" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>Longhand</a>
+    <a class="name" href="index.html" style="text-decoration:none"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="28,10 50,10 50,60 39,76 28,60" fill="currentColor"/><circle cx="34" cy="27" r="4" fill="var(--paper)"/><circle cx="44" cy="27" r="4" fill="var(--paper)"/><circle cx="35" cy="27.6" r="1.7" fill="currentColor"/><circle cx="45" cy="27.6" r="1.7" fill="currentColor"/><path d="M18 10 C 26 4, 52 4, 60 10" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M29 8 L 31 -6 L 48 -7 L 50 7 Z" fill="currentColor"/><path d="M28 86 H 86" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg>Nibwrite</a>
     <nav>
       <a href="https://github.com/Longhand-io/longhand">Plugin</a>
       <a href="https://github.com/Longhand-io/scrivener-to-obsidian">Importer</a>
@@ -356,7 +356,7 @@
   </ul>
 
   <h2 id="it-looks-like-ordinary-obsidian-where-is">It looks like ordinary Obsidian. Where is the binder, the inspector, the snapshots tab?</h2>
-  <p>Those are the Longhand plugin, which is being built. The importer's only job is to move your writing into plain files with nothing lost. What you see now is the foundation: your manuscript as numbered Markdown files, your metadata in Properties, your research copied, your snapshots as files and as git history. The plugin reads exactly this layout, so nothing needs converting again when it arrives.</p>
+  <p>Those are the Nibwrite plugin, which is being built. The importer's only job is to move your writing into plain files with nothing lost. What you see now is the foundation: your manuscript as numbered Markdown files, your metadata in Properties, your research copied, your snapshots as files and as git history. The plugin reads exactly this layout, so nothing needs converting again when it arrives.</p>
 
   <h2 id="a-pdf-shows-0-backlinks-with-a-red-icon">A PDF shows "0 backlinks" with a red icon. Is something broken?</h2>
   <div class="figure">
@@ -369,7 +369,7 @@
   <p>If any image is missing, that is a bug; please report it. One was found and fixed on 2026-09-12: inline PNGs came out unreadable because an identifier Scrivener stores next to each picture was being included in the image bytes. Reimport with a build after that date. Inline pictures in document text land in <code>_attachments/</code> and are embedded where they were; image items in Research are copied as files.</p>
 
   <h2 id="why-are-files-numbered-can-i-turn-that-o">Why are files numbered? Can I turn that off?</h2>
-  <p>Obsidian sorts the file tree by name, and your manuscript has an order that is not alphabetical. The two-digit prefix keeps binder order visible everywhere, including on a phone with no plugin. If you would rather not see numbers, run with <code>-no-prefix</code> and the order is written to an <code>order</code> field in each file's Properties instead. The Longhand plugin honours either.</p>
+  <p>Obsidian sorts the file tree by name, and your manuscript has an order that is not alphabetical. The two-digit prefix keeps binder order visible everywhere, including on a phone with no plugin. If you would rather not see numbers, run with <code>-no-prefix</code> and the order is written to an <code>order</code> field in each file's Properties instead. The Nibwrite plugin honours either.</p>
 
   <h2 id="there-is-a-note-inside-a-folder-with-the">There is a note inside a folder with the folder's own name. What is it?</h2>
   <p>Scrivener lets a folder carry text of its own, typically chapter text above its scenes. Obsidian folders cannot hold text, so that text becomes a note with the folder's name inside the folder, which Obsidian and most plugins treat as the folder's note.</p>
@@ -387,17 +387,17 @@
   <p>By design. Markdown has emphasis and headings, not fonts and colours, and Scrivener's named styles are a compile-time concern. The importer keeps bold, italic, underline, strikethrough, super and subscript, lists, links, footnotes, comments, and images. Tables are not converted yet.</p>
 
   <h2 id="where-are-the-snapshots">Where are the snapshots?</h2>
-  <p>Two places, the same content. <code>_snapshots/&lt;document id&gt;/</code> inside each project holds one Markdown file per snapshot, named by date and the title you gave it, and syncs with the vault to every device. If you converted with <code>-git</code>, each snapshot is also a commit with its original date, which the Longhand Snapshots module will show as a list with compare and restore. Until then, any git client shows them.</p>
+  <p>Two places, the same content. <code>_snapshots/&lt;document id&gt;/</code> inside each project holds one Markdown file per snapshot, named by date and the title you gave it, and syncs with the vault to every device. If you converted with <code>-git</code>, each snapshot is also a commit with its original date, which the Nibwrite Snapshots module will show as a list with compare and restore. Until then, any git client shows them.</p>
 
   <h2 id="can-i-put-the-vault-in-icloud-or-dropbox">Can I put the vault in iCloud or Dropbox?</h2>
-  <p>The files, yes. The git repository, not directly: a <code>.git</code> folder inside a cloud-synced folder gets corrupted. If you used <code>-git</code>, either keep the vault outside cloud sync or move the repository out with <code>git init --separate-git-dir</code>; the Longhand plugin does this for you. See <a href="https://github.com/Longhand-io/longhand/blob/main/docs/sync-and-history.md">Sync and history</a>.</p>
+  <p>The files, yes. The git repository, not directly: a <code>.git</code> folder inside a cloud-synced folder gets corrupted. If you used <code>-git</code>, either keep the vault outside cloud sync or move the repository out with <code>git init --separate-git-dir</code>; the Nibwrite plugin does this for you. See <a href="https://github.com/Longhand-io/longhand/blob/main/docs/sync-and-history.md">Sync and history</a>.</p>
 
   <h2 id="can-i-run-the-importer-again">Can I run the importer again?</h2>
   <p>Yes, into an empty folder. Reimporting into an existing vault and merging only what is new is on the roadmap, keyed on each document's <code>id</code>. The source package is never modified, so there is no risk in running it as often as you like.</p>
   </div>
 <!-- faq:end -->
 
-  <footer>Longhand is an independent project by grassclaw, published by 0xSpectra LLC under the Apache License 2.0, with no accounts, no telemetry, and no network calls. It is not affiliated with or endorsed by Literature &amp; Latte, the makers of Scrivener, or by Obsidian. Scrivener and Obsidian are trademarks of their respective owners.</footer>
+  <footer>Nibwrite is an independent project by grassclaw, published by 0xSpectra LLC under the Apache License 2.0, with no accounts, no telemetry, and no network calls. It is not affiliated with or endorsed by Literature &amp; Latte, the makers of Scrivener, or by Obsidian. Scrivener and Obsidian are trademarks of their respective owners.</footer>
 </div>
 </body>
 </html>

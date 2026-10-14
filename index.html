@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Longhand, the writing studio for Obsidian</title>
-<meta name="description" content="Binder, snapshots with side-by-side compare, inspector, corkboard, timeline, research, and compile for Obsidian. Files you own, git underneath.">
+<title>Nibwrite, the writing studio for people who like to write</title>
+<meta name="description" content="A local-first writing studio for the novel: binder, snapshots with side-by-side compare, cast and places, corkboard, timeline, research, and compile over plain Markdown files you own. Desktop, tablet, and phone.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="Longhand, the writing studio for Obsidian">
-<meta property="og:description" content="Binder, snapshots with side-by-side compare, inspector, corkboard, research, and compile. Files you own.">
+<meta property="og:title" content="Nibwrite, the writing studio for people who like to write">
+<meta property="og:description" content="Binder, snapshots with side-by-side compare, cast and places, corkboard, research, and compile. Plain files you own, on every device.">
 <meta property="og:image" content="https://longhand-io.github.io/longhand-site/brand/social/social-preview.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -305,7 +305,7 @@
 <body>
 <div class="wrap">
   <header>
-    <div class="name"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M18 78 C 38 64, 58 36, 60 16 C 61 8, 51 8, 49 18 C 46 40, 45 62, 47 76 C 48 86, 57 86, 63 78 C 69 71, 77 73, 86 80" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>Longhand</div>
+    <div class="name"><svg viewBox="0 -14 100 114" aria-hidden="true"><use href="#nibby-icon"/></svg>Nibwrite</div>
     <nav>
       <a href="https://github.com/Longhand-io/longhand">Plugin</a>
       <a href="https://github.com/Longhand-io/scrivener-to-obsidian">Importer</a>
@@ -316,8 +316,181 @@
     </nav>
   </header>
 
-  <h1>The writing studio for Obsidian.</h1>
-  <p class="lede">Binder, snapshots with side-by-side compare, inspector, corkboard, timeline, research, and compile. One plugin with switchable modules. Everything it adds is stored as Markdown, frontmatter, and git commits, so <em>nothing needs Longhand to be read.</em></p>
+  <!-- The Nib Rider sting, from brand/exploration/nib-rider-round-4.html. ?t=<seconds> freezes a frame for capture. -->
+  <style>
+  .sting-wrap{margin:1rem 0 2.5rem;background:var(--paper)}
+  .sting-wrap .stage{display:block;width:100%;height:auto}
+  .sting-wrap .sting-bar{display:flex;gap:12px;align-items:center;justify-content:flex-end;padding:6px 0 0;font-size:.9rem;color:var(--graphite)}
+  .sting-wrap button{font:inherit;font-size:.95rem;padding:4px 12px;border:1px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:6px;cursor:pointer}
+  .sting-wrap button:hover{background:var(--ink);color:var(--paper)}
+  #sting{--ride:4.6s;--lead:.5s}
+/* the rider's point follows the same path the ink is drawn along, at the same linear rate */
+.rider{offset-path:path("M-260 362 C -200 362, -160 320, -90 346 S 20 396, 100 344 S 220 306, 300 350 S 420 398, 500 344 S 620 304, 700 350 S 820 398, 900 344 S 1020 306, 1100 350 S 1220 392, 1300 352 S 1400 330, 1460 352");offset-rotate:0deg;offset-distance:0%}
+#sting.play .rider{animation:ride var(--ride) linear var(--lead) forwards, vanish .01s linear calc(var(--ride) + var(--lead)) forwards}
+#sting.play .trail{animation:draw var(--ride) linear var(--lead) forwards, settle 1s ease-out calc(var(--ride) + var(--lead) + .2s) forwards}
+@keyframes settle{to{opacity:.3}}
+#sting.play .depth{animation:depth .98s ease-in-out infinite}
+#sting.play .shadow{animation:shadow .98s ease-in-out infinite}
+#sting.play .skate{animation:skate .33s ease-in-out infinite}
+#sting.play .plume{animation:plume .33s ease-in-out infinite}
+#sting.play .cape{animation:cape .33s ease-in-out infinite}
+#sting.play .trees-far{animation:parallax calc(var(--ride) + var(--lead)) linear forwards}
+#sting.play .trees-near{animation:parallax-near calc(var(--ride) + var(--lead)) linear forwards}
+#sting.play .trees-front{animation:parallax-front calc(var(--ride) + var(--lead)) linear forwards}
+#sting.play .word{animation:word 1.1s ease-out calc(var(--ride) + var(--lead) + .3s) forwards}
+#sting.play .stand{animation:peek 1.3s cubic-bezier(.2,.9,.3,1.2) calc(var(--ride) + var(--lead) + .9s) forwards}
+@keyframes peek{to{transform:translate(0,0) rotate(0)}}
+#sting.play .stand .blink{animation:blink 3.2s step-end calc(var(--ride) + var(--lead) + 2s) infinite}
+#sting.play .stand .tip{animation:tip .9s ease-in-out calc(var(--ride) + var(--lead) + 2s) 1}
+@keyframes ride{from{offset-distance:0%}to{offset-distance:100%}}
+@keyframes vanish{to{opacity:0}}
+@keyframes appear{to{opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes depth{0%,100%{transform:scale(.92)}50%{transform:scale(1.08)}}
+@keyframes shadow{0%,100%{transform:scale(.7);opacity:.10}50%{transform:scale(1.15);opacity:.22}}
+@keyframes skate{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-7px) rotate(3deg)}}
+@keyframes plume{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-16deg)}}
+@keyframes cape{0%,100%{transform:skewX(0) scaleX(1)}50%{transform:skewX(-12deg) scaleX(1.15)}}
+@keyframes parallax{to{transform:translateX(-90px)}}
+@keyframes parallax-near{to{transform:translateX(-260px)}}
+@keyframes parallax-front{to{transform:translateX(-620px)}}
+@keyframes word{to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,94%{transform:scaleY(1)}95%,100%{transform:scaleY(.08)}}
+@keyframes tip{0%,100%{transform:rotate(0)}40%{transform:rotate(-24deg) translateY(-6px)}}
+.word{opacity:0;transform:translateY(10px)}
+.word-rule{stroke-dasharray:420;stroke-dashoffset:420}
+#sting.play .word-rule{animation:draw-rule .9s ease-out calc(var(--ride) + var(--lead) + .6s) forwards}
+@keyframes draw-rule{to{stroke-dashoffset:0}}
+.stand{transform:translate(0,170px) rotate(22deg)}
+.depth{transform-origin:0 0}
+.shadow{transform-origin:center;transform-box:fill-box}
+.blink{transform-origin:center;transform-box:fill-box}
+.tip{transform-origin:60% 100%;transform-box:fill-box}
+.skate,.plume,.cape{transform-box:fill-box}
+.skate{transform-origin:50% 100%}
+.plume{transform-origin:right center}
+.cape{transform-origin:right center}
+/* end state, for reduced motion: the line already drawn and faded, the word up, the icon on its line */
+#sting.done .rider{opacity:0}
+#sting.done .trail{opacity:.3;stroke-dashoffset:0!important}
+#sting.done .word{opacity:1;transform:none}
+#sting.done .word-rule{stroke-dashoffset:0}
+#sting.done .stand{transform:none}
+
+  </style>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- The mark itself, untouched. -->
+    <g id="mark-body">
+      <polygon points="28,10 50,10 50,60 39,76 28,60" fill="var(--ink)"/>
+      <circle cx="39" cy="44" r="3.5" fill="var(--paper)"/>
+      <line x1="39" y1="47" x2="39" y2="62" stroke="var(--paper)" stroke-width="3"/>
+    </g>
+    <!-- Eyes in the shoulders, above the breather hole. -->
+    <g id="mark-eyes" class="blink">
+      <circle cx="34" cy="27" r="4" fill="var(--paper)"/><circle cx="44" cy="27" r="4" fill="var(--paper)"/>
+      <circle cx="35" cy="27.6" r="1.7" fill="var(--ink)"/><circle cx="45" cy="27.6" r="1.7" fill="var(--ink)"/>
+    </g>
+    <!-- Musketeer hat on the square shoulders. -->
+    <g id="mark-hat" class="tip">
+      <path d="M18 10 C 26 4, 52 4, 60 10" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <path d="M29 8 L 31 -6 L 48 -7 L 50 7 Z" fill="var(--ink)"/>
+      <g class="plume">
+        <path d="M32 -4 C 22 -12, 10 -10, 2 0" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+        <path d="M30 -7 C 22 -13, 14 -12, 8 -7" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round" fill="none" opacity=".6"/>
+      </g>
+    </g>
+
+    <!-- A. Nibby on the move: the mark, on its own baseline, with cape, arms, rapier. viewBox -10 -20 120 120 -->
+    <symbol id="nibby" viewBox="-10 -20 120 120">
+      <g class="skate">
+        <g class="cape"><path d="M30 30 C 18 26, 10 36, 0 32 C 8 44, 20 46, 30 42 Z" fill="var(--ink)" opacity=".9"/></g>
+        <use href="#mark-body"/>
+        <use href="#mark-eyes"/>
+        <!-- arms -->
+        <path d="M29 36 C 22 40, 18 46, 20 52" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <path d="M49 34 C 56 32, 62 26, 66 18" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <!-- rapier -->
+        <path d="M66 18 L 78 -4" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M63 21 C 66 17, 69 17, 71 20" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+        <use href="#mark-hat"/>
+      </g>
+    </symbol>
+
+    <!-- B. The mark with eyes and hat, standing on its line. The app's assistant icon. viewBox 0 -14 100 114 -->
+    <symbol id="nibby-icon" viewBox="0 -14 100 114">
+      <use href="#mark-body"/>
+      <use href="#mark-eyes"/>
+      <use href="#mark-hat"/>
+      <path d="M28 86 H 86" stroke="var(--ink)" stroke-width="9" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- C. Hello: hat off, held out, standing on the line. -->
+    <symbol id="nibby-bow" viewBox="-10 -14 120 114">
+      <use href="#mark-body"/>
+      <g class="blink">
+        <circle cx="34" cy="27" r="4" fill="var(--paper)"/><circle cx="44" cy="27" r="4" fill="var(--paper)"/>
+        <circle cx="34" cy="28.4" r="1.7" fill="var(--ink)"/><circle cx="44" cy="28.4" r="1.7" fill="var(--ink)"/>
+      </g>
+      <path d="M29 36 C 20 38, 14 34, 12 28" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <path d="M49 36 C 58 40, 66 38, 70 32" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <g transform="translate(60 14) rotate(30)">
+        <path d="M0 18 C 8 12, 34 12, 42 18" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <path d="M11 16 L 13 2 L 30 1 L 32 15 Z" fill="var(--ink)"/>
+        <path d="M14 4 C 22 -4, 32 -5, 42 2" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+      </g>
+      <path d="M28 86 H 86" stroke="var(--ink)" stroke-width="9" stroke-linecap="round"/>
+    </symbol>
+      <!-- D. Standing, no baseline: for the end card, where the rule he just drew is his line -->
+    <symbol id="nibby-stand" viewBox="0 -14 100 114">
+      <use href="#mark-body"/>
+      <use href="#mark-eyes"/>
+      <use href="#mark-hat"/>
+    </symbol>
+  </defs>
+</svg>
+  <div class="sting-wrap" aria-label="Nibby, the assistant, gallops through a forest drawing a line of ink; Nibwrite appears">
+    <svg id="sting" class="stage" viewBox="0 0 1120 480" role="img" aria-label="Nibby gallops through a forest, weaving between trees, drawing an ink line that becomes the underline of Nibwrite">
+    <rect width="1120" height="480" fill="var(--paper)"/>
+    <!-- far trees, faint, slow -->
+    <g class="trees-far" fill="var(--ink)" opacity=".08">
+      <path d="M40 420 L70 300 L100 420 Z"/><path d="M130 420 L150 340 L170 420 Z"/><path d="M230 420 L270 270 L310 420 Z"/><path d="M360 420 L380 330 L400 420 Z"/><path d="M470 420 L510 280 L550 420 Z"/><path d="M620 420 L640 350 L660 420 Z"/><path d="M720 420 L760 290 L800 420 Z"/><path d="M860 420 L880 340 L900 420 Z"/><path d="M960 420 L1000 270 L1040 420 Z"/><path d="M1100 420 L1130 320 L1160 420 Z"/><path d="M1200 420 L1240 280 L1280 420 Z"/>
+    </g>
+    <!-- mid trees, behind him -->
+    <g class="trees-near" fill="var(--ink)" opacity=".18">
+      <path d="M-20 440 L30 230 L80 440 Z"/><path d="M180 440 L210 320 L240 440 Z"/><path d="M300 440 L350 220 L400 440 Z"/><path d="M520 440 L550 330 L580 440 Z"/><path d="M700 440 L750 210 L800 440 Z"/><path d="M940 440 L970 320 L1000 440 Z"/><path d="M1120 440 L1170 230 L1220 440 Z"/><path d="M1340 440 L1370 320 L1400 440 Z"/>
+    </g>
+    <path d="M0 440 H1120" stroke="var(--ink)" stroke-width="3" opacity=".25"/>
+    <!-- the ink line -->
+    <path id="trail" class="trail" d="M-260 362 C -200 362, -160 320, -90 346 S 20 396, 100 344 S 220 306, 300 350 S 420 398, 500 344 S 620 304, 700 350 S 820 398, 900 344 S 1020 306, 1100 350 S 1220 392, 1300 352 S 1400 330, 1460 352" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/>
+    <!-- Nibby: the group's origin is his point; it rides the path -->
+    <g class="rider">
+      <g class="depth">
+        <ellipse class="shadow" cx="0" cy="8" rx="40" ry="7" fill="var(--ink)" opacity=".14"/>
+        <!-- 2.4x the mark; point (39,76) in a -10,-20 viewBox is (117.6, 230.4) -->
+        <svg x="-117.6" y="-230.4" width="288" height="288" viewBox="-10 -20 120 120"><use href="#nibby"/></svg>
+      </g>
+    </g>
+    <!-- front trees, darkest and fastest, in front of him -->
+    <g class="trees-front" fill="var(--ink)" opacity=".34">
+      <path d="M60 470 L110 190 L160 470 Z"/><path d="M330 470 L360 300 L390 470 Z"/><path d="M620 470 L680 150 L740 470 Z"/><path d="M1000 470 L1040 260 L1080 470 Z"/><path d="M1320 470 L1380 160 L1440 470 Z"/><path d="M1620 470 L1660 280 L1700 470 Z"/>
+    </g>
+    <!-- the word rises as he starts the rule -->
+    <g class="word">
+      <text x="560" y="250" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-weight="500" font-size="112" letter-spacing="-0.02em" fill="var(--ink)">Nibwrite</text>
+    </g>
+    <path class="word-rule" d="M350 282 C 420 272, 700 272, 770 282" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/>
+    <!-- the icon peeks up in the corner on its own line -->
+    <g class="stand">
+      <!-- point (39,76) in a 0,-14 viewBox at 2.4x is (93.6, 216); rule ends at (870,282) -->
+      <svg x="900" y="262" width="190" height="200" viewBox="0 -14 100 114"><use href="#nibby-icon"/></svg>
+    </g>
+  </svg>
+    <div class="sting-bar"><button id="sting-play" type="button">Play again</button></div>
+  </div>
+
+  <h1>The writing studio for people who like to write.</h1>
+  <p class="lede">Binder, snapshots with side-by-side compare, cast and places, corkboard, timeline, research, and compile, over a folder of plain Markdown. Today that is an Obsidian plugin and a Scrivener importer, both open. Next is the Nibwrite app for desktop, tablet, and phone, with sync and the editor tools as the one subscription. Everything is stored as Markdown, frontmatter, and git commits, so <em>nothing needs Nibwrite to be read.</em></p>
 
   <div class="compare quiet" id="compare" aria-label="Example of comparing a snapshot with the live text">
     <div class="bar">
@@ -381,7 +554,7 @@
         <div class="lane town last"><div class="card ghost"><div class="t">Drop here</div><div class="s">to move Return to the town's thread</div></div></div>
       </div>
     </div>
-    <p style="margin-top:1.5rem">Where Longhand goes further: switch the axis from manuscript order to story date and the same threads become a timeline of when things happen, with a second track for when you wrote them. Notes that are not scenes, a war, a birth, a letter never sent, can sit on it too. Nothing new is stored; the board reads the same label and date fields as the inspector.</p>
+    <p style="margin-top:1.5rem">Where Nibwrite goes further: switch the axis from manuscript order to story date and the same threads become a timeline of when things happen, with a second track for when you wrote them. Notes that are not scenes, a war, a birth, a letter never sent, can sit on it too. Nothing new is stored; the board reads the same label and date fields as the inspector.</p>
     <div class="panel" aria-label="The same board with the axis set to story date">
       <div class="bar"><strong>Chapter 1</strong><span class="axis">Axis <span>Manuscript order</span><span class="on">Story date</span></span></div>
       <div class="body tl">
@@ -480,7 +653,7 @@
 
   <section class="feature">
     <h2>Pin a scene to a place.</h2>
-    <p>Any image can be a map: a hand-drawn world, an Inkarnate export, a scanned town plan, a floor plan of the house, or a blank canvas. Drop a pin and link it to a place, a scene, or a character. Draw on top of it in the same ink as this page: woods, water, hills, roads, rivers, routes, and labels, clean or hand-drawn, with a small toolbar that works the way drawing apps do. A place is a note, like a character, so Longhand knows where it appears: hover a pin or a drawn region and you get the chapters and scenes set there, the line that names it, the images you pinned for inspiration, and a search box for when a place carries half the book. Click a scene to open it. Pins and drawings are stored on the map's own note as plain frontmatter, so the map is a picture with a readable list beside it, and Nib can read and write that list too.</p>
+    <p>Any image can be a map: a hand-drawn world, an Inkarnate export, a scanned town plan, a floor plan of the house, or a blank canvas. Drop a pin and link it to a place, a scene, or a character. Draw on top of it in the same ink as this page: woods, water, hills, roads, rivers, routes, and labels, clean or hand-drawn, with a small toolbar that works the way drawing apps do. A place is a note, like a character, so Nibwrite knows where it appears: hover a pin or a drawn region and you get the chapters and scenes set there, the line that names it, the images you pinned for inspiration, and a search box for when a place carries half the book. Click a scene to open it. Pins and drawings are stored on the map's own note as plain frontmatter, so the map is a picture with a readable list beside it, and Nib can read and write that list too.</p>
     <div class="panel" aria-label="World map, flat view">
       <div class="bar"><strong>Harrowmere</strong><span class="axis">View <span class="on">Flat</span><span>Relief</span></span></div>
       <div class="world">
@@ -524,7 +697,7 @@
         <div class="mpin" data-place="stillwater" style="left:80%; top:52%" tabindex="0"><span class="tag">Stillwater crossing</span></div>
       </div>
     </div>
-    <p style="margin-top:1.5rem">The same map in relief, and this one is real: drag it. Give Longhand a heightmap, a model, or an export from a map generator and the world stands up. Orbit with a drag, zoom with the wheel, click a pin to land in its scene, drag a pin to move it and the coordinates update in the note. An Obsidian view is a full browser surface, so all of that works inside the vault on desktop. The flat map is the fallback on mobile.</p>
+    <p style="margin-top:1.5rem">The same map in relief, and this one is real: drag it. Give Nibwrite a heightmap, a model, or an export from a map generator and the world stands up. Orbit with a drag, zoom with the wheel, click a pin to land in its scene, drag a pin to move it and the coordinates update in the note. An Obsidian view is a full browser surface, so all of that works inside the vault on desktop. The flat map is the fallback on mobile.</p>
     <div class="panel" aria-label="World map, relief view">
       <div class="bar"><strong>Harrowmere</strong><span class="axis"><span class="hint">Drag to orbit, scroll to zoom</span> View <span>Flat</span><span class="on">Relief</span></span></div>
       <div class="world3d" id="relief">
@@ -537,7 +710,7 @@
 
   <section class="feature">
     <h2>Keep track of who is where.</h2>
-    <p>A character is a note. Scrivener gives you a sheet to fill in; Longhand gives you the sheet and then reads the manuscript for you. Every scene that links to the character, or mentions a name or alias you have approved, counts as an appearance. The cast panel shows each character across the book in manuscript order, where they were last seen, and which thread they carry on the corkboard. Click a cell to open the scene. Nothing is typed twice: the sheet is frontmatter, the appearances are links.</p>
+    <p>A character is a note. Scrivener gives you a sheet to fill in; Nibwrite gives you the sheet and then reads the manuscript for you. Every scene that links to the character, or mentions a name or alias you have approved, counts as an appearance. The cast panel shows each character across the book in manuscript order, where they were last seen, and which thread they carry on the corkboard. Click a cell to open the scene. Nothing is typed twice: the sheet is frontmatter, the appearances are links.</p>
     <div class="panel" aria-label="Cast panel example">
       <div class="bar"><strong>Cast</strong><span>Part One, 12 scenes</span></div>
       <div class="body cast">
@@ -563,9 +736,9 @@
     <div class="nib">
       <div class="icon"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="28,10 50,10 50,60 39,76 28,60" fill="currentColor"/><circle cx="39" cy="44" r="3.5" fill="#FBFBF9"/><line x1="39" y1="47" x2="39" y2="62" stroke="#FBFBF9" stroke-width="3"/><path d="M28 86 H 86" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg></div>
       <div>
-        <p>Every studio has someone who knows where things are. Nib is Longhand's. It lives in the margin, knows your manuscript, and stays out of your prose. Ask it what changed in chapter four since the June draft, where Tom was last seen, which scenes still mention the tin after you cut it, or whether a synopsis still matches its scene. It answers from your files and your history, and anything it changes lands as an ordinary edit or a snapshot you can undo.</p>
-        <p>Half of Nib needs no model at all. Where someone was last seen, what is set at a place, who is in a scene, which places have no scene yet, how long a chapter is, where a note sits on a map: those are lookups over your files, and that half of Nib is open source, works offline, and ships with the plugin. The half that reads your prose is the hosted one.</p>
-        <p>Nib is off until you turn it on. It runs on our hosted models with a subscription, or on your own key or a local model. It sends your manuscript nowhere you did not point it, and it reports nothing back to us. Nib is the one part of Longhand you pay for by the month, and it is the only part that ever will be a subscription.</p>
+        <p>Every studio has someone who knows where things are. Nib is Nibwrite's. It lives in the margin, knows your manuscript, and stays out of your prose. Ask it what changed in chapter four since the June draft, where Tom was last seen, which scenes still mention the tin after you cut it, or whether a synopsis still matches its scene. It answers from your files and your history, and anything it changes lands as an ordinary edit or a snapshot you can undo.</p>
+        <p>Half of Nib needs no model at all. Where someone was last seen, what is set at a place, who is in a scene, which places have no scene yet, how long a chapter is, where a note sits on a map: those are lookups over your files, and that half of Nib is open source, works offline, and ships with the plugin and the app. The half that reads your prose is the hosted one.</p>
+        <p>Nib is free, and off until you turn it on. For the half that reads your prose, bring your own key or point it at a local model; hosted models come later as a separate tier. It sends your manuscript nowhere you did not point it, and it reports nothing back to us.</p>
       </div>
     </div>
     <div class="chat" aria-label="Example conversation with Nib">
@@ -579,14 +752,14 @@
 
   <section class="feature">
     <h2>What is open, and what is not.</h2>
-    <p>Anything that touches your files is open source under Apache-2.0 and always will be, because nobody should trust a writing tool that can hold a manuscript hostage. What you can pay for is convenience and Nib.</p>
+    <p>Anything that touches your files is open source under Apache-2.0 and always will be, because nobody should trust a writing tool that can hold a manuscript hostage. What you can pay for is sync between your devices and the editor tools.</p>
     <div class="split2">
       <div>
         <h3>Open, Apache-2.0</h3>
         <ul>
           <li>The vault spec <small>the contract everything reads and writes</small></li>
           <li>The importer <small>Scrivener in, vault and history out</small></li>
-          <li>The plugin core and its module and theme APIs</li>
+          <li>The Obsidian plugin, its core, and its module and theme APIs</li>
           <li>Snapshots, binder, inspector, corkboard and threads, research, cast, flat maps, targets</li>
           <li>Themes and project templates <small>an open format; build your own, share them, sell them</small></li>
         </ul>
@@ -594,11 +767,11 @@
       <div>
         <h3>Paid</h3>
         <ul>
-          <li>Nib <small>a monthly subscription, with a bring-your-own-key option</small></li>
-          <li>Compile presets <small>manuscript formats to docx, pdf, epub; a one-time licence</small></li>
-          <li>Relief maps <small>the world in three dimensions; a one-time licence</small></li>
+          <li>Sync <small>end-to-end encrypted, between your desktop, tablet, and phone</small></li>
+          <li>The editor tools <small>focus and audit, the editor's redlines back from Word, beta-reader round trips, compile presets</small></li>
+          <li>Hosted models for Nib <small>later, as a separate tier</small></li>
         </ul>
-        <p style="margin-top:1rem">Turn a paid module off and your files are untouched. There is nothing in them that only a paid module can read.</p>
+        <p style="margin-top:1rem">One subscription, $5 a month or $4 a month billed annually. The app itself is free, and a whole novel can be written in it without paying. Stop paying and your files are untouched: there is nothing in them that only a paid tool can read.</p>
       </div>
     </div>
   </section>
@@ -621,7 +794,7 @@
 
   <section>
     <h2>Works with how you already sync</h2>
-    <p>Longhand does not sync anything. Your vault keeps moving through iCloud, Dropbox, Obsidian Sync, Syncthing, or a git remote, whichever you use today. Snapshot history is stored as plain files inside the vault by default, so it travels with the vault to every device, including your phone. If you want real version control as well, turn on the git store: desktop only, and the repository is kept outside the synced folder so cloud sync never touches it.</p>
+    <p>The plugin does not sync anything. Your vault keeps moving through iCloud, Dropbox, Obsidian Sync, Syncthing, or a git remote, whichever you use today. The Nibwrite app adds its own end-to-end encrypted sync as the subscription, for writers who would rather not run one of those; the files stay plain either way. Snapshot history is stored as plain files inside the vault by default, so it travels with the vault to every device, including your phone. If you want real version control as well, turn on the git store: desktop only, and the repository is kept outside the synced folder so cloud sync never touches it.</p>
   </section>
 
   <section>
@@ -629,19 +802,19 @@
     <div class="two">
       <div>
         <h3>Moving a project out of Scrivener</h3>
-        <p>Our importer reads a .scriv package and writes a vault that follows the Longhand spec, snapshots included. The original project is never modified.</p>
+        <p>Our importer reads a .scriv package and writes a vault that follows the Nibwrite spec, snapshots included. The original project is never modified.</p>
         <pre>go install github.com/longhand-io/scrivener-to-obsidian/cmd/scriv2obsidian@latest
 scriv2obsidian convert -out ~/Writing -git Novel.scriv</pre>
       </div>
       <div>
         <h3>The plugin</h3>
-        <p>In early development, and usable in a test vault. The importer is feature complete for its first release. The plugin core, the map with pins, place cards, and drawing, the New command, and Nib's offline answers build and pass their tests; nothing is published yet. The spec, the importer, the plugin core, and every module that touches your files are open source and will stay that way. Nib's hosted half and two convenience modules are paid; nothing that guards your data ever will be.</p>
+        <p>In early development, and usable in a test vault. The importer is feature complete for its first release. The plugin core, the map with pins, place cards, and drawing, the New command, and Nib's offline answers build and pass their tests; nothing is published yet. The spec, the importer, the plugin, and every module that touches your files are open source and will stay that way. Sync and the editor tools are the paid part; nothing that guards your data ever will be.</p>
         <p><a href="https://github.com/Longhand-io/longhand">Follow the repo</a> to hear when there is a build to try.</p>
       </div>
     </div>
   </section>
 
-  <footer>Longhand is an independent project by grassclaw, published by 0xSpectra LLC under the Apache License 2.0, with no accounts, no telemetry, and no network calls. It is not affiliated with or endorsed by Literature &amp; Latte, the makers of Scrivener, or by Obsidian. Scrivener and Obsidian are trademarks of their respective owners.</footer>
+  <footer>Nibwrite is an independent project by grassclaw, published by 0xSpectra LLC under the Apache License 2.0, with no accounts, no telemetry, and no network calls. It is not affiliated with or endorsed by Literature &amp; Latte, the makers of Scrivener, or by Obsidian. Scrivener and Obsidian are trademarks of their respective owners.</footer>
 </div>
 <script>
   // One motion moment: the diff tints in once the page has settled.
@@ -758,7 +931,7 @@ scriv2obsidian convert -out ~/Writing -git Novel.scriv</pre>
     container.addEventListener('pointerdown', function () { hide(true); });
     return function () { if (open) place(open); };
   }
-  window.longhandWirePlaces = wire;
+  window.nibwriteWirePlaces = wire;
   var flat = document.querySelector('.world'); if (flat) wire(flat);
 })();
 </script>
@@ -832,7 +1005,7 @@ scriv2obsidian convert -out ~/Writing -git Novel.scriv</pre>
     el.innerHTML = '<span class="tag">' + p.name + '</span><span class="stem"></span>';
     pinLayer.appendChild(el); p.el = el;
   });
-  var repositionCard = window.longhandWirePlaces ? window.longhandWirePlaces(pinLayer) : function () {};
+  var repositionCard = window.nibwriteWirePlaces ? window.nibwriteWirePlaces(pinLayer) : function () {};
 
   // orbit
   var theta = -0.35, phi = 1.0, radius = 165, target = new THREE.Vector3(0, 3, 0);
@@ -868,6 +1041,20 @@ scriv2obsidian convert -out ~/Writing -git Novel.scriv</pre>
   }
   frame();
 })();
+</script>
+<script>
+const s=document.getElementById('sting');
+const trail=document.getElementById('trail');
+const L=trail.getTotalLength();
+trail.style.strokeDasharray=L;trail.style.strokeDashoffset=L;
+const play=()=>{s.classList.remove('play');void s.getBoundingClientRect();s.classList.add('play')};
+document.getElementById('sting-play').onclick=play;
+
+const t=new URLSearchParams(location.search).get('t');
+const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(t!==null){s.classList.add('play');requestAnimationFrame(()=>{for(const a of document.getAnimations()){a.pause();a.currentTime=parseFloat(t)*1000;}});}
+else if(reduce){s.classList.add('done');}
+else setTimeout(play,400);
 </script>
 </body>
 </html>
