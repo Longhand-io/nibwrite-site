@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <meta property="og:title" content="Nibwrite FAQ">
 <meta property="og:description" content="Binder, snapshots with side-by-side compare, inspector, corkboard, research, and compile. Files you own.">
-<meta property="og:image" content="https://longhand-io.github.io/longhand-site/brand/social/social-preview.png">
+<meta property="og:image" content="https://nibwrite.github.io/nibwrite-site/brand/social/social-preview.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -327,18 +327,18 @@
   <header>
     <a class="name" href="index.html" style="text-decoration:none"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="28,10 50,10 50,60 39,76 28,60" fill="currentColor"/><circle cx="34" cy="27" r="4" fill="var(--paper)"/><circle cx="44" cy="27" r="4" fill="var(--paper)"/><circle cx="35" cy="27.6" r="1.7" fill="currentColor"/><circle cx="45" cy="27.6" r="1.7" fill="currentColor"/><path d="M18 10 C 26 4, 52 4, 60 10" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M29 8 L 31 -6 L 48 -7 L 50 7 Z" fill="currentColor"/><path d="M28 86 H 86" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg>Nibwrite</a>
     <nav>
-      <a href="https://github.com/Longhand-io/longhand">Plugin</a>
-      <a href="https://github.com/Longhand-io/scrivener-to-obsidian">Importer</a>
-      <a href="https://github.com/Longhand-io/longhand/blob/main/docs/spec.md">Spec</a>
+      <a href="https://github.com/nibwrite/nibwrite">Plugin</a>
+      <a href="https://github.com/nibwrite/scrivener-to-obsidian">Importer</a>
+      <a href="https://github.com/nibwrite/nibwrite/blob/main/docs/spec.md">Spec</a>
       <a href="index.html#nib">Nib</a>
       <a href="faq.html">FAQ</a>
-      <a href="https://github.com/Longhand-io/longhand-site/tree/main/brand">Brand</a>
+      <a href="https://github.com/nibwrite/nibwrite-site/tree/main/brand">Brand</a>
     </nav>
   </header>
 
   <h1>Questions from the first week.</h1>
 <!-- faq:start -->
-  <p class="lede">Things writers notice after importing a project, most of them not bugs. If yours is not here, ask in <a href="https://github.com/Longhand-io/longhand/discussions">Discussions</a>.</p>
+  <p class="lede">Things writers notice after importing a project, most of them not bugs. If yours is not here, ask in <a href="https://github.com/nibwrite/nibwrite/discussions">Discussions</a>.</p>
   <div class="faq">
   <ul class="toc">
     <li><a href="#it-looks-like-ordinary-obsidian-where-is">It looks like ordinary Obsidian. Where is the binder, the inspector, the snapshots tab?</a></li>
@@ -390,7 +390,7 @@
   <p>Two places, the same content. <code>_snapshots/&lt;document id&gt;/</code> inside each project holds one Markdown file per snapshot, named by date and the title you gave it, and syncs with the vault to every device. If you converted with <code>-git</code>, each snapshot is also a commit with its original date, which the Nibwrite Snapshots module will show as a list with compare and restore. Until then, any git client shows them.</p>
 
   <h2 id="can-i-put-the-vault-in-icloud-or-dropbox">Can I put the vault in iCloud or Dropbox?</h2>
-  <p>The files, yes. The git repository, not directly: a <code>.git</code> folder inside a cloud-synced folder gets corrupted. If you used <code>-git</code>, either keep the vault outside cloud sync or move the repository out with <code>git init --separate-git-dir</code>; the Nibwrite plugin does this for you. See <a href="https://github.com/Longhand-io/longhand/blob/main/docs/sync-and-history.md">Sync and history</a>.</p>
+  <p>The files, yes. The git repository, not directly: a <code>.git</code> folder inside a cloud-synced folder gets corrupted. If you used <code>-git</code>, either keep the vault outside cloud sync or move the repository out with <code>git init --separate-git-dir</code>; the Nibwrite plugin does this for you. See <a href="https://github.com/nibwrite/nibwrite/blob/main/docs/sync-and-history.md">Sync and history</a>.</p>
 
   <h2 id="can-i-run-the-importer-again">Can I run the importer again?</h2>
   <p>Yes, into an empty folder. Reimporting into an existing vault and merging only what is new is on the roadmap, keyed on each document's <code>id</code>. The source package is never modified, so there is no risk in running it as often as you like.</p>
