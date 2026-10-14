@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nib Rider, round 0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1E2432;--paper:#F3F4F1;--paper-deep:#E9EBE6;--graphite:#676B72;--rule:#CFD2CC;--red:#B65A52;--blue:#4C6A9A;--green:#5E8A5C;--yellow:#C9A24A}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Newsreader,Georgia,serif;font-size:18px;line-height:1.55;padding:24px 16px 80px}
+h1{font-weight:500;letter-spacing:-.01em;font-size:34px;margin:0 0 4px}
+h2{font-weight:500;letter-spacing:-.01em;font-size:24px;margin:40px 0 8px}
+p{max-width:66ch;margin:0 0 12px}
+small,.meta{color:var(--graphite)}
+.sheet{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-end;margin:12px 0 8px}
+.v{text-align:center}.v small{display:block;margin-top:6px}
+.v svg{width:260px;height:208px}
+.stage-wrap{max-width:1120px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);overflow:hidden}
+.stage{display:block;width:100%;height:auto}
+.bar{display:flex;gap:12px;align-items:center;padding:10px 14px;border-top:1px solid var(--rule);background:var(--paper-deep)}
+button{font:inherit;font-size:16px;padding:6px 14px;border:1px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:6px;cursor:pointer}
+button:hover{background:var(--ink);color:var(--paper)}
+.beats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:1120px}
+.beat{border:1px solid var(--rule);border-radius:8px;padding:12px 14px;background:#fff}
+.beat b{font-weight:600}
+.beat .t{color:var(--graphite);font-size:15px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#F3F4F1;--paper:#1E2432;--paper-deep:#262C3B;--graphite:#AEB2BA;--rule:#3A4152}.beat{background:#232938}}
+:root[data-theme="dark"]{--ink:#F3F4F1;--paper:#1E2432;--paper-deep:#262C3B;--graphite:#AEB2BA;--rule:#3A4152}
+
+/* ---------- animation ---------- */
+#sting{--d:7s}
+#sting.play .rider{animation:ride var(--d) cubic-bezier(.4,0,.2,1) forwards}
+#sting.play .bob{animation:bob .42s ease-in-out infinite}
+#sting.play .plume{animation:plume .42s ease-in-out infinite}
+#sting.play .cape{animation:cape .42s ease-in-out infinite}
+#sting.play .trail{animation:draw calc(var(--d)*.55) linear forwards}
+#sting.play .trees-far{animation:parallax calc(var(--d)*.6) linear forwards}
+#sting.play .trees-near{animation:parallax-near calc(var(--d)*.6) linear forwards}
+#sting.play .word{animation:word 1.2s ease-out calc(var(--d)*.6) forwards}
+#sting.play .word-rule{animation:draw-rule .9s ease-out calc(var(--d)*.62) forwards}
+#sting.play .peek{animation:peek 1.6s cubic-bezier(.2,.9,.3,1.2) calc(var(--d)*.74) forwards}
+#sting.play .blink{animation:blink 4s step-end calc(var(--d)*.9) infinite}
+#sting.play .tip{animation:tip .9s ease-in-out calc(var(--d)*.86) 1}
+@keyframes ride{0%{transform:translate(-320px,0)}58%{transform:translate(1180px,0)}100%{transform:translate(1180px,0)}}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+@keyframes plume{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-14deg)}}
+@keyframes cape{0%,100%{transform:skewX(0) scaleX(1)}50%{transform:skewX(-10deg) scaleX(1.12)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes draw-rule{to{stroke-dashoffset:0}}
+@keyframes parallax{to{transform:translateX(-140px)}}
+@keyframes parallax-near{to{transform:translateX(-420px)}}
+@keyframes word{to{opacity:1;transform:translateY(0)}}
+@keyframes peek{to{transform:translate(0,0) rotate(0)}}
+@keyframes blink{0%,96%{transform:scaleY(1)}97%,100%{transform:scaleY(.1)}}
+@keyframes tip{0%,100%{transform:rotate(0)}40%{transform:rotate(-22deg) translateY(-6px)}}
+.trail{stroke-dasharray:2600;stroke-dashoffset:2600}
+.word-rule{stroke-dasharray:420;stroke-dashoffset:420}
+.word{opacity:0;transform:translateY(10px)}
+.peek{transform:translate(0,140px) rotate(25deg)}
+.eye{transform-origin:center;transform-box:fill-box}
+.tip{transform-origin:60px 60px;transform-box:fill-box}
+.bob,.plume,.cape{transform-box:fill-box;transform-origin:center}
+.plume{transform-origin:left center}
+.cape{transform-origin:right center}
+body[data-frame]{padding:0}body[data-frame]>*:not(.stage-wrap){display:none}body[data-frame] .stage-wrap{border:0;border-radius:0;max-width:none}body[data-frame] .bar{display:none}
+</style>
+
+<h1>Nib Rider, round 0</h1>
+<p class="meta">Character sheet and an animated sting prototype. Ink on paper, single-stroke line art with round caps, the same hand as the cursive mark. 2026-10-13. Not committed.</p>
+
+<!-- Shared character symbol: rider on the pen, facing right. viewBox 0 0 240 170 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="rider" viewBox="0 0 240 170">
+      <!-- pen as the steed -->
+      <g class="bob">
+        <path d="M30 118 L178 70" stroke="var(--ink)" stroke-width="14" stroke-linecap="round"/>
+        <path d="M30 118 L178 70" stroke="var(--paper)" stroke-width="3" stroke-linecap="round" opacity=".35"/>
+        <!-- nib: a real nib on the pen, not the logo -->
+        <path d="M172 74 L206 54 L214 66 L186 88 Z" fill="var(--ink)"/>
+        <path d="M206 54 L190 78" stroke="var(--paper)" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="192" cy="72" r="2.6" fill="var(--paper)"/>
+        <!-- cape -->
+        <g class="cape">
+          <path d="M96 78 C 70 70, 52 92, 34 86 C 50 104, 74 104, 100 96 Z" fill="var(--ink)" opacity=".92"/>
+        </g>
+        <!-- body -->
+        <path d="M104 72 C 100 92, 104 104, 110 112" stroke="var(--ink)" stroke-width="12" stroke-linecap="round"/>
+        <!-- legs, dangling forward -->
+        <path d="M108 108 C 116 118, 124 118, 134 108" stroke="var(--ink)" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M104 110 C 104 124, 110 130, 118 128" stroke="var(--ink)" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <!-- rein arm to the pen -->
+        <path d="M110 86 C 124 84, 138 82, 150 80" stroke="var(--ink)" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <!-- raised arm with a scribble flourish -->
+        <path d="M100 82 C 90 70, 86 58, 94 46" stroke="var(--ink)" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M94 46 c 6 -6, 10 2, 4 6 c -5 4, -1 10, 6 6" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <!-- head -->
+        <circle cx="112" cy="58" r="16" fill="var(--paper)" stroke="var(--ink)" stroke-width="5"/>
+        <!-- eyes: the character has eyes and looks at you -->
+        <g class="eye"><circle cx="109" cy="57" r="2.6" fill="var(--ink)"/></g>
+        <g class="eye"><circle cx="119" cy="56" r="2.6" fill="var(--ink)"/></g>
+        <path d="M112 64 c 3 2, 6 1, 8 -1" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        <!-- musketeer hat -->
+        <g class="tip">
+          <path d="M86 50 C 96 38, 128 36, 142 48" stroke="var(--ink)" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <path d="M98 46 L 102 30 L 126 28 L 130 44 Z" fill="var(--ink)"/>
+          <!-- plume: a feather, which is to say a quill -->
+          <g class="plume">
+            <path d="M104 30 C 84 22, 66 26, 50 44" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
+            <path d="M98 28 C 86 20, 72 20, 60 30" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" fill="none" opacity=".6"/>
+          </g>
+        </g>
+      </g>
+    </symbol>
+    <!-- simpler direction B: the nib itself wears the hat -->
+    <symbol id="nibhat" viewBox="0 0 240 170">
+      <path d="M86 150 L120 60 L154 150 Z" fill="var(--ink)"/>
+      <path d="M120 60 L120 112" stroke="var(--paper)" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="120" cy="118" r="4" fill="var(--paper)"/>
+      <circle cx="110" cy="96" r="3" fill="var(--paper)"/><circle cx="130" cy="96" r="3" fill="var(--paper)"/>
+      <path d="M80 64 C 96 48, 144 48, 160 64" stroke="var(--ink)" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <path d="M100 58 L104 38 L136 36 L140 56 Z" fill="var(--ink)"/>
+      <path d="M106 38 C 86 28, 66 30, 48 50" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
+    </symbol>
+    <!-- direction C: head and hat only, a stamp for corners -->
+    <symbol id="bust" viewBox="0 0 240 170">
+      <circle cx="120" cy="104" r="30" fill="var(--paper)" stroke="var(--ink)" stroke-width="6"/>
+      <circle cx="112" cy="100" r="4" fill="var(--ink)"/><circle cx="130" cy="98" r="4" fill="var(--ink)"/>
+      <path d="M114 116 c 5 4, 12 2, 16 -2" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M72 86 C 92 66, 150 62, 172 82" stroke="var(--ink)" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <path d="M96 80 L102 50 L142 46 L148 76 Z" fill="var(--ink)"/>
+      <path d="M106 50 C 80 38, 56 44, 36 70" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <path d="M100 46 C 84 36, 70 38, 58 48" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".6"/>
+    </symbol>
+  </defs>
+</svg>
+
+<h2>Character sheet</h2>
+<div class="sheet">
+  <div class="v"><svg viewBox="0 0 240 170"><use href="#rider"/></svg><small>A. The Nib Rider: a musketeer riding the pen like a lance, nib forward, plume streaming. Eyes on you.</small></div>
+  <div class="v"><svg viewBox="0 0 240 170"><use href="#nibhat"/></svg><small>B. The nib wears the hat. Simpler, reads at 24 px, but it is the pictogram we are retiring.</small></div>
+  <div class="v"><svg viewBox="0 0 240 170"><use href="#bust"/></svg><small>C. Bust only. The corner stamp for the app: the face that talks to you.</small></div>
+</div>
+<p>A is the one for the short. C is what A becomes when it shrinks into the corner of the app, so the character in the video and the assistant on screen are the same person. B is here to show why the pictogram alone is not enough: no eyes, no one to talk to.</p>
+
+<h2>Sting prototype</h2>
+<div class="stage-wrap">
+  <svg id="sting" class="stage" viewBox="0 0 1120 480" role="img" aria-label="The Nib Rider gallops through a forest trailing ink that becomes the word Nibwrite">
+    <rect width="1120" height="480" fill="var(--paper)"/>
+    <!-- far trees -->
+    <g class="trees-far" fill="var(--ink)" opacity=".10">
+      <g id="far">
+        <path d="M40 420 L70 300 L100 420 Z"/><path d="M130 420 L150 340 L170 420 Z"/><path d="M230 420 L270 270 L310 420 Z"/><path d="M360 420 L380 330 L400 420 Z"/><path d="M470 420 L510 280 L550 420 Z"/><path d="M620 420 L640 350 L660 420 Z"/><path d="M720 420 L760 290 L800 420 Z"/><path d="M860 420 L880 340 L900 420 Z"/><path d="M960 420 L1000 270 L1040 420 Z"/><path d="M1100 420 L1130 320 L1160 420 Z"/><path d="M1200 420 L1240 280 L1280 420 Z"/>
+      </g>
+    </g>
+    <!-- near trees -->
+    <g class="trees-near" fill="var(--ink)" opacity=".22">
+      <path d="M-20 440 L30 230 L80 440 Z"/><path d="M180 440 L210 320 L240 440 Z"/><path d="M400 440 L450 220 L500 440 Z"/><path d="M640 440 L670 330 L700 440 Z"/><path d="M820 440 L870 210 L920 440 Z"/><path d="M1080 440 L1110 320 L1140 440 Z"/><path d="M1260 440 L1310 230 L1360 440 Z"/><path d="M1480 440 L1510 320 L1540 440 Z"/>
+    </g>
+    <!-- ground -->
+    <path d="M0 440 H1120" stroke="var(--ink)" stroke-width="3" opacity=".25"/>
+    <!-- ink trail the rider leaves: loops like handwriting -->
+    <path class="trail" d="M-300 330 C -200 330, -150 290, -80 320 S 20 360, 90 320 S 190 290, 240 330 S 330 370, 400 320 S 500 280, 560 330 S 650 380, 720 320 S 810 280, 880 330 S 980 370, 1060 320 S 1180 300, 1300 330" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/>
+    <!-- the rider -->
+    <g class="rider">
+      <svg x="-60" y="200" width="320" height="226" viewBox="0 0 240 170"><use href="#rider"/></svg>
+    </g>
+    <!-- wordmark reveal -->
+    <g class="word">
+      <text x="560" y="250" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-weight="500" font-size="112" letter-spacing="-0.02em" fill="var(--ink)">Nibwrite</text>
+    </g>
+    <path class="word-rule" d="M350 282 C 420 272, 700 272, 770 282" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/>
+    <!-- the bust peeks up from the bottom corner and tips its hat -->
+    <g class="peek">
+      <svg x="880" y="300" width="220" height="156" viewBox="0 0 240 170">
+        <g class="tip">
+          <use href="#bust"/>
+        </g>
+      </svg>
+    </g>
+  </svg>
+  <div class="bar">
+    <button id="play">Play</button>
+    <button id="toggle">Dark ground</button>
+    <small class="meta">7 seconds. Beats below. Loop with Play.</small>
+  </div>
+</div>
+
+<h2>Beats</h2>
+<div class="beats">
+  <div class="beat"><b>1. Forest</b><div class="t">0.0 to 0.8 s</div>Paper ground, two layers of ink tree silhouettes drifting at different speeds. Quiet.</div>
+  <div class="beat"><b>2. The ride</b><div class="t">0.8 to 4.0 s</div>The Rider gallops in from the left on the pen, nib forward, plume and cape in the wind, bobbing at a trot. The nib leaves a looping ink line behind it like handwriting.</div>
+  <div class="beat"><b>3. The word</b><div class="t">4.0 to 5.2 s</div>The Rider exits right. The line settles. Nibwrite rises in Newsreader above a hand-drawn rule.</div>
+  <div class="beat"><b>4. Hello</b><div class="t">5.2 to 7.0 s</div>The bust pops up in the corner, tips the hat, blinks. Hold. This is the same face that lives in the app's corner.</div>
+</div>
+<p class="meta" style="margin-top:16px">Render path for an MP4: Chrome headless screenshots at 30 fps driven by a small script that steps the CSS animations, then ffmpeg. Sound is one pen scratch and one hat tip; nothing else.</p>
+
+<script>
+const s=document.getElementById('sting');
+const play=()=>{s.classList.remove('play');void s.getBoundingClientRect();s.classList.add('play')};
+document.getElementById('play').onclick=play;
+document.getElementById('toggle').onclick=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark'};
+const t=new URLSearchParams(location.search).get('t');
+if(t!==null){document.body.dataset.frame='1';s.classList.add('play');requestAnimationFrame(()=>{for(const a of document.getAnimations()){a.pause();a.currentTime=parseFloat(t)*1000;}});}
+else setTimeout(play,400);
+</script>
+</html>

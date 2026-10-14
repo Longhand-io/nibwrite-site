@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nib Rider, round 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1E2432;--paper:#F3F4F1;--paper-deep:#E9EBE6;--graphite:#676B72;--rule:#CFD2CC}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Newsreader,Georgia,serif;font-size:18px;line-height:1.55;padding:24px 16px 80px}
+h1{font-weight:500;letter-spacing:-.01em;font-size:34px;margin:0 0 4px}
+h2{font-weight:500;letter-spacing:-.01em;font-size:24px;margin:40px 0 8px}
+p{max-width:66ch;margin:0 0 12px}
+small,.meta{color:var(--graphite)}
+.sheet{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-end;margin:12px 0 8px}
+.v{text-align:center;max-width:250px}.v small{display:block;margin-top:6px}
+.v svg{width:220px;height:220px}
+.stage-wrap{max-width:1120px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);overflow:hidden}
+.stage{display:block;width:100%;height:auto}
+.bar{display:flex;gap:12px;align-items:center;padding:10px 14px;border-top:1px solid var(--rule);background:var(--paper-deep)}
+button{font:inherit;font-size:16px;padding:6px 14px;border:1px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:6px;cursor:pointer}
+button:hover{background:var(--ink);color:var(--paper)}
+.beats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:1120px}
+.beat{border:1px solid var(--rule);border-radius:8px;padding:12px 14px;background:#fff}
+.beat b{font-weight:600}.beat .t{color:var(--graphite);font-size:15px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#F3F4F1;--paper:#1E2432;--paper-deep:#262C3B;--graphite:#AEB2BA;--rule:#3A4152}.beat{background:#232938}}
+:root[data-theme="dark"]{--ink:#F3F4F1;--paper:#1E2432;--paper-deep:#262C3B;--graphite:#AEB2BA;--rule:#3A4152}
+body[data-frame]{padding:0}body[data-frame]>*:not(.stage-wrap){display:none}body[data-frame] .stage-wrap{border:0;border-radius:0;max-width:none}body[data-frame] .bar{display:none}
+
+#sting{--ride:3.9s}
+#sting.play .rider{animation:ride var(--ride) linear forwards}
+#sting.play .skate{animation:skate .36s ease-in-out infinite}
+#sting.play .plume{animation:plume .36s ease-in-out infinite}
+#sting.play .cape{animation:cape .36s ease-in-out infinite}
+#sting.play .trail{animation:draw var(--ride) linear forwards, settle 1s ease-out calc(var(--ride) + .3s) forwards}
+#sting.play .trees-far{animation:parallax var(--ride) linear forwards}
+#sting.play .trees-near{animation:parallax-near var(--ride) linear forwards}
+#sting.play .word{animation:word 1.2s ease-out calc(var(--ride) + .4s) forwards}
+#sting.play .word-rule{animation:draw-rule .9s ease-out calc(var(--ride) + .6s) forwards}
+#sting.play .peek{animation:peek 1.4s cubic-bezier(.2,.9,.3,1.2) calc(var(--ride) + 1.4s) forwards}
+#sting.play .blink{animation:blink 3.4s step-end calc(var(--ride) + 2.4s) infinite}
+#sting.play .tip{animation:tip .9s ease-in-out calc(var(--ride) + 2.2s) 1}
+@keyframes ride{from{transform:translate(0,0)}to{transform:translate(1600px,0)}}
+@keyframes skate{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-9px) rotate(3deg)}}
+@keyframes plume{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-16deg)}}
+@keyframes cape{0%,100%{transform:skewX(0) scaleX(1)}50%{transform:skewX(-12deg) scaleX(1.15)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes settle{to{opacity:.35}}
+@keyframes draw-rule{to{stroke-dashoffset:0}}
+@keyframes parallax{to{transform:translateX(-120px)}}
+@keyframes parallax-near{to{transform:translateX(-380px)}}
+@keyframes word{to{opacity:1;transform:translateY(0)}}
+@keyframes peek{to{transform:translate(0,0) rotate(0)}}
+@keyframes blink{0%,94%{transform:scaleY(1)}95%,100%{transform:scaleY(.08)}}
+@keyframes tip{0%,100%{transform:rotate(0)}40%{transform:rotate(-24deg) translateY(-6px)}}
+.word-rule{stroke-dasharray:420;stroke-dashoffset:420}
+.word{opacity:0;transform:translateY(10px)}
+.peek{transform:translate(0,150px) rotate(25deg)}
+.blink{transform-origin:center;transform-box:fill-box}
+.tip{transform-origin:60% 100%;transform-box:fill-box}
+.skate,.plume,.cape{transform-box:fill-box}
+.skate{transform-origin:50% 100%}
+.plume{transform-origin:right center}
+.cape{transform-origin:right center}
+</style>
+
+<h1>Nib Rider, round 2</h1>
+<p class="meta">Built from the real mark: <code>brand/logo/nib-mark.svg</code>, polygon 28,10 50,10 50,60 39,76 28,60, breather hole at 39,44, slit to 62, baseline at 86. Nothing redrawn; eyes, hat, cape and arms are added around it. 2026-10-13. Not committed.</p>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- The mark itself, untouched. -->
+    <g id="mark-body">
+      <polygon points="28,10 50,10 50,60 39,76 28,60" fill="var(--ink)"/>
+      <circle cx="39" cy="44" r="3.5" fill="var(--paper)"/>
+      <line x1="39" y1="47" x2="39" y2="62" stroke="var(--paper)" stroke-width="3"/>
+    </g>
+    <!-- Eyes in the shoulders, above the breather hole. -->
+    <g id="mark-eyes" class="blink">
+      <circle cx="34" cy="27" r="4" fill="var(--paper)"/><circle cx="44" cy="27" r="4" fill="var(--paper)"/>
+      <circle cx="35" cy="27.6" r="1.7" fill="var(--ink)"/><circle cx="45" cy="27.6" r="1.7" fill="var(--ink)"/>
+    </g>
+    <!-- Musketeer hat on the square shoulders. -->
+    <g id="mark-hat" class="tip">
+      <path d="M18 10 C 26 4, 52 4, 60 10" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <path d="M29 8 L 31 -6 L 48 -7 L 50 7 Z" fill="var(--ink)"/>
+      <g class="plume">
+        <path d="M32 -4 C 22 -12, 10 -10, 2 0" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+        <path d="M30 -7 C 22 -13, 14 -12, 8 -7" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round" fill="none" opacity=".6"/>
+      </g>
+    </g>
+
+    <!-- A. Nibby on the move: the mark, on its own baseline, with cape, arms, rapier. viewBox -10 -20 120 120 -->
+    <symbol id="nibby" viewBox="-10 -20 120 120">
+      <g class="skate">
+        <g class="cape"><path d="M30 30 C 18 26, 10 36, 0 32 C 8 44, 20 46, 30 42 Z" fill="var(--ink)" opacity=".9"/></g>
+        <use href="#mark-body"/>
+        <use href="#mark-eyes"/>
+        <!-- arms -->
+        <path d="M29 36 C 22 40, 18 46, 20 52" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <path d="M49 34 C 56 32, 62 26, 66 18" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <!-- rapier -->
+        <path d="M66 18 L 78 -4" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M63 21 C 66 17, 69 17, 71 20" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+        <use href="#mark-hat"/>
+      </g>
+    </symbol>
+
+    <!-- B. The mark with eyes and hat, standing on its line. The app's assistant icon. viewBox 0 -14 100 114 -->
+    <symbol id="nibby-icon" viewBox="0 -14 100 114">
+      <use href="#mark-body"/>
+      <use href="#mark-eyes"/>
+      <use href="#mark-hat"/>
+      <path d="M28 86 H 86" stroke="var(--ink)" stroke-width="9" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- C. Hello: hat off, held out, standing on the line. -->
+    <symbol id="nibby-bow" viewBox="-10 -14 120 114">
+      <use href="#mark-body"/>
+      <g class="blink">
+        <circle cx="34" cy="27" r="4" fill="var(--paper)"/><circle cx="44" cy="27" r="4" fill="var(--paper)"/>
+        <circle cx="34" cy="28.4" r="1.7" fill="var(--ink)"/><circle cx="44" cy="28.4" r="1.7" fill="var(--ink)"/>
+      </g>
+      <path d="M29 36 C 20 38, 14 34, 12 28" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <path d="M49 36 C 58 40, 66 38, 70 32" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <g transform="translate(60 14) rotate(30)">
+        <path d="M0 18 C 8 12, 34 12, 42 18" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <path d="M11 16 L 13 2 L 30 1 L 32 15 Z" fill="var(--ink)"/>
+        <path d="M14 4 C 22 -4, 32 -5, 42 2" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+      </g>
+      <path d="M28 86 H 86" stroke="var(--ink)" stroke-width="9" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<h2>Character sheet</h2>
+<div class="sheet">
+  <div class="v"><svg viewBox="-10 -20 120 120"><use href="#nibby"/></svg><small>A. On the move. The mark, point on the page, with the hat on its square shoulders. Cape, arms, rapier.</small></div>
+  <div class="v"><svg viewBox="0 -14 100 114"><use href="#nibby-icon"/></svg><small>B. The icon. The mark with eyes and hat, on its own line of writing. Replaces nib-mark.svg where Nibby appears.</small></div>
+  <div class="v"><svg viewBox="-10 -14 120 114"><use href="#nibby-bow"/></svg><small>C. Hello. Hat off, held out. For the end card and his first appearance in the app.</small></div>
+</div>
+<p>The polygon, hole, slit and baseline are the shipped mark, byte for byte. The eyes sit in the shoulders above the breather hole, the hat sits on the flat top, and the baseline the mark already has is the line he writes.</p>
+
+<h2>Sting prototype</h2>
+<div class="stage-wrap">
+  <svg id="sting" class="stage" viewBox="0 0 1120 480" role="img" aria-label="Nibby skates through a forest drawing an ink line that becomes the word Nibwrite">
+    <rect width="1120" height="480" fill="var(--paper)"/>
+    <g class="trees-far" fill="var(--ink)" opacity=".10">
+      <path d="M40 420 L70 300 L100 420 Z"/><path d="M130 420 L150 340 L170 420 Z"/><path d="M230 420 L270 270 L310 420 Z"/><path d="M360 420 L380 330 L400 420 Z"/><path d="M470 420 L510 280 L550 420 Z"/><path d="M620 420 L640 350 L660 420 Z"/><path d="M720 420 L760 290 L800 420 Z"/><path d="M860 420 L880 340 L900 420 Z"/><path d="M960 420 L1000 270 L1040 420 Z"/><path d="M1100 420 L1130 320 L1160 420 Z"/><path d="M1200 420 L1240 280 L1280 420 Z"/>
+    </g>
+    <g class="trees-near" fill="var(--ink)" opacity=".22">
+      <path d="M-20 440 L30 230 L80 440 Z"/><path d="M180 440 L210 320 L240 440 Z"/><path d="M400 440 L450 220 L500 440 Z"/><path d="M640 440 L670 330 L700 440 Z"/><path d="M820 440 L870 210 L920 440 Z"/><path d="M1080 440 L1110 320 L1140 440 Z"/><path d="M1260 440 L1310 230 L1360 440 Z"/><path d="M1480 440 L1510 320 L1540 440 Z"/>
+    </g>
+    <path d="M0 440 H1120" stroke="var(--ink)" stroke-width="3" opacity=".25"/>
+    <path id="trail" class="trail" d="M-260 362 C -180 362, -120 330, -40 350 S 80 386, 160 350 S 280 318, 360 352 S 480 388, 560 350 S 680 316, 760 352 S 880 390, 960 350 S 1100 322, 1180 352 S 1300 380, 1360 362" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/>
+    <!-- Nibby at 2.4x the mark; his point (39,76 in mark space) lands on the trail's start at (-260,362) -->
+    <g class="rider">
+      <svg x="-378" y="132" width="288" height="288" viewBox="-10 -20 120 120"><use href="#nibby"/></svg>
+    </g>
+    <g class="word">
+      <text x="560" y="250" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-weight="500" font-size="112" letter-spacing="-0.02em" fill="var(--ink)">Nibwrite</text>
+    </g>
+    <path class="word-rule" d="M350 282 C 420 272, 700 272, 770 282" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/>
+    <g class="peek">
+      <svg x="900" y="270" width="190" height="200" viewBox="0 -14 100 114"><use href="#nibby-icon"/></svg>
+    </g>
+  </svg>
+  <div class="bar">
+    <button id="play">Play</button>
+    <button id="toggle">Dark ground</button>
+    <small class="meta">7 seconds. He is the shipped mark; the line comes out of his point.</small>
+  </div>
+</div>
+
+<h2>Beats</h2>
+<div class="beats">
+  <div class="beat"><b>1. Forest</b><div class="t">0.0 to 0.6 s</div>Paper, two layers of trees drifting. Quiet.</div>
+  <div class="beat"><b>2. The ride</b><div class="t">0.6 to 4.0 s</div>Nibby skates in on his point, hat and plume back, cape out, rapier up. The ink line comes out of him in a loose hand.</div>
+  <div class="beat"><b>3. The word</b><div class="t">4.0 to 5.3 s</div>He exits right. The line fades to a ghost. Nibwrite rises over a drawn rule.</div>
+  <div class="beat"><b>4. Hello</b><div class="t">5.3 to 7.0 s</div>The icon pops up in the corner on its line, tips the hat, blinks. Hold.</div>
+</div>
+<p class="meta" style="margin-top:16px">Frames: add <code>?t=seconds</code> to the URL to freeze the sting for headless Chrome capture.</p>
+
+<script>
+const s=document.getElementById('sting');
+const trail=document.getElementById('trail');
+const L=trail.getTotalLength();
+trail.style.strokeDasharray=L;trail.style.strokeDashoffset=L;
+const play=()=>{s.classList.remove('play');void s.getBoundingClientRect();s.classList.add('play')};
+document.getElementById('play').onclick=play;
+document.getElementById('toggle').onclick=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark'};
+const t=new URLSearchParams(location.search).get('t');
+if(t!==null){document.body.dataset.frame='1';s.classList.add('play');requestAnimationFrame(()=>{for(const a of document.getAnimations()){a.pause();a.currentTime=parseFloat(t)*1000;}});}
+else setTimeout(play,400);
+</script>
+</html>
