@@ -1,4 +1,4 @@
-# Contributing to nibwrite-site
+# Contributing to oakfall-site
 
 Thank you. This is a small project with one maintainer, so the rules below exist to keep review fast, not to slow you down.
 
