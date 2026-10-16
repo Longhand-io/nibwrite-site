@@ -57,3 +57,7 @@ The names Oakfall, Longhand, and Gall and the marks in this folder are trademark
 ## Affiliation
 
 Oakfall is independent. It is not affiliated with or endorsed by Literature & Latte, the makers of Scrivener, or by Obsidian. Do not use their logos in Longhand material.
+
+## 2026-10-16: the leaf
+
+Gall is now a leaf that is a nib (`gall-leaf.svg`): eyes in the shoulders, breather hole, slit, stem, tilted a little; he smiles now and then. The wordmark is Plus Jakarta Sans bold, tight, with the leaf as the first l (set live in the app, not yet drawn to outlines). The nib-shaped l wordmark from earlier today is withdrawn.
