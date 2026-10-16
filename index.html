@@ -272,11 +272,11 @@
   .world .mpin .tag:hover, .world3d .mpin .tag:hover, .mpin.open .tag { border-color: var(--ink); }
 
 
-  /* nib */
-  .nib { display: grid; grid-template-columns: 7rem 1fr; gap: 2rem; align-items: start; max-width: 60rem; }
-  .nib .icon { width: 7rem; height: 7rem; border-radius: 1.4rem; background: var(--ink); color: var(--paper); display: grid; place-items: center; }
-  .nib .icon svg { width: 5rem; height: 5rem; }
-  .nib p { margin: 0 0 1rem; }
+  /* gall */
+  .gall { display: grid; grid-template-columns: 7rem 1fr; gap: 2rem; align-items: start; max-width: 60rem; }
+  .gall .icon { width: 7rem; height: 7rem; border-radius: 1.4rem; background: var(--ink); color: var(--paper); display: grid; place-items: center; }
+  .gall .icon svg { width: 5rem; height: 5rem; }
+  .gall p { margin: 0 0 1rem; }
   .chat { border: 1px solid var(--rule); background: #FBFBF9; max-width: 60rem; margin: 1.5rem 0 0; }
   .chat .msg { display: grid; grid-template-columns: 2rem 1fr; gap: .8rem; padding: .9rem 1.1rem; border-top: 1px solid var(--rule); }
   .chat .msg:first-child { border-top: 0; }
@@ -292,7 +292,7 @@
   .split2 ul { margin: 0; padding-left: 1.1rem; }
   .split2 li { margin: .25rem 0; }
   .split2 li small { color: var(--graphite); }
-  @media (max-width: 720px) { .nib, .split2 { grid-template-columns: 1fr; } }
+  @media (max-width: 720px) { .gall, .split2 { grid-template-columns: 1fr; } }
 
   @media (max-width: 720px) {
     .compare .bar, .compare .panes, dl.changes, .two { grid-template-columns: 1fr; }
@@ -305,12 +305,12 @@
 <body>
 <div class="wrap">
   <header>
-    <div class="name"><svg viewBox="0 -14 100 114" aria-hidden="true"><use href="#nibby-icon"/></svg>Oakfall</div>
+    <div class="name"><svg viewBox="0 -14 100 114" aria-hidden="true"><use href="#gall-icon"/></svg>Oakfall</div>
     <nav>
       <a href="https://github.com/oakfall/oakfall">Plugin</a>
       <a href="https://github.com/oakfall/scrivener-to-obsidian">Importer</a>
       <a href="https://github.com/oakfall/oakfall/blob/main/docs/spec.md">Spec</a>
-      <a href="#nib">Nib</a>
+      <a href="#gall">Gall</a>
       <a href="faq.html">FAQ</a>
       <a href="https://github.com/oakfall/oakfall-site/tree/main/brand">Brand</a>
     </nav>
@@ -401,8 +401,8 @@
       </g>
     </g>
 
-    <!-- A. Nibby on the move: the mark, on its own baseline, with cape, arms, rapier. viewBox -10 -20 120 120 -->
-    <symbol id="nibby" viewBox="-10 -20 120 120">
+    <!-- A. Gall on the move: the mark, on its own baseline, with cape, arms, rapier. viewBox -10 -20 120 120 -->
+    <symbol id="gall" viewBox="-10 -20 120 120">
       <g class="skate">
         <g class="cape"><path d="M30 30 C 18 26, 10 36, 0 32 C 8 44, 20 46, 30 42 Z" fill="var(--ink)" opacity=".9"/></g>
         <use href="#mark-body"/>
@@ -418,7 +418,7 @@
     </symbol>
 
     <!-- B. The mark with eyes and hat, standing on its line. The app's assistant icon. viewBox 0 -14 100 114 -->
-    <symbol id="nibby-icon" viewBox="0 -14 100 114">
+    <symbol id="gall-icon" viewBox="0 -14 100 114">
       <use href="#mark-body"/>
       <use href="#mark-eyes"/>
       <use href="#mark-hat"/>
@@ -426,7 +426,7 @@
     </symbol>
 
     <!-- C. Hello: hat off, held out, standing on the line. -->
-    <symbol id="nibby-bow" viewBox="-10 -14 120 114">
+    <symbol id="gall-bow" viewBox="-10 -14 120 114">
       <use href="#mark-body"/>
       <g class="blink">
         <circle cx="34" cy="27" r="4" fill="var(--paper)"/><circle cx="44" cy="27" r="4" fill="var(--paper)"/>
@@ -442,15 +442,15 @@
       <path d="M28 86 H 86" stroke="var(--ink)" stroke-width="9" stroke-linecap="round"/>
     </symbol>
       <!-- D. Standing, no baseline: for the end card, where the rule he just drew is his line -->
-    <symbol id="nibby-stand" viewBox="0 -14 100 114">
+    <symbol id="gall-stand" viewBox="0 -14 100 114">
       <use href="#mark-body"/>
       <use href="#mark-eyes"/>
       <use href="#mark-hat"/>
     </symbol>
   </defs>
 </svg>
-  <div class="sting-wrap" aria-label="Nibby, the assistant, gallops through a forest drawing a line of ink; Oakfall appears">
-    <svg id="sting" class="stage" viewBox="0 0 1120 480" role="img" aria-label="Nibby gallops through a forest, weaving between trees, drawing an ink line that becomes the underline of Oakfall">
+  <div class="sting-wrap" aria-label="Gall, the assistant, gallops through a forest drawing a line of ink; Oakfall appears">
+    <svg id="sting" class="stage" viewBox="0 0 1120 480" role="img" aria-label="Gall gallops through a forest, weaving between trees, drawing an ink line that becomes the underline of Oakfall">
     <rect width="1120" height="480" fill="var(--paper)"/>
     <!-- far trees, faint, slow -->
     <g class="trees-far" fill="var(--ink)" opacity=".08">
@@ -463,12 +463,12 @@
     <path d="M0 440 H1120" stroke="var(--ink)" stroke-width="3" opacity=".25"/>
     <!-- the ink line -->
     <path id="trail" class="trail" d="M-260 362 C -200 362, -160 320, -90 346 S 20 396, 100 344 S 220 306, 300 350 S 420 398, 500 344 S 620 304, 700 350 S 820 398, 900 344 S 1020 306, 1100 350 S 1220 392, 1300 352 S 1400 330, 1460 352" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/>
-    <!-- Nibby: the group's origin is his point; it rides the path -->
+    <!-- Gall: the group's origin is his point; it rides the path -->
     <g class="rider">
       <g class="depth">
         <ellipse class="shadow" cx="0" cy="8" rx="40" ry="7" fill="var(--ink)" opacity=".14"/>
         <!-- 2.4x the mark; point (39,76) in a -10,-20 viewBox is (117.6, 230.4) -->
-        <svg x="-117.6" y="-230.4" width="288" height="288" viewBox="-10 -20 120 120"><use href="#nibby"/></svg>
+        <svg x="-117.6" y="-230.4" width="288" height="288" viewBox="-10 -20 120 120"><use href="#gall"/></svg>
       </g>
     </g>
     <!-- front trees, darkest and fastest, in front of him -->
@@ -483,7 +483,7 @@
     <!-- the icon peeks up in the corner on its own line -->
     <g class="stand">
       <!-- point (39,76) in a 0,-14 viewBox at 2.4x is (93.6, 216); rule ends at (870,282) -->
-      <svg x="900" y="262" width="190" height="200" viewBox="0 -14 100 114"><use href="#nibby-icon"/></svg>
+      <svg x="900" y="262" width="190" height="200" viewBox="0 -14 100 114"><use href="#gall-icon"/></svg>
     </g>
   </svg>
     <div class="sting-bar"><button id="sting-play" type="button">Play again</button></div>
@@ -653,7 +653,7 @@
 
   <section class="feature">
     <h2>Pin a scene to a place.</h2>
-    <p>Any image can be a map: a hand-drawn world, an Inkarnate export, a scanned town plan, a floor plan of the house, or a blank canvas. Drop a pin and link it to a place, a scene, or a character. Draw on top of it in the same ink as this page: woods, water, hills, roads, rivers, routes, and labels, clean or hand-drawn, with a small toolbar that works the way drawing apps do. A place is a note, like a character, so Oakfall knows where it appears: hover a pin or a drawn region and you get the chapters and scenes set there, the line that names it, the images you pinned for inspiration, and a search box for when a place carries half the book. Click a scene to open it. Pins and drawings are stored on the map's own note as plain frontmatter, so the map is a picture with a readable list beside it, and Nib can read and write that list too.</p>
+    <p>Any image can be a map: a hand-drawn world, an Inkarnate export, a scanned town plan, a floor plan of the house, or a blank canvas. Drop a pin and link it to a place, a scene, or a character. Draw on top of it in the same ink as this page: woods, water, hills, roads, rivers, routes, and labels, clean or hand-drawn, with a small toolbar that works the way drawing apps do. A place is a note, like a character, so Oakfall knows where it appears: hover a pin or a drawn region and you get the chapters and scenes set there, the line that names it, the images you pinned for inspiration, and a search box for when a place carries half the book. Click a scene to open it. Pins and drawings are stored on the map's own note as plain frontmatter, so the map is a picture with a readable list beside it, and Gall can read and write that list too.</p>
     <div class="panel" aria-label="World map, flat view">
       <div class="bar"><strong>Harrowmere</strong><span class="axis">View <span class="on">Flat</span><span>Relief</span></span></div>
       <div class="world">
@@ -731,17 +731,17 @@
     </div>
   </section>
 
-  <section class="feature" id="nib">
-    <h2>Meet Nib.</h2>
-    <div class="nib">
+  <section class="feature" id="gall">
+    <h2>Meet Gall.</h2>
+    <div class="gall">
       <div class="icon"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="28,10 50,10 50,60 39,76 28,60" fill="currentColor"/><circle cx="39" cy="44" r="3.5" fill="#FBFBF9"/><line x1="39" y1="47" x2="39" y2="62" stroke="#FBFBF9" stroke-width="3"/><path d="M28 86 H 86" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg></div>
       <div>
-        <p>Every studio has someone who knows where things are. Nib is Oakfall's. It lives in the margin, knows your manuscript, and stays out of your prose. Ask it what changed in chapter four since the June draft, where Tom was last seen, which scenes still mention the tin after you cut it, or whether a synopsis still matches its scene. It answers from your files and your history, and anything it changes lands as an ordinary edit or a snapshot you can undo.</p>
-        <p>Half of Nib needs no model at all. Where someone was last seen, what is set at a place, who is in a scene, which places have no scene yet, how long a chapter is, where a note sits on a map: those are lookups over your files, and that half of Nib is open source, works offline, and ships with the plugin and the app. The half that reads your prose is the hosted one.</p>
-        <p>Nib is free, and off until you turn it on. For the half that reads your prose, bring your own key or point it at a local model; hosted models come later as a separate tier. It sends your manuscript nowhere you did not point it, and it reports nothing back to us.</p>
+        <p>Every studio has someone who knows where things are. Gall is Oakfall's. It lives in the margin, knows your manuscript, and stays out of your prose. Ask it what changed in chapter four since the June draft, where Tom was last seen, which scenes still mention the tin after you cut it, or whether a synopsis still matches its scene. It answers from your files and your history, and anything it changes lands as an ordinary edit or a snapshot you can undo.</p>
+        <p>Half of Gall needs no model at all. Where someone was last seen, what is set at a place, who is in a scene, which places have no scene yet, how long a chapter is, where a note sits on a map: those are lookups over your files, and that half of Gall is open source, works offline, and ships with the plugin and the app. The half that reads your prose is the hosted one.</p>
+        <p>Gall is free, and off until you turn it on. For the half that reads your prose, bring your own key or point it at a local model; hosted models come later as a separate tier. It sends your manuscript nowhere you did not point it, and it reports nothing back to us.</p>
       </div>
     </div>
-    <div class="chat" aria-label="Example conversation with Nib">
+    <div class="chat" aria-label="Example conversation with Gall">
       <div class="msg"><div class="av">You</div><div><p class="you">what changed in the tin since the june snapshot?</p></div></div>
       <div class="msg"><div class="av n"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="28,10 50,10 50,60 39,76 28,60" fill="currentColor"/><circle cx="39" cy="44" r="3.5" fill="#FBFBF9"/><line x1="39" y1="47" x2="39" y2="62" stroke="#FBFBF9" stroke-width="3"/><path d="M28 86 H 86" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg></div><div><p>Two things in <em>02 The Tin</em> since “Second draft, 2 Oct 2021”: the dream sequence is gone, 412 words, and Mara now opens the tin in the kitchen instead of the yard. Tom is not mentioned in either version.</p><p><span class="act">Compare side by side</span><span class="act">Restore the dream sequence</span></p></div></div>
       <div class="msg"><div class="av">You</div><div><p class="you">did i lose anything that other scenes depend on?</p></div></div>
@@ -769,7 +769,7 @@
         <ul>
           <li>Sync <small>end-to-end encrypted, between your desktop, tablet, and phone</small></li>
           <li>The editor tools <small>focus and audit, the editor's redlines back from Word, beta-reader round trips, compile presets</small></li>
-          <li>Hosted models for Nib <small>later, as a separate tier</small></li>
+          <li>Hosted models for Gall <small>later, as a separate tier</small></li>
         </ul>
         <p style="margin-top:1rem">One subscription, $5 a month or $4 a month billed annually. The app itself is free, and a whole novel can be written in it without paying. Stop paying and your files are untouched: there is nothing in them that only a paid tool can read.</p>
       </div>
@@ -788,7 +788,7 @@
       <div><dt>Any image becomes a map, flat or in relief.</dt><dd>Pins link places to scenes and back. Stored as frontmatter on the map's note.</dd></div>
       <div><dt>Characters track themselves.</dt><dd>A character is a note; its appearances are the scenes that link to it or name it. The cast panel reads the book so you don't have to.</dd></div>
       <div><dt>Every module has a switch.</dt><dd>One settings page. Turn off what you do not write with; nothing is stranded because every module reads the same fields.</dd></div>
-      <div><dt>Nib knows the book.</dt><dd>Ask what changed, who was where, what depends on what. Answers come from your files and history; changes land as edits you can undo.</dd></div>
+      <div><dt>Gall knows the book.</dt><dd>Ask what changed, who was where, what depends on what. Answers come from your files and history; changes land as edits you can undo.</dd></div>
     </dl>
   </section>
 
@@ -808,7 +808,7 @@ scriv2obsidian convert -out ~/Writing -git Novel.scriv</pre>
       </div>
       <div>
         <h3>The plugin</h3>
-        <p>In early development, and usable in a test vault. The importer is feature complete for its first release. The plugin core, the map with pins, place cards, and drawing, the New command, and Nib's offline answers build and pass their tests; nothing is published yet. The spec, the importer, the plugin, and every module that touches your files are open source and will stay that way. Sync and the editor tools are the paid part; nothing that guards your data ever will be.</p>
+        <p>In early development, and usable in a test vault. The importer is feature complete for its first release. The plugin core, the map with pins, place cards, and drawing, the New command, and Gall's offline answers build and pass their tests; nothing is published yet. The spec, the importer, the plugin, and every module that touches your files are open source and will stay that way. Sync and the editor tools are the paid part; nothing that guards your data ever will be.</p>
         <p><a href="https://github.com/oakfall/oakfall">Follow the repo</a> to hear when there is a build to try.</p>
       </div>
     </div>

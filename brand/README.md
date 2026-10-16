@@ -1,6 +1,6 @@
 # Oakfall brand
 
-Renamed from Longhand on 2026-10-13. The cursive ℓ files below (`longhand-*.svg`) were the Longhand mark and are retired; the Oakfall mark is not drawn yet. The Nib Rider character and sting live in `exploration/nib-rider-round-4.html`.
+Renamed from Longhand on 2026-10-13. The cursive ℓ files below (`longhand-*.svg`) were the Longhand mark and are retired; the Oakfall mark is not drawn yet. The Gall Rider character and sting live in `exploration/nib-rider-round-4.html`.
 
 Everything needed to represent Oakfall consistently. Use the files here rather than redrawing.
 
@@ -17,7 +17,7 @@ A cursive ℓ drawn in one stroke with round ends, ending in a small flourish. I
 | `logo/favicon.svg` | Heavier stroke on the tile, for 16 to 32 px. |
 | `logo/longhand-lockup.svg` | Mark plus wordmark, ink. The wordmark is live text set in Newsreader with Georgia fallback; convert to outlines before sending to print. |
 | `logo/longhand-lockup-paper.svg` | Same, for dark grounds. |
-| `logo/nib-mark.svg`, `logo/nib-tile.svg` | Nib, the Oakfall assistant. A pen nib over a line of writing. Nib is a character, not a product mark: never use it to represent Longhand itself, and never show it without the Longhand mark somewhere on the same surface. |
+| `logo/nib-mark.svg`, `logo/nib-tile.svg` | Gall, the Oakfall assistant. A pen gall over a line of writing. Gall is a character, not a product mark: never use it to represent Longhand itself, and never show it without the Longhand mark somewhere on the same surface. |
 | `social/social-preview.png` | 1280 by 640 social preview for GitHub repos and link unfurls. Rendered from `social-preview.html` with headless Chrome so Newsreader is real: `chrome --headless=new --window-size=1280,640 --virtual-time-budget=8000 --screenshot=social-preview.png social-preview.html`. |
 
 Clear space around the mark: at least the width of the loop on every side. Never stretch it, outline it, add a shadow, or set it in any colour other than ink or paper.
@@ -42,9 +42,9 @@ Label colours for cards and threads, muted so they sit on paper: `#B65A52` red, 
 
 One family: Newsreader (Google Fonts), optical sizing on, weights 400, 500, 600, italic 400. Fallback Georgia, then Times New Roman. Body 18 px at 1.55 line height, measure 66 characters. Headlines 500 weight with slightly negative tracking. Monospace for commit messages and commands only: the system UI monospace stack.
 
-## Nib's voice
+## Gall's voice
 
-Nib speaks in the second person, briefly, and only when asked or when it has something specific. It names the file, the snapshot, or the scene it means. It never praises the writing. It is allowed exactly one joke, and it is the Clippy one, once.
+Gall speaks in the second person, briefly, and only when asked or when it has something specific. It names the file, the snapshot, or the scene it means. It never praises the writing. It is allowed exactly one joke, and it is the Clippy one, once.
 
 ## Voice
 
@@ -52,7 +52,7 @@ Plain verbs, sentence case, no exclamation marks. Say what the thing does, not h
 
 ## Ownership
 
-The names Oakfall, Longhand, and Nib and the marks in this folder are trademarks of 0xSpectra LLC. The brand kit files may be used to refer to Longhand; see TRADEMARKS.md in the longhand repository for what that covers.
+The names Oakfall, Longhand, and Gall and the marks in this folder are trademarks of 0xSpectra LLC. The brand kit files may be used to refer to Longhand; see TRADEMARKS.md in the longhand repository for what that covers.
 
 ## Affiliation
 
