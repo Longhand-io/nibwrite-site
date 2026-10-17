@@ -58,6 +58,30 @@
   var guide = document.getElementById('guide'), say = document.getElementById('say');
   var stops = Array.prototype.slice.call(document.querySelectorAll('[data-gall]'));
   var home = document.querySelector('.bar .gall-l');
+  // ---- easter egg: arrow keys walk the page section by section, and Gall rides along ----
+  var egg = { told: false };
+  if (stops.length) {
+    addEventListener('keydown', function (ev) {
+      if (ev.metaKey || ev.ctrlKey || ev.altKey || ev.shiftKey) return;
+      var t = ev.target;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(t.tagName))) return;
+      var k = ev.key, dir = (k === 'ArrowDown' || k === 'ArrowRight') ? 1 : (k === 'ArrowUp' || k === 'ArrowLeft') ? -1 : 0;
+      if (k === 'Home') dir = -99;
+      if (!dir) return;
+      ev.preventDefault();
+      // where are we: the last section whose top has passed the upper third
+      var line = window.innerHeight * .34, idx = -1;
+      for (var i = 0; i < stops.length; i++) if (stops[i].getBoundingClientRect().top <= line) idx = i;
+      var to = dir === -99 ? -1 : Math.max(-1, Math.min(stops.length - 1, idx + dir));
+      var y = to < 0 ? 0 : window.scrollY + stops[to].getBoundingClientRect().top - 96;
+      window.scrollTo({ top: Math.max(0, y), behavior: reduce ? 'auto' : 'smooth' });
+      if (!egg.told && say && to >= 0) {
+        egg.told = true;
+        setTimeout(function () { say.textContent = 'Oh, you found the arrows. Lead the way.'; say.classList.add('show'); setTimeout(function () { say.classList.remove('show'); }, 2600); }, 650);
+        egg.quiet = Date.now() + 3400;
+      }
+    });
+  }
   if (!guide || !home || !stops.length || reduce || window.innerWidth < 1100) return;
   var REST = Math.atan2(20 - 50, 94 - 62) * 180 / Math.PI - 10; // the wand's resting direction
   var wand = guide.querySelector('.wand');
@@ -87,7 +111,7 @@
     clearTimeout(sayTimer);
     say.classList.remove('show');
     if (!el) return;
-    sayTimer = setTimeout(function () { say.textContent = el.dataset.gall; say.classList.add('show'); sayTimer = setTimeout(function () { say.classList.remove('show'); }, 3400); }, 420);
+    sayTimer = setTimeout(function () { if (egg.quiet && Date.now() < egg.quiet) return; say.textContent = el.dataset.gall; say.classList.add('show'); sayTimer = setTimeout(function () { say.classList.remove('show'); }, 3400); }, 420);
   }
   function frame(t) {
     var dt = Math.min(64, t - (last || t)); last = t;
