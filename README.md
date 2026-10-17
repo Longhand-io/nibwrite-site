@@ -2,7 +2,7 @@
 
 The public face of [Oakfall](https://github.com/oakfall/oakfall): the website, the brand, and shared resources.
 
-- `index.html`: the landing page, served by GitHub Pages at https://oakfall.github.io/oakfall-site/
+- `index.html`: the landing page, served by GitHub Pages at https://oakfall.app/
 - `brand/`: logo files, colours, type, and voice. Start with [brand/README.md](brand/README.md).
 - `assets/`: files the site loads.
 
