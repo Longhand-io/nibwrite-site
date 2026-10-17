@@ -11,27 +11,29 @@
 <meta property="og:description" content="Binder, snapshots with side-by-side compare, cast and places, maps, and Gall in the margin. Plain files you own.">
 <meta property="og:image" content="https://oakfall.app/brand/social/social-preview.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
 <style>
   /* Layout: a sticky bar, a hero with the desk in a window, then sections that each make one claim and show it. */
   :root {
-    --paper: #f3f4f1; --paper-2: #e9ebe6; --card: #fbfbf9; --ink: #1e2432; --mid: #5d6370; --dim: #9096a0; --line: #d6d8d2;
-    --moss: #5e8a5c; --moss-ink: #ffffff; --moss-wash: #e5eee1; --red: #a8322b; --red-wash: #f4dedc; --green: #2f6f4e; --green-wash: #dcebe2;
-    --code: #eef0eb;
+    /* Moss: green-tinted paper, ink with a green cast, deep moss for action. Light is the default whatever the system says. */
+    --paper: #f1f4ec; --paper-2: #e6ece0; --card: #fafcf7; --ink: #1c261b; --mid: #566352; --dim: #8b9786; --line: #d5ddcd;
+    --moss: #4f7a4c; --moss-deep: #2a3f28; --moss-ink: #ffffff; --moss-wash: #e1ead9; --red: #9c3a2e; --red-wash: #f2dcd6; --green: #2f6a3f; --green-wash: #d8ead8;
+    --code: #e9eee3; --band: #2a3f28; --band-ink: #eef3e8; --glow: rgb(79 122 76 / .16);
     --font-brand: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
     --font-ui: "DM Sans", system-ui, -apple-system, sans-serif;
     --font-prose: "Newsreader", "Iowan Old Style", Georgia, serif;
     --measure: 64ch;
+    color-scheme: light;
   }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-    --paper: #15181e; --paper-2: #1b1f26; --card: #1f242c; --ink: #eceef2; --mid: #a3a8b3; --dim: #6b7180; --line: #2f3540;
-    --moss: #8fbf7a; --moss-ink: #12200e; --moss-wash: #233020; --red: #ef8d80; --red-wash: #3f2523; --green: #8fcf9f; --green-wash: #1f3527; --code: #1b1f26; color-scheme: dark; } }
   :root[data-theme="dark"] {
-    --paper: #15181e; --paper-2: #1b1f26; --card: #1f242c; --ink: #eceef2; --mid: #a3a8b3; --dim: #6b7180; --line: #2f3540;
-    --moss: #8fbf7a; --moss-ink: #12200e; --moss-wash: #233020; --red: #ef8d80; --red-wash: #3f2523; --green: #8fcf9f; --green-wash: #1f3527; --code: #1b1f26; color-scheme: dark; }
+    /* Forest: the dark of the same green, never charcoal */
+    --paper: #111a12; --paper-2: #172218; --card: #18241a; --ink: #e6eee0; --mid: #a2b19b; --dim: #6f7f69; --line: #29382a;
+    --moss: #9cc78a; --moss-deep: #9cc78a; --moss-ink: #10200f; --moss-wash: #213220; --red: #ec9a8c; --red-wash: #3a2420; --green: #9fd4a6; --green-wash: #1d3322;
+    --code: #152017; --band: #1e2e1f; --band-ink: #e6eee0; --glow: rgb(156 199 138 / .12); color-scheme: dark;
+  }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-ui); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
@@ -64,19 +66,22 @@
   .theme { appearance: none; border: 1px solid var(--line); background: var(--card); color: var(--mid); border-radius: 999px; height: 34px; padding: 0 12px; font: 500 .8rem var(--font-ui); cursor: pointer; letter-spacing: .04em; text-transform: uppercase; }
   .btn { display: inline-flex; align-items: center; gap: 9px; font: 600 .98rem var(--font-ui); text-decoration: none; border-radius: 999px; padding: 11px 18px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; white-space: nowrap; }
   .btn:hover { border-color: var(--mid); }
-  .btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .btn.primary { background: var(--moss-deep); color: var(--moss-ink); border-color: var(--moss-deep); }
+  :root[data-theme="dark"] .btn.primary { color: var(--moss-ink); }
+  .btn.primary .soon { background: var(--paper); color: var(--moss-deep); }
   .btn.sm { padding: 7px 14px; font-size: .9rem; }
   .soon { font: 600 .68rem var(--font-ui); letter-spacing: .06em; text-transform: uppercase; background: var(--moss); color: var(--moss-ink); border-radius: 999px; padding: 3px 8px; }
 
   /* hero */
-  .hero { padding: 72px 0 0; text-align: center; }
+  .hero { padding: 72px 0 0; text-align: center; position: relative; }
+  .hero::before { content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: min(1200px, 100vw); height: 760px; background: radial-gradient(60% 55% at 50% 40%, var(--glow), transparent 70%); pointer-events: none; z-index: -1; }
   .hero .wm { font-size: clamp(3.6rem, 10vw, 7.2rem); }
   .hero h1 { font-size: clamp(2rem, 4.6vw, 3.3rem); font-weight: 800; line-height: 1.05; margin: 26px auto 18px; max-width: 18ch; }
   .hero .lede { margin: 0 auto; }
   .ctas { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 30px 0 14px; }
   .note { color: var(--dim); font-size: .92rem; }
   .note code { font-family: ui-monospace, Menlo, monospace; font-size: .85em; }
-  .window { margin: 52px auto 0; max-width: 64rem; border-radius: 14px; border: 1px solid var(--line); overflow: hidden; box-shadow: 0 30px 80px -30px rgb(20 24 32 / .45), 0 2px 6px rgb(20 24 32 / .08); background: var(--card); }
+  .window { display: block; margin: 52px auto 0; max-width: 64rem; border-radius: 14px; border: 1px solid var(--line); overflow: hidden; box-shadow: 0 34px 90px -36px rgb(28 48 26 / .45), 0 2px 6px rgb(28 48 26 / .08); background: var(--card); }
   .window img { display: block; width: 100%; height: auto; }
   .hero-foot { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; margin: 22px 0 0; color: var(--mid); font-size: .92rem; }
   .hero-foot span::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--moss); margin-right: 8px; vertical-align: 1px; }
@@ -120,7 +125,7 @@
   .chat { display: grid; gap: 10px; margin-top: 22px; }
   .msg { display: flex; gap: 10px; align-items: flex-start; }
   .msg .av { flex: none; width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; font: 600 .7rem var(--font-ui); background: var(--paper-2); color: var(--mid); }
-  .msg .av.g { background: var(--ink); color: var(--paper); padding: 4px; }
+  .msg .av.g { background: var(--moss-deep); color: var(--paper); padding: 4px; }
   .msg .bub { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 9px 13px; font-size: .95rem; }
   .msg .bub.you { background: transparent; border-style: dashed; color: var(--mid); }
   .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
@@ -146,6 +151,10 @@
   .plan li { padding-left: 24px; position: relative; color: var(--mid); }
   .plan li::before { content: ""; position: absolute; left: 4px; top: .55em; width: 9px; height: 5px; border-left: 2px solid var(--moss); border-bottom: 2px solid var(--moss); transform: rotate(-45deg); }
 
+  .plans.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .plan .pitch { color: var(--mid); font-size: .95rem; margin-top: -6px; }
+  @media (max-width: 1100px) { .plans.four { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .plans.four { grid-template-columns: 1fr; } }
   /* does not */
   .nots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 28px; margin: 0; padding: 0; list-style: none; }
   .nots li { padding: 14px 0; border-top: 1px solid var(--line); color: var(--mid); }
@@ -157,10 +166,10 @@
   .plat .soon { background: var(--paper-2); color: var(--mid); }
   .plat.now .soon { background: var(--moss); color: var(--moss-ink); }
 
-  .cta-band { margin: 110px 0 0; background: var(--ink); color: var(--paper); border-radius: 22px; padding: 56px 40px; text-align: center; display: grid; gap: 16px; justify-items: center; }
-  .cta-band h2 { color: var(--paper); }
-  .cta-band p { color: color-mix(in srgb, var(--paper) 75%, transparent); max-width: 50ch; }
-  .cta-band .btn { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  .cta-band { margin: 110px 0 0; background: var(--band); color: var(--band-ink); border-radius: 22px; padding: 56px 40px; text-align: center; display: grid; gap: 16px; justify-items: center; }
+  .cta-band h2 { color: var(--band-ink); }
+  .cta-band p { color: color-mix(in srgb, var(--band-ink) 78%, transparent); max-width: 50ch; }
+  .cta-band .btn { background: var(--band-ink); color: var(--band); border-color: var(--band-ink); }
   .cta-band code { background: color-mix(in srgb, var(--paper) 12%, transparent); padding: 2px 8px; border-radius: 6px; font-size: .9rem; }
 
   footer { margin: 72px 0 0; border-top: 1px solid var(--line); padding: 28px 0 calc(40px + env(safe-area-inset-bottom, 0px)); color: var(--dim); font-size: .9rem; }
@@ -200,7 +209,7 @@
       <a href="https://github.com/oakfall">GitHub</a>
     </nav>
     <div class="right">
-      <button class="theme" id="theme" type="button" aria-label="Colour theme">System</button>
+      <button class="theme" id="theme" type="button" aria-label="Switch to dark">Dark</button>
       <a class="btn sm primary" href="#download">Download <span class="soon">Soon</span></a>
     </div>
   </div>
@@ -209,15 +218,14 @@
 <main id="top">
   <div class="wrap hero">
     <a class="wm" href="#gall" aria-label="Oakfall">Oakfa<span class="gall-l" title="Gall"><svg viewBox="10 -2 80 104" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--paper)"/><circle cx="58" cy="32" r="4.2" fill="var(--paper)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--paper)"/><path d="M50 56 V 80" stroke="var(--paper)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></span>l</a>
-    <h1>The writing studio for people who like to write.</h1>
-    <p class="lede">A binder, snapshots you can compare side by side, your cast and places, maps, and threads, over a folder of plain Markdown you own. Gall lives in the margin and knows where everything is.</p>
+    <h1>Write the long thing. Keep every draft.</h1>
+    <p class="lede">Oakfall is a writing studio for novels, memoirs and anything that outgrows one file: a binder, snapshots you can compare side by side, your cast and places, maps and threads, over plain Markdown you own. Gall lives in the margin and knows where everything is.</p>
     <div class="ctas">
       <a class="btn primary" href="#download"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8s2.1-1.2 2.9-2.4c.9-1.4 1.3-2.7 1.3-2.8 0 0-2.4-1-2.4-3.9zM14 5.5c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.6 2.8-1.4z"/></svg>Download for macOS <span class="soon">Coming soon</span></a>
       <a class="btn" href="preview/">Try the desk in your browser</a>
     </div>
     <p class="note">Free to write in. Windows, Linux, iPad and phone follow from the same app.</p>
     <picture class="window">
-      <source srcset="assets/shots/desk-dark.webp" media="(prefers-color-scheme: dark)">
       <img src="assets/shots/desk-light.webp" width="1440" height="900" alt="The Oakfall desk: the binder of the demo novel Harrowmere on the left, the scene The House open on the page, and the inspector with synopsis, status, date and snapshots on the right." id="deskshot">
     </picture>
     <div class="hero-foot"><span>Plain Markdown files</span><span>Works offline</span><span>No account to write</span><span>Open spec, Apache-2.0</span></div>
@@ -274,7 +282,7 @@
     <div class="nums">
       <div class="num"><b>0</b><small>Proprietary formats</small><p>A project is a folder of Markdown with a little frontmatter. Open it in any editor, sync it with anything, read it in fifty years.</p></div>
       <div class="num"><b>1</b><small>Folder per project</small><p>Snapshots are plain copies, or ordinary git commits if you prefer. Uninstall Oakfall and every scene, note and snapshot is still there.</p></div>
-      <div class="num"><b>$0</b><small>To write a whole novel</small><p>The app is free. You pay only if you want sync between devices and the editor tools.</p></div>
+      <div class="num"><b>$0</b><small>To write a whole novel</small><p>The app is free, with the whole desk and every module. You pay only for sync, hosted Gall, or the editorial pack.</p></div>
     </div>
   </section>
 
@@ -323,28 +331,51 @@ scriv2obsidian convert -out ~/Writing -git Novel.scriv</pre>
   <section class="wrap" id="pricing">
     <div class="head">
       <span class="eyebrow">Pricing</span>
-      <h2>Free to write in. One subscription if you want more.</h2>
+      <h2>Free to write in. Pay for what you add.</h2>
+      <p class="lede">The whole desk is free. Each plan adds one thing, and every paid plan includes sync. Stop paying and every file stays exactly where it is.</p>
     </div>
-    <div class="plans">
+    <div class="plans four">
       <div class="plan">
         <h3>Oakfall</h3>
         <div class="price">Free</div>
+        <p class="pitch">Everything you need to write a book.</p>
         <ul>
-          <li>The whole desk: binder, page, inspector, snapshots and compare</li>
+          <li>Binder, page, inspector, snapshots and compare</li>
           <li>Cast, places, maps, threads and timeline</li>
-          <li>Gall, with your own key or a local model</li>
-          <li>Every look, every layout, Focus</li>
-          <li>Your files, on your disk, forever</li>
+          <li>Gall's lookups offline, or your own key or local model</li>
+          <li>Every look and layout, Focus</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <h3>Sync</h3>
+        <div class="price">$5<small> / month</small></div>
+        <p class="pitch">$4 a month billed yearly.</p>
+        <ul>
+          <li>End-to-end encrypted sync between desktop, tablet and phone</li>
+          <li>Snapshots and history on every device</li>
+          <li>Compile presets for manuscript, paperback and ebook</li>
         </ul>
       </div>
       <div class="plan pro">
-        <h3>Oakfall with sync</h3>
-        <div class="price">$5<small> a month, or $4 a month billed yearly</small></div>
+        <h3>Gall</h3>
+        <div class="price">$20<small> / month</small></div>
+        <p class="pitch">Hosted models; nothing to set up.</p>
         <ul>
-          <li>End-to-end encrypted sync between desktop, tablet and phone</li>
-          <li>The editor tools: focus and audit, redlines back from Word, beta-reader rounds</li>
-          <li>Compile presets</li>
-          <li>Stop paying and every file stays exactly where it is</li>
+          <li>Gall reads your prose: what changed, what depends on a cut, does a synopsis still match</li>
+          <li>Continuity checks across the whole book</li>
+          <li>No key or local model needed</li>
+          <li>Includes Sync</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <h3>Editorial</h3>
+        <div class="price">$25<small> / month</small></div>
+        <p class="pitch">For working with editors and readers.</p>
+        <ul>
+          <li>Collaborators on a project</li>
+          <li>Import an editor's review: redlines and comments back from Word</li>
+          <li>Beta-reader rounds, focus and audit passes</li>
+          <li>Includes Sync</li>
         </ul>
       </div>
     </div>
@@ -404,17 +435,17 @@ scriv2obsidian convert -out ~/Writing -git Novel.scriv</pre>
 
 <script>
   (function () {
-    // theme: system, light, dark; remembered per browser
-    var root = document.documentElement, btn = document.getElementById('theme'), order = ['system', 'light', 'dark'];
-    var cur = 'system'; try { cur = localStorage.getItem('oakfall.theme') || 'system'; } catch (e) {}
-    var shot = document.getElementById('deskshot'), src = shot.closest('picture').querySelector('source');
+    // theme: Moss light by default; dark (forest) on request; remembered per browser
+    var root = document.documentElement, btn = document.getElementById('theme');
+    var cur = 'light'; try { cur = localStorage.getItem('oakfall.theme') === 'dark' ? 'dark' : 'light'; } catch (e) {}
+    var shot = document.getElementById('deskshot');
     function apply() {
-      if (cur === 'system') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', cur);
-      btn.textContent = cur.charAt(0).toUpperCase() + cur.slice(1);
-      var dark = cur === 'dark' || (cur === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
-      src.media = cur === 'system' ? '(prefers-color-scheme: dark)' : (dark ? 'all' : 'not all');
+      if (cur === 'dark') root.setAttribute('data-theme', 'dark'); else root.removeAttribute('data-theme');
+      btn.textContent = cur === 'dark' ? 'Light' : 'Dark';
+      btn.setAttribute('aria-label', cur === 'dark' ? 'Switch to light' : 'Switch to dark');
+      shot.src = cur === 'dark' ? 'assets/shots/desk-dark.webp' : 'assets/shots/desk-light.webp';
     }
-    btn.addEventListener('click', function () { cur = order[(order.indexOf(cur) + 1) % 3]; try { localStorage.setItem('oakfall.theme', cur); } catch (e) {} apply(); });
+    btn.addEventListener('click', function () { cur = cur === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('oakfall.theme', cur); } catch (e) {} apply(); });
     apply();
     // the compare tints in once
     var cmp = document.getElementById('compare'), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
