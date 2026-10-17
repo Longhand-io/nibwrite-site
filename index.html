@@ -2,347 +2,235 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Oakfall, the writing studio for people who like to write</title>
-<meta name="description" content="A local-first writing studio for the novel: binder, snapshots with side-by-side compare, cast and places, corkboard, timeline, research, and compile over plain Markdown files you own. Desktop, tablet, and phone.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Oakfall, the writing studio</title>
+<meta name="description" content="A writing studio for the long work: binder, snapshots with side-by-side compare, cast and places, maps, threads, and Gall in the margin. Plain Markdown files you own. Free to write in.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="Oakfall, the writing studio for people who like to write">
-<meta property="og:description" content="Binder, snapshots with side-by-side compare, cast and places, corkboard, research, and compile. Plain files you own, on every device.">
+<link rel="canonical" href="https://oakfall.app/">
+<meta property="og:title" content="Oakfall, the writing studio">
+<meta property="og:description" content="Binder, snapshots with side-by-side compare, cast and places, maps, and Gall in the margin. Plain files you own.">
 <meta property="og:image" content="https://oakfall.app/brand/social/social-preview.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
 <style>
+  /* Layout: a sticky bar, a hero with the desk in a window, then sections that each make one claim and show it. */
   :root {
-    --paper: #F3F4F1;
-    --paper-deep: #E9EBE6;
-    --ink: #1E2432;
-    --graphite: #676B72;
-    --rule: #CFD2CC;
-    --removed: #A8322B;
-    --removed-wash: #F4DEDC;
-    --added: #2F6F4E;
-    --added-wash: #DCEBE2;
-    --measure: 66ch;
+    --paper: #f3f4f1; --paper-2: #e9ebe6; --card: #fbfbf9; --ink: #1e2432; --mid: #5d6370; --dim: #9096a0; --line: #d6d8d2;
+    --moss: #5e8a5c; --moss-ink: #ffffff; --moss-wash: #e5eee1; --red: #a8322b; --red-wash: #f4dedc; --green: #2f6f4e; --green-wash: #dcebe2;
+    --code: #eef0eb;
+    --font-brand: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+    --font-ui: "DM Sans", system-ui, -apple-system, sans-serif;
+    --font-prose: "Newsreader", "Iowan Old Style", Georgia, serif;
+    --measure: 64ch;
   }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --paper: #15181e; --paper-2: #1b1f26; --card: #1f242c; --ink: #eceef2; --mid: #a3a8b3; --dim: #6b7180; --line: #2f3540;
+    --moss: #8fbf7a; --moss-ink: #12200e; --moss-wash: #233020; --red: #ef8d80; --red-wash: #3f2523; --green: #8fcf9f; --green-wash: #1f3527; --code: #1b1f26; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --paper: #15181e; --paper-2: #1b1f26; --card: #1f242c; --ink: #eceef2; --mid: #a3a8b3; --dim: #6b7180; --line: #2f3540;
+    --moss: #8fbf7a; --moss-ink: #12200e; --moss-wash: #233020; --red: #ef8d80; --red-wash: #3f2523; --green: #8fcf9f; --green-wash: #1f3527; --code: #1b1f26; color-scheme: dark; }
   * { box-sizing: border-box; }
-  html { background: var(--paper); color: var(--ink); }
-  body {
-    margin: 0;
-    font-family: "Newsreader", Georgia, "Times New Roman", serif;
-    font-optical-sizing: auto;
-    font-size: 1.125rem;
-    line-height: 1.55;
-  }
-  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-  .wrap { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; }
-  header {
-    display: flex; justify-content: space-between; align-items: baseline;
-    padding: 1.5rem 0 1rem; border-bottom: 1px solid var(--rule);
-  }
-  header .name { display: flex; align-items: center; gap: .5rem; font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; }
-  header .name svg { width: 1.6rem; height: 1.6rem; }
-  header nav a { margin-left: 1.5rem; color: var(--graphite); }
-  h1 {
-    font-size: clamp(2.4rem, 6vw, 4.5rem);
-    line-height: 1.02; font-weight: 500; letter-spacing: -0.02em;
-    margin: 2.5rem 0 1rem; max-width: 18ch;
-  }
-  .lede { font-size: 1.35rem; max-width: var(--measure); margin: 0 0 2rem; color: var(--ink); }
-  .lede em { font-style: italic; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-ui); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  :focus-visible { outline: 2px solid var(--moss); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 72rem; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+  h1, h2, h3 { font-family: var(--font-brand); letter-spacing: -0.03em; text-wrap: balance; margin: 0; }
+  h2 { font-size: clamp(1.9rem, 3.6vw, 2.6rem); font-weight: 700; line-height: 1.08; }
+  h3 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.015em; }
+  p { margin: 0; }
+  .lede { font-size: 1.2rem; color: var(--mid); max-width: var(--measure); }
 
-  /* the compare panel */
-  .compare {
-    border: 1px solid var(--rule); background: #FBFBF9;
-    margin: 0 0 4rem;
-  }
-  .compare .bar {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-    border-bottom: 1px solid var(--rule); color: var(--graphite); font-size: 1rem;
-  }
-  .compare .bar div { padding: .7rem 1.25rem; }
-  .compare .bar div + div { border-left: 1px solid var(--rule); }
-  .compare .bar strong { color: var(--ink); font-weight: 500; }
+  /* the lockup: Plus Jakarta Sans 700 with Gall as the l; the face never changes */
+  .wm { font-family: var(--font-brand); font-weight: 700; letter-spacing: -0.04em; line-height: 1; display: inline-flex; align-items: flex-end; color: var(--ink); text-decoration: none; }
+  .gall-l { display: inline-block; width: .62em; height: .98em; margin: 0 -.02em 0 .02em; cursor: pointer; perspective: 300px; }
+  .gall-l svg, .gall svg { width: 100%; height: 100%; overflow: visible; display: block; }
+  .gl { transform-box: fill-box; transform-origin: 50% 60%; }
+  .turn .gl { animation: turn 1.4s ease-in-out; }
+  @keyframes turn { 0% { transform: rotateY(0) } 45% { transform: rotateY(180deg) } 100% { transform: rotateY(360deg) } }
+  .blink .eyes { transform: scaleY(.1); transform-box: fill-box; transform-origin: center; }
+
+  /* bar */
+  .bar { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter: saturate(1.2) blur(10px); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top, 0px); }
+  .bar .wrap { display: flex; align-items: center; gap: 22px; height: 64px; }
+  .bar .wm { font-size: 1.55rem; }
+  .bar nav { display: flex; gap: 20px; margin-left: 12px; }
+  .bar nav a { text-decoration: none; color: var(--mid); font-weight: 500; font-size: .95rem; }
+  .bar nav a:hover { color: var(--ink); }
+  .bar .right { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+  .theme { appearance: none; border: 1px solid var(--line); background: var(--card); color: var(--mid); border-radius: 999px; height: 34px; padding: 0 12px; font: 500 .8rem var(--font-ui); cursor: pointer; letter-spacing: .04em; text-transform: uppercase; }
+  .btn { display: inline-flex; align-items: center; gap: 9px; font: 600 .98rem var(--font-ui); text-decoration: none; border-radius: 999px; padding: 11px 18px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; white-space: nowrap; }
+  .btn:hover { border-color: var(--mid); }
+  .btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .btn.sm { padding: 7px 14px; font-size: .9rem; }
+  .soon { font: 600 .68rem var(--font-ui); letter-spacing: .06em; text-transform: uppercase; background: var(--moss); color: var(--moss-ink); border-radius: 999px; padding: 3px 8px; }
+
+  /* hero */
+  .hero { padding: 72px 0 0; text-align: center; }
+  .hero .wm { font-size: clamp(3.6rem, 10vw, 7.2rem); }
+  .hero h1 { font-size: clamp(2rem, 4.6vw, 3.3rem); font-weight: 800; line-height: 1.05; margin: 26px auto 18px; max-width: 18ch; }
+  .hero .lede { margin: 0 auto; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 30px 0 14px; }
+  .note { color: var(--dim); font-size: .92rem; }
+  .note code { font-family: ui-monospace, Menlo, monospace; font-size: .85em; }
+  .window { margin: 52px auto 0; max-width: 64rem; border-radius: 14px; border: 1px solid var(--line); overflow: hidden; box-shadow: 0 30px 80px -30px rgb(20 24 32 / .45), 0 2px 6px rgb(20 24 32 / .08); background: var(--card); }
+  .window img { display: block; width: 100%; height: auto; }
+  .hero-foot { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; margin: 22px 0 0; color: var(--mid); font-size: .92rem; }
+  .hero-foot span::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--moss); margin-right: 8px; vertical-align: 1px; }
+
+  section { padding: 96px 0 0; }
+  .head { display: grid; gap: 14px; margin-bottom: 36px; max-width: 46rem; }
+  .eyebrow { font: 600 .8rem var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--moss); }
+
+  /* compare */
+  .compare { border: 1px solid var(--line); background: var(--card); border-radius: 14px; overflow: hidden; font-family: var(--font-prose); font-size: 1.12rem; }
+  .compare .cbar { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line); font: .9rem var(--font-ui); color: var(--mid); }
+  .compare .cbar div { padding: .75rem 1.25rem; } .compare .cbar div + div { border-left: 1px solid var(--line); }
+  .compare .cbar strong { color: var(--ink); font-weight: 600; }
   .compare .panes { display: grid; grid-template-columns: 1fr 1fr; }
-  .compare .pane { padding: 1.5rem 1.25rem 1.75rem; }
-  .compare .pane + .pane { border-left: 1px solid var(--rule); }
-  .compare p { margin: 0 0 1rem; max-width: 40ch; }
-  .compare p:last-child { margin-bottom: 0; }
-  del, ins { text-decoration: none; padding: 0 .08em; border-radius: 2px; transition: background-color .6s ease, color .6s ease; }
-  del { color: var(--removed); background: var(--removed-wash); }
-  ins { color: var(--added); background: var(--added-wash); }
-  .compare.quiet del, .compare.quiet ins { background: transparent; color: inherit; }
-  .compare .foot {
-    border-top: 1px solid var(--rule); padding: .7rem 1.25rem;
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .85rem; color: var(--graphite);
-    white-space: nowrap; overflow-x: auto;
-  }
-  .compare .foot span { color: var(--ink); }
+  .compare .pane { padding: 1.5rem 1.25rem 1.75rem; } .compare .pane + .pane { border-left: 1px solid var(--line); }
+  .compare p { margin: 0 0 1rem; max-width: 42ch; line-height: 1.6; } .compare p:last-child { margin: 0; }
+  del, ins { text-decoration: none; padding: 0 .1em; border-radius: 3px; transition: background-color .9s ease, color .9s ease; }
+  del { background: var(--red-wash); color: var(--red); } ins { background: var(--green-wash); color: var(--green); }
+  .quiet del, .quiet ins { background: transparent; color: inherit; }
+  .compare .foot { border-top: 1px solid var(--line); padding: .7rem 1.25rem; font: .82rem ui-monospace, Menlo, monospace; color: var(--mid); overflow-x: auto; white-space: nowrap; }
 
-  section { padding: 0 0 3.5rem; }
-  h2 { font-size: 1.9rem; font-weight: 500; letter-spacing: -0.01em; margin: 0 0 1rem; }
-  section > p { max-width: var(--measure); margin: 0 0 1rem; }
-  dl.changes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem 3rem; margin: 1.5rem 0 0; max-width: 60rem; }
-  dl.changes div { border-top: 1px solid var(--rule); padding-top: .75rem; }
-  dl.changes dt { font-weight: 600; margin: 0 0 .2rem; }
-  dl.changes dd { margin: 0; color: var(--graphite); }
-  ul.plain { list-style: none; padding: 0; margin: 1rem 0 0; max-width: var(--measure); }
-  ul.plain li { padding: .55rem 0; border-top: 1px solid var(--rule); }
-  ul.plain li:first-child { border-top: 0; padding-top: 0; }
-  pre {
-    background: var(--paper-deep); padding: 1rem 1.25rem; overflow-x: auto;
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .92rem; line-height: 1.5;
-    max-width: 60rem; margin: 1rem 0;
-  }
-  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 60rem; }
-  .two > div { min-width: 0; }
-  .two h3 { font-size: 1.25rem; font-weight: 600; margin: 0 0 .5rem; }
-  .two p { margin: 0 0 .75rem; color: var(--graphite); }
-  footer { border-top: 1px solid var(--rule); padding: 1.5rem 0 3rem; color: var(--graphite); font-size: 1rem; }
+  /* cards */
+  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px 22px 24px; display: grid; gap: 10px; align-content: start; }
+  .card .ic { width: 38px; height: 38px; border-radius: 10px; background: var(--moss-wash); color: var(--moss); display: grid; place-items: center; }
+  .card p { color: var(--mid); font-size: .97rem; }
 
-  /* feature panels */
-  .panel { border: 1px solid var(--rule); background: #FBFBF9; margin: 1.5rem 0 0; }
-  .panel .bar { display: flex; justify-content: space-between; gap: 1rem; padding: .7rem 1.25rem; border-bottom: 1px solid var(--rule); color: var(--graphite); font-size: 1rem; }
-  .panel .bar strong { color: var(--ink); font-weight: 500; }
-  .panel .body { padding: 1.25rem; }
-  .feature { padding: 0 0 3.5rem; }
-  .feature > p { max-width: var(--measure); margin: 0 0 .5rem; }
-  .split { display: grid; grid-template-columns: 1.2fr 1fr; }
-  .split > div + div { border-left: 1px solid var(--rule); }
-  .split > div { padding: 1.25rem; }
-  .tag { display: inline-block; border: 1px solid var(--rule); border-radius: 3px; padding: .05rem .45rem; font-size: .9rem; color: var(--ink); background: #fff; white-space: nowrap; }
-  .lab { display: inline-block; width: .7rem; height: .7rem; border-radius: 50%; vertical-align: -1px; margin-right: .35rem; }
-  .red { background: #B65A52; } .blue { background: #4C6A9A; } .green { background: #5E8A5C; } .yellow { background: #C9A24A; }
-
-  /* timeline */
-  .tl { position: relative; padding: .5rem 0 0; }
-  .tl .ruler { display: flex; justify-content: space-between; border-bottom: 1px solid var(--ink); padding-bottom: .3rem; font-size: .9rem; color: var(--graphite); }
-  .tl .track { position: relative; height: 4.6rem; }
-  .tl .track + .track { border-top: 1px dashed var(--rule); }
-  .tl .track .name { position: absolute; left: 0; top: .5rem; font-size: .85rem; color: var(--graphite); }
-  .tl .pin { position: absolute; top: 1.9rem; transform: translateX(-50%); }
-  .tl .pin::before { content: ""; position: absolute; left: 50%; top: -1.35rem; width: 1px; height: 1.3rem; background: var(--ink); }
-  .tl .pin.event .tag { border-style: dashed; color: var(--graphite); }
-  .tl .dot { position: absolute; top: 1.3rem; width: .55rem; height: .55rem; border-radius: 50%; background: var(--ink); transform: translateX(-50%); }
-  .tl .dot.small { width: .4rem; height: .4rem; background: var(--graphite); }
-
-
-  /* threads (corkboard arranged by label) */
-  .threads { display: grid; grid-template-columns: 3rem repeat(3, 1fr); column-gap: 1.25rem; row-gap: .9rem; position: relative; }
-  .threads .th { font-size: .95rem; color: var(--graphite); padding-bottom: .4rem; border-bottom: 1px solid var(--rule); }
-  .threads .th.first { grid-column: 1; }
-  .threads .ord { font-size: .85rem; color: var(--graphite); align-self: center; }
-  .threads .lane { position: relative; }
-  .threads .lane::before { content: ""; position: absolute; left: 50%; top: -.9rem; bottom: -.9rem; width: 3px; background: var(--rule); }
-  .threads .lane.mara::before { background: #E3C6C3; }
-  .threads .lane.tom::before { background: #C9D2E2; }
-  .threads .lane.town::before { background: #CFDCCF; }
-  .threads .lane.last::before { bottom: 0; }
-  .threads .card { position: relative; margin: 0; border-left: 3px solid var(--rule); }
-  .threads .card.mara { border-left-color: #B65A52; }
-  .threads .card.tom { border-left-color: #4C6A9A; }
-  .threads .card.town { border-left-color: #5E8A5C; }
-  .threads .card.ghost { border-style: dashed; background: transparent; box-shadow: none; color: var(--graphite); }
-  .axis { display: flex; gap: 1rem; align-items: center; font-size: .95rem; color: var(--graphite); }
-  .axis span { border: 1px solid var(--rule); border-radius: 3px; padding: .05rem .5rem; background: #fff; }
-  .axis span.on { color: var(--ink); border-color: var(--ink); }
-
-  /* research */
-  .excerpt p { margin: 0 0 .9rem; max-width: 42ch; }
-  .excerpt p:last-child { margin: 0; }
-  .excerpt mark { background: var(--added-wash); color: inherit; padding: 0 .08em; }
-  .pins { list-style: none; margin: 0; padding: 0; }
-  .pins li { display: grid; grid-template-columns: 2.6rem 1fr; gap: .8rem; padding: .7rem 0; border-top: 1px solid var(--rule); }
-  .pins li:first-child { border-top: 0; padding-top: 0; }
-  .pins .thumb { width: 2.6rem; height: 3.2rem; border: 1px solid var(--rule); background: #fff; font-size: .7rem; color: var(--graphite); display: flex; align-items: flex-end; justify-content: center; padding-bottom: .2rem; }
-  .pins .thumb.img { background: linear-gradient(160deg, #D7DACF, #B9BFB3); }
-  .pins .thumb.note { background: repeating-linear-gradient(#fff 0 .35rem, var(--rule) .35rem .38rem); }
-  .pins .what { font-weight: 600; }
-  .pins .why { color: var(--graphite); font-size: .95rem; }
-  .pins q { quotes: "\201C" "\201D"; }
-
-  /* corkboard */
-  .cork { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-  .cork .col h4 { margin: 0 0 .6rem; font-weight: 500; font-size: 1rem; color: var(--graphite); }
-  .card { background: #fff; border: 1px solid var(--rule); padding: .75rem .9rem .8rem; margin-bottom: .75rem; box-shadow: 0 1px 0 var(--rule); }
-  .card .t { font-weight: 600; margin-bottom: .2rem; }
-  .card .s { color: var(--graphite); font-size: .95rem; }
-  .card .n { font-size: .8rem; color: var(--graphite); margin-top: .5rem; }
-
-  /* binder + inspector */
-  .tree { list-style: none; margin: 0; padding: 0; }
-  .tree li { display: flex; justify-content: space-between; padding: .3rem 0; }
-  .tree li.dir { font-weight: 600; }
-  .tree li.in { padding-left: 1.25rem; }
-  .tree li.sel { background: var(--paper-deep); margin: 0 -.5rem; padding-left: 1.75rem; padding-right: .5rem; }
-  .tree .wc { color: var(--graphite); font-size: .9rem; }
-  .insp dl { margin: 0; }
-  .insp dt { font-size: .85rem; color: var(--graphite); margin-top: .8rem; }
-  .insp dt:first-child { margin-top: 0; }
-  .insp dd { margin: .1rem 0 0; }
-  .insp .tabs { display: flex; gap: 1.25rem; border-bottom: 1px solid var(--rule); margin: 0 0 1rem; font-size: .95rem; color: var(--graphite); }
-  .insp .tabs span:first-child { color: var(--ink); border-bottom: 2px solid var(--ink); padding-bottom: .35rem; margin-bottom: -1px; }
-  .snaps { list-style: none; margin: .5rem 0 0; padding: 0; font-size: .95rem; }
-  .snaps li { display: flex; justify-content: space-between; padding: .35rem 0; border-top: 1px solid var(--rule); }
-  .snaps li span:last-child { color: var(--graphite); }
-
-  /* map */
-  .map { position: relative; height: 18rem; background:
-      radial-gradient(ellipse at 20% 30%, #C9CFC0 0 18%, transparent 19%),
-      radial-gradient(ellipse at 70% 65%, #C2C9B8 0 26%, transparent 27%),
-      radial-gradient(ellipse at 55% 20%, #D5DACC 0 12%, transparent 13%),
-      linear-gradient(#E3E6DD, #DADED4); }
-  .map .river { position: absolute; left: 0; right: 0; top: 52%; height: 2px; background: #9DB0BF; transform: rotate(-8deg); }
-  .map .mpin { position: absolute; transform: translate(-50%, -100%); }
-  .map .mpin::after { content: ""; position: absolute; left: 50%; bottom: -.5rem; width: .5rem; height: .5rem; background: var(--ink); border-radius: 50%; transform: translateX(-50%); }
-  .map .mpin .tag { display: block; margin-bottom: .3rem; }
-
-  @media (max-width: 720px) {
-    .split, .cork { grid-template-columns: 1fr; }
-    .split > div + div { border-left: 0; border-top: 1px solid var(--rule); }
-    .tl .track { height: 5.4rem; }
-    .threads { grid-template-columns: 2rem repeat(3, 1fr); column-gap: .5rem; }
-  }
-
-  /* world map */
-  .world { position: relative; height: 22rem; overflow: hidden; background: radial-gradient(ellipse at 60% 40%, #DDE4E6, #D3DBDE 70%); }
-  .world svg.map { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .world .mpin { position: absolute; transform: translate(-50%, -100%); }
-  .world .mpin::after { content: ""; position: absolute; left: 50%; bottom: -.45rem; width: .5rem; height: .5rem; background: var(--ink); border-radius: 50%; transform: translateX(-50%); box-shadow: 0 0 0 2px #FBFBF9; }
-  .world .mpin .tag { display: block; margin-bottom: .35rem; }
-  .world3d { position: relative; height: 26rem; overflow: hidden; background: linear-gradient(#E3E9EB, #C9D3D8); cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
-  .world3d:active { cursor: grabbing; }
-  .world3d canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-  .world3d .pins3d { position: absolute; inset: 0; pointer-events: none; }
-  .world3d .pins3d .pcard { pointer-events: auto; }
-  .world3d .mpin { position: absolute; transform: translate(-50%, -100%); pointer-events: auto; cursor: pointer; }
-  .world3d .mpin .tag { display: block; box-shadow: 0 1px 0 var(--rule); }
-  .world3d .mpin .stem { display: block; width: 2px; height: 26px; background: var(--ink); margin: 0 auto; }
-  .world3d .mpin::after { content: ""; position: absolute; left: 50%; bottom: -.28rem; width: .5rem; height: .5rem; background: var(--ink); border-radius: 50%; transform: translateX(-50%); box-shadow: 0 0 0 2px #FBFBF9; }
-  .world3d .mpin.hidden { display: none; }
-  .world3d .nowebgl { position: absolute; inset: auto 1.25rem 1rem; margin: 0; color: var(--graphite); }
-  .axis .hint { border: 0; background: transparent; color: var(--graphite); padding: 0; margin-right: .5rem; }
-  .place { font-family: "Newsreader", Georgia, serif; font-style: italic; font-size: 11px; fill: #4F5560; }
-  .sea { font-family: "Newsreader", Georgia, serif; font-style: italic; font-size: 12px; fill: #7E8A94; letter-spacing: .12em; }
-
-  /* cast */
-  .cast { display: grid; grid-template-columns: 11rem 1fr 9rem; gap: .6rem 1.25rem; align-items: center; }
-  .cast .hd { font-size: .9rem; color: var(--graphite); padding-bottom: .4rem; border-bottom: 1px solid var(--rule); }
-  .cast .who { font-weight: 600; }
-  .cast .who small { display: block; font-weight: 400; color: var(--graphite); font-size: .85rem; }
-  .cast .strip { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; }
-  .cast .strip i { display: block; height: 1.15rem; border: 1px solid var(--rule); background: #fff; border-radius: 2px; }
-  .cast .strip i.on { background: var(--ink); border-color: var(--ink); }
-  .cast .strip i.on.red { background: #B65A52; border-color: #B65A52; }
-  .cast .strip i.on.blue { background: #4C6A9A; border-color: #4C6A9A; }
-  .cast .strip i.on.green { background: #5E8A5C; border-color: #5E8A5C; }
-  .cast .strip i.cur { box-shadow: 0 0 0 2px var(--ink); }
-  .cast .last { color: var(--graphite); font-size: .95rem; }
-  .cast .scenes { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; font-size: .7rem; color: var(--graphite); text-align: center; }
-  @media (max-width: 720px) { .cast { grid-template-columns: 1fr; } .cast .hd, .cast .last { display: none; } .world3d { height: 18rem; } }
-
-
-  /* place cards */
-  .pcard { position: absolute; z-index: 5; width: 19rem; max-height: calc(100% - 16px); overflow-y: auto; overscroll-behavior: contain; background: #FBFBF9; border: 1px solid var(--rule); box-shadow: 0 6px 18px rgba(30,36,50,.10); font-size: .95rem; pointer-events: auto; }
-  .pcard[hidden] { display: none; }
-  .pcard .ph { position: sticky; top: 0; z-index: 1; background: #FBFBF9; padding: .7rem .9rem .5rem; border-bottom: 1px solid var(--rule); }
-  .pcard .ph strong { display: block; font-weight: 600; font-size: 1.05rem; }
-  .pcard .ph span { color: var(--graphite); font-size: .85rem; }
-  .pcard input { width: 100%; box-sizing: border-box; margin: .55rem 0 0; padding: .3rem .5rem; border: 1px solid var(--rule); background: #fff; font: inherit; font-size: .9rem; color: var(--ink); }
-  .pcard input:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
-  .pcard .imgs { display: flex; gap: .4rem; padding: .6rem .9rem 0; overflow-x: auto; }
-  .pcard .imgs figure { margin: 0; flex: 0 0 5.2rem; }
-  .pcard .imgs .ph-img { height: 3.4rem; border: 1px solid var(--rule); border-radius: 2px; }
-  .pcard .imgs figcaption { font-size: .72rem; color: var(--graphite); margin-top: .2rem; line-height: 1.2; }
-  .i1 { background: linear-gradient(160deg, #D7DACF, #B9BFB3); }
-  .i2 { background: linear-gradient(200deg, #CFD9DD 40%, #9DB0BF); }
-  .i3 { background: repeating-linear-gradient(135deg, #E6E8DE 0 6px, #D5DBC3 6px 12px); }
-  .i4 { background: radial-gradient(circle at 30% 30%, #F3F4F1, #C4C9BE 70%); }
-  .pcard ul { list-style: none; margin: .5rem 0 0; padding: 0 .9rem .6rem; }
-  .pcard li { padding: .45rem 0; border-top: 1px solid var(--rule); }
-  .pcard li:first-child { border-top: 0; }
-  .pcard li .ch { color: var(--graphite); font-size: .8rem; }
-  .pcard li .ti { font-weight: 600; }
-  .pcard li .ex { color: var(--graphite); font-size: .88rem; }
-  .pcard li .ex mark { background: var(--added-wash); color: inherit; }
-  .pcard .none { color: var(--graphite); padding: .5rem .9rem .7rem; }
-  .world .mpin, .world3d .mpin { cursor: pointer; }
-  .world .mpin .tag:hover, .world3d .mpin .tag:hover, .mpin.open .tag { border-color: var(--ink); }
-
+  /* numbers */
+  .nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); }
+  .num { padding: 26px 26px 0 0; }
+  .num + .num { padding-left: 26px; border-left: 1px solid var(--line); }
+  .num b { display: block; font: 800 clamp(2.6rem, 5vw, 3.6rem) var(--font-brand); letter-spacing: -0.04em; line-height: 1; }
+  .num small { display: block; font: 600 .75rem var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin: 10px 0 14px; }
+  .num p { color: var(--mid); font-size: .97rem; }
 
   /* gall */
-  .gall { display: grid; grid-template-columns: 7rem 1fr; gap: 2rem; align-items: start; max-width: 60rem; }
-  .gall .icon { width: 7rem; height: 7rem; border-radius: 1.4rem; background: var(--ink); color: var(--paper); display: grid; place-items: center; }
-  .gall .icon svg { width: 5rem; height: 5rem; }
-  .gall p { margin: 0 0 1rem; }
-  .chat { border: 1px solid var(--rule); background: #FBFBF9; max-width: 60rem; margin: 1.5rem 0 0; }
-  .chat .msg { display: grid; grid-template-columns: 2rem 1fr; gap: .8rem; padding: .9rem 1.1rem; border-top: 1px solid var(--rule); }
-  .chat .msg:first-child { border-top: 0; }
-  .chat .msg .av { width: 2rem; height: 2rem; border-radius: .5rem; display: grid; place-items: center; font-size: .8rem; color: var(--graphite); border: 1px solid var(--rule); }
-  .chat .msg .av.n { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-  .chat .msg .av svg { width: 1.3rem; height: 1.3rem; }
-  .chat .msg p { margin: 0 0 .4rem; }
-  .chat .msg p:last-child { margin: 0; }
-  .chat .msg .act { display: inline-block; border: 1px solid var(--ink); border-radius: 3px; padding: .05rem .5rem; margin-right: .4rem; font-size: .9rem; }
-  .chat .you { color: var(--ink); }
-  .split2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 60rem; }
-  .split2 h3 { font-size: 1.25rem; font-weight: 600; margin: 0 0 .5rem; }
-  .split2 ul { margin: 0; padding-left: 1.1rem; }
-  .split2 li { margin: .25rem 0; }
-  .split2 li small { color: var(--graphite); }
-  @media (max-width: 720px) { .gall, .split2 { grid-template-columns: 1fr; } }
+  .gall-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+  .outfits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .outfit { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 8px 12px; text-align: center; font-size: .85rem; color: var(--mid); display: grid; gap: 6px; justify-items: center; }
+  .outfit .gall { width: 64px; height: 64px; color: var(--ink); }
+  .chat { display: grid; gap: 10px; margin-top: 22px; }
+  .msg { display: flex; gap: 10px; align-items: flex-start; }
+  .msg .av { flex: none; width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; font: 600 .7rem var(--font-ui); background: var(--paper-2); color: var(--mid); }
+  .msg .av.g { background: var(--ink); color: var(--paper); padding: 4px; }
+  .msg .bub { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 9px 13px; font-size: .95rem; }
+  .msg .bub.you { background: transparent; border-style: dashed; color: var(--mid); }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .chips span { border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; font-size: .82rem; color: var(--mid); }
 
-  @media (max-width: 720px) {
-    .compare .bar, .compare .panes, dl.changes, .two { grid-template-columns: 1fr; }
-    .compare .bar div + div, .compare .pane + .pane { border-left: 0; border-top: 1px solid var(--rule); }
-    header nav a { margin-left: 1rem; }
+  /* table */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+  table { width: 100%; border-collapse: collapse; font-size: .97rem; min-width: 560px; }
+  th, td { text-align: left; padding: 13px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  th { font: 600 .75rem var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+  td:first-child { color: var(--mid); width: 34%; }
+  .tag { display: inline-block; font: 600 .66rem var(--font-ui); letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; margin-left: 8px; vertical-align: 2px; background: var(--moss-wash); color: var(--moss); }
+  pre { background: var(--code); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font: .88rem/1.6 ui-monospace, Menlo, monospace; margin: 14px 0 0; }
+
+  /* pricing */
+  .plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .plan { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 26px; display: grid; gap: 14px; align-content: start; }
+  .plan.pro { border-color: var(--moss); box-shadow: 0 0 0 3px color-mix(in srgb, var(--moss) 18%, transparent); }
+  .price { font: 800 2.4rem var(--font-brand); letter-spacing: -0.04em; line-height: 1; }
+  .price small { font: 500 1rem var(--font-ui); color: var(--mid); letter-spacing: 0; }
+  .plan ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .plan li { padding-left: 24px; position: relative; color: var(--mid); }
+  .plan li::before { content: ""; position: absolute; left: 4px; top: .55em; width: 9px; height: 5px; border-left: 2px solid var(--moss); border-bottom: 2px solid var(--moss); transform: rotate(-45deg); }
+
+  /* does not */
+  .nots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 28px; margin: 0; padding: 0; list-style: none; }
+  .nots li { padding: 14px 0; border-top: 1px solid var(--line); color: var(--mid); }
+  .nots li b { color: var(--ink); font-weight: 600; display: block; margin-bottom: 2px; }
+
+  /* platforms */
+  .plats { display: flex; flex-wrap: wrap; gap: 10px; }
+  .plat { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 8px 14px; font-weight: 500; }
+  .plat .soon { background: var(--paper-2); color: var(--mid); }
+  .plat.now .soon { background: var(--moss); color: var(--moss-ink); }
+
+  .cta-band { margin: 110px 0 0; background: var(--ink); color: var(--paper); border-radius: 22px; padding: 56px 40px; text-align: center; display: grid; gap: 16px; justify-items: center; }
+  .cta-band h2 { color: var(--paper); }
+  .cta-band p { color: color-mix(in srgb, var(--paper) 75%, transparent); max-width: 50ch; }
+  .cta-band .btn { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  .cta-band code { background: color-mix(in srgb, var(--paper) 12%, transparent); padding: 2px 8px; border-radius: 6px; font-size: .9rem; }
+
+  footer { margin: 72px 0 0; border-top: 1px solid var(--line); padding: 28px 0 calc(40px + env(safe-area-inset-bottom, 0px)); color: var(--dim); font-size: .9rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; }
+  footer .wm { font-size: 1.2rem; color: var(--mid); }
+  footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+  footer a { color: var(--mid); text-decoration: none; }
+  footer p { flex-basis: 100%; }
+
+  @media (max-width: 900px) {
+    .bar nav { display: none; }
+    .cards, .nums { grid-template-columns: 1fr; }
+    .num + .num { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); margin-top: 20px; }
+    .gall-grid, .plans { grid-template-columns: 1fr; }
+    .nots { grid-template-columns: 1fr; }
   }
-  @media (prefers-reduced-motion: reduce) { del, ins { transition: none; } }
-
-  /* the lockup: Plus Jakarta Sans with Gall as the l. The face never changes. */
-  .wm{font-family:"Plus Jakarta Sans","Helvetica Neue",Arial,sans-serif;font-weight:700;letter-spacing:-.04em;line-height:1;display:inline-flex;align-items:flex-end;color:var(--ink);font-style:normal}
-  .wm-s{font-size:1.7rem}.wm-l{font-size:clamp(4.5rem,13vw,9.5rem)}
-  .gall-l{display:inline-block;width:.62em;height:.98em;margin:0 -.02em 0 .02em;cursor:pointer;perspective:300px}
-  .gall-l svg{width:100%;height:100%;overflow:visible;display:block}
-  .gall-l .gl{transform-box:fill-box;transform-origin:50% 60%}
-  .gall-l.turn .gl{animation:turn 1.4s ease-in-out}
-  @keyframes turn{0%{transform:rotateY(0)}45%{transform:rotateY(180deg)}100%{transform:rotateY(360deg)}}
-  .gall-l.blink .eyes{transform:scaleY(.1);transform-box:fill-box;transform-origin:center}
-  .hero{padding:3.5rem 0 1rem}
-  .hero-note{color:var(--graphite);font-size:1rem;margin:.6rem 0 0}
-  header .name{gap:0}
-  .gall .icon svg,.av-g{width:100%;height:100%}
-  .gall .icon{color:var(--paper)}
-  @media (prefers-reduced-motion: reduce){.gall-l .gl{animation:none!important}}
+  @media (max-width: 640px) {
+    .compare .panes, .compare .cbar { grid-template-columns: 1fr; }
+    .compare .pane + .pane, .compare .cbar div + div { border-left: 0; border-top: 1px solid var(--line); }
+    .bar .btn.sm { display: none; }
+    .outfits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cta-band { padding: 40px 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .gl, del, ins { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="name"><span class="wm wm-s" aria-label="Oakfall">Oakfa<span class="gall-l" title="Gall"><svg class="" viewBox="10 -2 80 104" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--paper)"/><circle cx="58" cy="32" r="4.2" fill="var(--paper)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--paper)"/><path d="M50 56 V 80" stroke="var(--paper)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></span>l</span></div>
-    <nav>
-      <a href="https://github.com/oakfall/oakfall">Plugin</a>
-      <a href="https://github.com/oakfall/scrivener-to-obsidian">Importer</a>
-      <a href="https://github.com/oakfall/oakfall/blob/main/docs/spec.md">Spec</a>
+<header class="bar">
+  <div class="wrap">
+    <a class="wm" href="#top" aria-label="Oakfall">Oakfa<span class="gall-l" title="Gall"><svg viewBox="10 -2 80 104" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--paper)"/><circle cx="58" cy="32" r="4.2" fill="var(--paper)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--paper)"/><path d="M50 56 V 80" stroke="var(--paper)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></span>l</a>
+    <nav aria-label="Sections">
+      <a href="#features">Features</a>
       <a href="#gall">Gall</a>
+      <a href="#scrivener">From Scrivener</a>
+      <a href="#pricing">Pricing</a>
       <a href="faq.html">FAQ</a>
-      <a href="https://github.com/oakfall/oakfall-site/tree/main/brand">Brand</a>
+      <a href="https://github.com/oakfall">GitHub</a>
     </nav>
-  </header>
+    <div class="right">
+      <button class="theme" id="theme" type="button" aria-label="Colour theme">System</button>
+      <a class="btn sm primary" href="#download">Download <span class="soon">Soon</span></a>
+    </div>
+  </div>
+</header>
 
-  <div class="hero">
-    <div class="hero-mark"><span class="wm wm-l" aria-label="Oakfall">Oakfa<span class="gall-l" title="Gall"><svg class="" viewBox="10 -2 80 104" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--paper)"/><circle cx="58" cy="32" r="4.2" fill="var(--paper)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--paper)"/><path d="M50 56 V 80" stroke="var(--paper)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></span>l</span></div>
-    <p class="hero-note">Gall lives in the l. Click him.</p>
+<main id="top">
+  <div class="wrap hero">
+    <a class="wm" href="#gall" aria-label="Oakfall">Oakfa<span class="gall-l" title="Gall"><svg viewBox="10 -2 80 104" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--paper)"/><circle cx="58" cy="32" r="4.2" fill="var(--paper)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--paper)"/><path d="M50 56 V 80" stroke="var(--paper)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></span>l</a>
+    <h1>The writing studio for people who like to write.</h1>
+    <p class="lede">A binder, snapshots you can compare side by side, your cast and places, maps, and threads, over a folder of plain Markdown you own. Gall lives in the margin and knows where everything is.</p>
+    <div class="ctas">
+      <a class="btn primary" href="#download"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8s2.1-1.2 2.9-2.4c.9-1.4 1.3-2.7 1.3-2.8 0 0-2.4-1-2.4-3.9zM14 5.5c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.6 2.8-1.4z"/></svg>Download for macOS <span class="soon">Coming soon</span></a>
+      <a class="btn" href="preview/">Try the desk in your browser</a>
+    </div>
+    <p class="note">Free to write in. Windows, Linux, iPad and phone follow from the same app.</p>
+    <picture class="window">
+      <source srcset="assets/shots/desk-dark.webp" media="(prefers-color-scheme: dark)">
+      <img src="assets/shots/desk-light.webp" width="1440" height="900" alt="The Oakfall desk: the binder of the demo novel Harrowmere on the left, the scene The House open on the page, and the inspector with synopsis, status, date and snapshots on the right." id="deskshot">
+    </picture>
+    <div class="hero-foot"><span>Plain Markdown files</span><span>Works offline</span><span>No account to write</span><span>Open spec, Apache-2.0</span></div>
   </div>
 
-
-  <h1>The writing studio for people who like to write.</h1>
-  <p class="lede">Binder, snapshots with side-by-side compare, cast and places, corkboard, timeline, research, and compile, over a folder of plain Markdown. Today that is an Obsidian plugin and a Scrivener importer, both open. Next is the Oakfall app for desktop, tablet, and phone, with sync and the editor tools as the one subscription. Everything is stored as Markdown, frontmatter, and git commits, so <em>nothing needs Oakfall to be read.</em></p>
-
-  <div class="compare quiet" id="compare" aria-label="Example of comparing a snapshot with the live text">
-    <div class="bar">
+  <section class="wrap" id="features">
+    <div class="head">
+      <span class="eyebrow">Snapshots</span>
+      <h2>Try the risky rewrite. Keep the old one.</h2>
+      <p class="lede">Before a big edit, take a snapshot and name it. Later, open it beside the live text with every change tinted at the word level, and pull back a sentence or the whole scene. Restoring snapshots the current version first, so nothing is ever the last copy.</p>
+    </div>
+    <div class="compare quiet" id="compare" aria-label="Example of comparing a snapshot with the live text">
+    <div class="cbar">
       <div><strong>First draft</strong>, snapshot taken 19 Jan 2020</div>
       <div><strong>Now</strong>, editing</div>
     </div>
@@ -360,549 +248,185 @@
   </div>
 
   <section>
-    <h2>Write, snapshot, compare, restore.</h2>
-    <p>Before a risky edit, take a snapshot and give it a name. That is one git commit for one file, and you never see git. When the edit goes wrong, open the Snapshots tab: only this document's named snapshots are listed, not every auto-commit in the vault. Compare shows the old version beside the live text with changes tinted at the word level. Pull back a sentence, or restore the whole thing. Restore snapshots the current state first, so nothing is ever the last copy.</p>
-    <p>If you are coming from Scrivener, the importer replays every snapshot you ever took as history with its original title and date. You arrive with your past intact.</p>
   </section>
 
-
-  <section class="feature">
-    <h2>Arrange a chapter by thread.</h2>
-    <p>This is Scrivener's corkboard arranged by label, and it is the view writers miss most. One thread per label: a point-of-view character, a plot line, a location. The chapter's scenes run down the axis in manuscript order, each card sitting on the thread that matches its label. Drag a card up or down and the scene moves in the book. Drag it sideways and its label changes. The picture is the order of events and who carries them, at a glance.</p>
-    <div class="panel" aria-label="Threads example, a chapter arranged by label">
-      <div class="bar"><strong>Chapter 1</strong><span class="axis">Axis <span class="on">Manuscript order</span><span>Story date</span></span></div>
-      <div class="body threads">
-        <div class="th first"></div>
-        <div class="th"><i class="lab red"></i>Mara</div>
-        <div class="th"><i class="lab blue"></i>Tom</div>
-        <div class="th"><i class="lab green"></i>The town</div>
-
-        <div class="ord">1</div>
-        <div class="lane mara"><div class="card mara"><div class="t">The Letter</div><div class="s">Mara finds the letter. Reads it standing.</div></div></div>
-        <div class="lane tom"></div>
-        <div class="lane town"></div>
-
-        <div class="ord">2</div>
-        <div class="lane mara"><div class="card mara"><div class="t">The Tin</div><div class="s">She decides not to open it. Then she opens it.</div></div></div>
-        <div class="lane tom"></div>
-        <div class="lane town"></div>
-
-        <div class="ord">3</div>
-        <div class="lane mara"></div>
-        <div class="lane tom"><div class="card tom"><div class="t">Winter Fair</div><div class="s">Tom sees the tin on the stall and says nothing.</div></div></div>
-        <div class="lane town"></div>
-
-        <div class="ord">4</div>
-        <div class="lane mara"></div>
-        <div class="lane tom"></div>
-        <div class="lane town"><div class="card town"><div class="t">Flood</div><div class="s">The water reaches the chapel steps by nightfall.</div></div></div>
-
-        <div class="ord">5</div>
-        <div class="lane mara last"><div class="card mara"><div class="t">Return</div><div class="s">The house is smaller than she remembers.</div></div></div>
-        <div class="lane tom last"></div>
-        <div class="lane town last"><div class="card ghost"><div class="t">Drop here</div><div class="s">to move Return to the town's thread</div></div></div>
-      </div>
+  <section class="wrap">
+    <div class="head">
+      <span class="eyebrow">The desk</span>
+      <h2>Everything a long work needs, in one place.</h2>
+      <p class="lede">Each part is a module you can turn off. They all read the same notes, so nothing is stranded when you do.</p>
     </div>
-    <p style="margin-top:1.5rem">Where Oakfall goes further: switch the axis from manuscript order to story date and the same threads become a timeline of when things happen, with a second track for when you wrote them. Notes that are not scenes, a war, a birth, a letter never sent, can sit on it too. Nothing new is stored; the board reads the same label and date fields as the inspector.</p>
-    <div class="panel" aria-label="The same board with the axis set to story date">
-      <div class="bar"><strong>Chapter 1</strong><span class="axis">Axis <span>Manuscript order</span><span class="on">Story date</span></span></div>
-      <div class="body tl">
-        <div class="ruler"><span>1896</span><span>1897</span><span>1898</span><span>1899</span></div>
-        <div class="track">
-          <span class="name">Story</span>
-          <div class="pin event" style="left:9%"><span class="tag">Father leaves</span></div>
-          <div class="pin" style="left:34%"><span class="tag"><i class="lab red"></i>The Letter</span></div>
-          <div class="pin" style="left:47%"><span class="tag"><i class="lab red"></i>The Tin</span></div>
-          <div class="pin" style="left:63%"><span class="tag"><i class="lab blue"></i>Winter Fair</span></div>
-          <div class="pin" style="left:78%"><span class="tag"><i class="lab green"></i>Flood</span></div>
-          <div class="pin" style="left:90%"><span class="tag"><i class="lab red"></i>Return</span></div>
+    <div class="cards">
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M9 3v18M12.5 8h5M12.5 12h5M12.5 16h3"/></svg></div><h3>The binder</h3><p>Parts, chapters and scenes in manuscript order, with a word count and status on every row. Drag to reorder; the order lives in the file names.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M15 3v18"/><path d="M6.5 8h5M6.5 12h5"/></svg></div><h3>The inspector</h3><p>Synopsis, label, status, story date, notes and snapshots for the scene you are on, beside the page instead of in a dialog.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3 2.8-5 5.5-5s4.9 2 5.5 5"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14.2c2.4.2 4.2 2 4.8 4.8"/></svg></div><h3>Cast and places</h3><p>A character is a note. Its appearances are the scenes that link to it or name it, so the cast panel reads the book for you.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg></div><h3>Maps</h3><p>Any image becomes a map: a drawn world, a town plan, the floor plan of the house. Pin places, draw roads and rivers, click through to the scenes.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h6M3 12h10M3 17h7"/><circle cx="12" cy="7" r="1.6"/><circle cx="16" cy="12" r="1.6"/><circle cx="13" cy="17" r="1.6"/><path d="M14 7h7M18 12h3M15 17h6"/></svg></div><h3>Threads and timeline</h3><p>Cards by thread or by story date, from the same synopsis, label and date fields. Scrivener's arrange-by-label, without retyping anything.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 000 18z" fill="currentColor"/></svg></div><h3>Your desk, your look</h3><p>Light or dark, Desk or Classic, five looks, the page's paper and type size. Focus clears everything but the page.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="head">
+      <span class="eyebrow">Why it is different</span>
+      <h2>Your manuscript is never held hostage.</h2>
+    </div>
+    <div class="nums">
+      <div class="num"><b>0</b><small>Proprietary formats</small><p>A project is a folder of Markdown with a little frontmatter. Open it in any editor, sync it with anything, read it in fifty years.</p></div>
+      <div class="num"><b>1</b><small>Folder per project</small><p>Snapshots are plain copies, or ordinary git commits if you prefer. Uninstall Oakfall and every scene, note and snapshot is still there.</p></div>
+      <div class="num"><b>$0</b><small>To write a whole novel</small><p>The app is free. You pay only if you want sync between devices and the editor tools.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap" id="gall">
+    <div class="gall-grid">
+      <div>
+        <div class="head" style="margin-bottom:0">
+          <span class="eyebrow">Meet Gall</span>
+          <h2>Every studio has someone who knows where things are.</h2>
+          <p class="lede">Gall lives in the l of Oakfall and steps out when you need him. Ask where someone was last seen, what changed since a snapshot, which scenes still mention the thing you just cut. He answers from your files and history, and he never writes your prose.</p>
+          <p class="lede" style="font-size:1rem">Half of Gall needs no model at all and works offline. He is free, and off until you turn him on. He dresses for the season.</p>
         </div>
-        <div class="track">
-          <span class="name">Written</span>
-          <div class="dot small" style="left:34%"></div>
-          <div class="dot" style="left:36%"></div>
-          <div class="dot small" style="left:47%"></div>
-          <div class="dot small" style="left:63%"></div>
-          <div class="dot" style="left:66%"></div>
-          <div class="dot small" style="left:90%"></div>
+        <div class="chat" aria-label="Example conversation with Gall">
+          <div class="msg"><div class="av">You</div><div class="bub you">what changed in the tin since the june snapshot?</div></div>
+          <div class="msg"><div class="av g"><svg viewBox="-6 -4 112 108" aria-hidden="true"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--ink)"/><circle cx="58" cy="32" r="4.2" fill="var(--ink)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--ink)"/><path d="M50 56 V 80" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></svg></div><div class="bub">Two things in <i>02 The Tin</i>: the dream sequence is gone, 412 words, and Mara now opens the tin in the kitchen instead of the yard.<div class="chips"><span>Compare side by side</span><span>Restore the dream</span></div></div></div>
         </div>
       </div>
+      <div class="outfits" aria-label="Gall's outfits"><div class="outfit"><span class="gall"><svg viewBox="-14 -22 128 128" aria-hidden="true"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--card)"/><circle cx="58" cy="32" r="4.2" fill="var(--card)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--card)"/><path d="M50 56 V 80" stroke="var(--card)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g><g transform="rotate(-10 50 50)"><path d="M26 16 C 36 10, 64 10, 74 16" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M36 14 L 38 -2 L 62 -3 L 64 13 Z" fill="currentColor"/><path d="M40 0 C 30 -8, 18 -6, 10 4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" fill="none"/><path d="M62 50 C 68 50, 72 48, 76 44" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M76 44 L 94 20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M94 20 l 2.5 -6 l 2.5 6 l 6 2.5 l -6 2.5 l -2.5 6 l -2.5 -6 l -6 -2.5 Z" fill="var(--moss)"/></g></svg></span>Tutorial</div><div class="outfit"><span class="gall"><svg viewBox="-14 -22 128 128" aria-hidden="true"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--card)"/><circle cx="58" cy="32" r="4.2" fill="var(--card)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--card)"/><path d="M50 56 V 80" stroke="var(--card)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g><g transform="rotate(-10 50 50)"><circle cx="42" cy="32" r="7.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="58" cy="32" r="7.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M49.5 32 H 50.5 M34.5 31 L 27 28 M65.5 31 L 73 28" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></g></svg></span>Editor</div><div class="outfit"><span class="gall"><svg viewBox="-14 -22 128 128" aria-hidden="true"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--card)"/><circle cx="58" cy="32" r="4.2" fill="var(--card)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--card)"/><path d="M50 56 V 80" stroke="var(--card)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g><g transform="rotate(-10 50 50)"><path d="M28 22 C 30 4, 70 4, 72 22 Z" fill="#5e8a5c"/><path d="M26 20 H 74" stroke="#c9a24a" stroke-width="7" stroke-linecap="round"/><circle cx="50" cy="4" r="5" fill="#c9a24a"/><path d="M30 60 C 40 66, 60 66, 70 60" stroke="#b4491b" stroke-width="8" stroke-linecap="round" fill="none"/><path d="M66 62 L 72 80" stroke="#b4491b" stroke-width="7" stroke-linecap="round"/></g></svg></span>Winter</div><div class="outfit"><span class="gall"><svg viewBox="-14 -22 128 128" aria-hidden="true"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--card)"/><circle cx="58" cy="32" r="4.2" fill="var(--card)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--card)"/><path d="M50 56 V 80" stroke="var(--card)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g><g transform="rotate(-10 50 50) translate(66 12)"><circle r="4" fill="#c9a24a"/><circle cx="0" cy="-6" r="3.2" fill="#e8a0b4"/><circle cx="5.7" cy="-1.8" r="3.2" fill="#e8a0b4"/><circle cx="3.5" cy="4.9" r="3.2" fill="#e8a0b4"/><circle cx="-3.5" cy="4.9" r="3.2" fill="#e8a0b4"/><circle cx="-5.7" cy="-1.8" r="3.2" fill="#e8a0b4"/></g></svg></span>Spring</div><div class="outfit"><span class="gall"><svg viewBox="-14 -22 128 128" aria-hidden="true"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--card)"/><circle cx="58" cy="32" r="4.2" fill="var(--card)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--card)"/><path d="M50 56 V 80" stroke="var(--card)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g><g transform="rotate(-10 50 50)"><path d="M33 29 H 49 V 36 Q 49 40 44 40 H 38 Q 33 40 33 36 Z M51 29 H 67 V 36 Q 67 40 62 40 H 56 Q 51 40 51 36 Z" fill="#1a1b20" stroke="var(--card)" stroke-width="1"/><path d="M49 31 H 51 M33 30 L 27 27 M67 30 L 73 27" stroke="#1a1b20" stroke-width="1.8" stroke-linecap="round"/></g></svg></span>Summer</div><div class="outfit"><span class="gall"><svg viewBox="-14 -22 128 128" aria-hidden="true"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--card)"/><circle cx="58" cy="32" r="4.2" fill="var(--card)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--card)"/><path d="M50 56 V 80" stroke="var(--card)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g><g transform="rotate(-10 50 50) translate(0 -3)"><path d="M30 20 C 30 4, 70 4, 70 20 Z" fill="#8c6a2e"/><path d="M28 20 H 72" stroke="#8c6a2e" stroke-width="5" stroke-linecap="round"/><path d="M50 4 V -2" stroke="#8c6a2e" stroke-width="3" stroke-linecap="round"/></g></svg></span>Autumn</div><div class="outfit"><span class="gall"><svg viewBox="-14 -22 128 128" aria-hidden="true"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--card)"/><circle cx="58" cy="32" r="4.2" fill="var(--card)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--card)"/><path d="M50 56 V 80" stroke="var(--card)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g><g transform="rotate(-10 50 50) translate(0 -2)"><path d="M40 16 L 50 -14 L 60 16 Z" fill="#5e8a5c"/><path d="M44 6 L 56 6 M42 12 L 58 12" stroke="#c9a24a" stroke-width="2.4"/><circle cx="50" cy="-14" r="3.5" fill="#c9a24a"/></g></svg></span>Milestone</div><div class="outfit"><span class="gall"><svg viewBox="-14 -22 128 128" aria-hidden="true"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--card)"/><circle cx="58" cy="32" r="4.2" fill="var(--card)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--card)"/><path d="M50 56 V 80" stroke="var(--card)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g><g transform="rotate(-10 50 50)"><path d="M26 30 C 22 20, 30 10, 40 8 M74 30 C 78 20, 70 10, 60 8" stroke="#5e8a5c" stroke-width="2.4" stroke-linecap="round" fill="none"/><g fill="#5e8a5c"><ellipse cx="28" cy="22" rx="2.2" ry="4" transform="rotate(30 28 22)"/><ellipse cx="33" cy="13" rx="2.2" ry="4" transform="rotate(50 33 13)"/><ellipse cx="72" cy="22" rx="2.2" ry="4" transform="rotate(-30 72 22)"/><ellipse cx="67" cy="13" rx="2.2" ry="4" transform="rotate(-50 67 13)"/></g></g></svg></span>Laurels</div></div>
     </div>
   </section>
 
-  <section class="feature">
-    <h2>Pin research to the scene that needs it.</h2>
-    <p>Attach a PDF, an image, or a note to the document you are writing and it shows up beside the text whenever that document is open. Highlight a passage in the PDF and the highlight links back to the exact sentence it supports. Research lives in the vault as ordinary files; a pin is one line of frontmatter.</p>
-    <div class="panel split" aria-label="Research pane example">
-      <div class="excerpt">
-        <p>Mara found the letter in the tin with the buttons. The postmark was <mark>Whitby, the fourth of March</mark>, three days before the flood took the lower town.</p>
-        <p>She read it twice, standing, because sitting felt like agreeing to it.</p>
-      </div>
-      <div>
-        <ul class="pins">
-          <li><div class="thumb">PDF</div><div><div class="what">Whitby Gazette, March 1897</div><div class="why">Highlight, page 3: <q>the water reached the chapel steps by nightfall</q></div></div></li>
-          <li><div class="thumb img"></div><div><div class="what">Harbour photograph, 1890s</div><div class="why">For the description of the quay</div></div></li>
-          <li><div class="thumb note"></div><div><div class="what">Postal routes, Yorkshire coast</div><div class="why">Your note. Confirms a three-day delivery.</div></div></li>
-        </ul>
-      </div>
+  <section class="wrap" id="scrivener">
+    <div class="head">
+      <span class="eyebrow">Coming from Scrivener</span>
+      <h2>Bring every project, and every snapshot you ever took.</h2>
+      <p class="lede">The importer reads a .scriv package and writes an Oakfall project, replaying your snapshots as history with their original titles and dates. The original is never modified.</p>
     </div>
-  </section>
-
-  <section class="feature">
-    <h2>See the book as cards.</h2>
-    <p>The same cards, arranged another way. The corkboard makes an index card from each scene's synopsis, coloured by label. As a grid it is the chapter laid flat. As columns by status it is a kanban board. As threads by label it is the view above. Drag a card and the scene's order, status, or label changes in its frontmatter. There is nothing to keep in sync because there is only one copy.</p>
-    <div class="panel" aria-label="Corkboard example">
-      <div class="bar"><strong>Corkboard</strong><span>Columns by status</span></div>
-      <div class="body cork">
-        <div class="col"><h4>First draft</h4>
-          <div class="card"><div class="t"><i class="lab blue"></i>Winter Fair</div><div class="s">Mara sells the buttons. Someone recognises the tin.</div><div class="n">1,140 words</div></div>
-          <div class="card"><div class="t"><i class="lab green"></i>Return</div><div class="s">The house is smaller than she remembers.</div><div class="n">620 words</div></div>
-        </div>
-        <div class="col"><h4>Revised</h4>
-          <div class="card"><div class="t"><i class="lab red"></i>The Tin</div><div class="s">She decides not to open it. Then she opens it.</div><div class="n">2,010 words</div></div>
-        </div>
-        <div class="col"><h4>Final</h4>
-          <div class="card"><div class="t"><i class="lab red"></i>The Letter</div><div class="s">Mara finds the letter. Reads it standing.</div><div class="n">2,417 words</div></div>
-        </div>
-      </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>In Scrivener</th><th>In Oakfall</th></tr></thead>
+        <tbody>
+          <tr><td>Binder, folders and documents</td><td>The binder, folders and Markdown notes in manuscript order <span class="tag">same</span></td></tr>
+          <tr><td>Snapshots</td><td>Named snapshots per scene, with word-level compare and safe restore <span class="tag">better</span></td></tr>
+          <tr><td>Inspector: synopsis, label, status, notes</td><td>The inspector, from frontmatter you can read anywhere <span class="tag">same</span></td></tr>
+          <tr><td>Corkboard and arrange by label</td><td>Threads and timeline, from the same fields <span class="tag">same</span></td></tr>
+          <tr><td>Research folder</td><td>Research attached to the scene you have open</td></tr>
+          <tr><td>Character and setting sheets</td><td>Cast and places that find their own appearances <span class="tag">new</span></td></tr>
+          <tr><td>Compile</td><td>Compile presets for manuscript, paperback and ebook <span class="tag">paid</span></td></tr>
+        </tbody>
+      </table>
     </div>
-  </section>
-
-  <section class="feature">
-    <h2>A binder on the left, an inspector on the right.</h2>
-    <p>The manuscript in order, with word counts, folders as chapters. Beside the text, everything about the scene that is not the scene: synopsis, label, status, notes, keywords, the research pinned to it, and the Snapshots tab. All of it is frontmatter and files, shown in one place.</p>
-    <div class="panel split" aria-label="Binder and inspector example">
-      <div>
-        <ul class="tree">
-          <li class="dir"><span>01 Part One</span><span class="wc">5,187</span></li>
-          <li class="in"><span>01 The Letter</span><span class="wc">2,417</span></li>
-          <li class="in sel"><span>02 The Tin</span><span class="wc">2,010</span></li>
-          <li class="in"><span>03 Winter Fair</span><span class="wc">1,140</span></li>
-          <li class="dir"><span>02 Part Two</span><span class="wc">620</span></li>
-          <li class="in"><span>01 Return</span><span class="wc">620</span></li>
-        </ul>
-      </div>
-      <div class="insp">
-        <div class="tabs"><span>Inspector</span><span>Snapshots</span><span>Research</span></div>
-        <dl>
-          <dt>Synopsis</dt><dd>She decides not to open it. Then she opens it.</dd>
-          <dt>Label</dt><dd><i class="lab red"></i>Mara</dd>
-          <dt>Status</dt><dd>Revised</dd>
-          <dt>Story date</dt><dd>12 April 1897</dd>
-          <dt>Snapshots</dt>
-          <dd><ul class="snaps">
-            <li><span>Before cutting the dream sequence</span><span>Tue</span></li>
-            <li><span>Second draft</span><span>2 Oct 2021</span></li>
-            <li><span>First draft</span><span>19 Jan 2020</span></li>
-          </ul></dd>
-        </dl>
-      </div>
-    </div>
-  </section>
-
-  <section class="feature">
-    <h2>Pin a scene to a place.</h2>
-    <p>Any image can be a map: a hand-drawn world, an Inkarnate export, a scanned town plan, a floor plan of the house, or a blank canvas. Drop a pin and link it to a place, a scene, or a character. Draw on top of it in the same ink as this page: woods, water, hills, roads, rivers, routes, and labels, clean or hand-drawn, with a small toolbar that works the way drawing apps do. A place is a note, like a character, so Oakfall knows where it appears: hover a pin or a drawn region and you get the chapters and scenes set there, the line that names it, the images you pinned for inspiration, and a search box for when a place carries half the book. Click a scene to open it. Pins and drawings are stored on the map's own note as plain frontmatter, so the map is a picture with a readable list beside it, and Gall can read and write that list too.</p>
-    <div class="panel" aria-label="World map, flat view">
-      <div class="bar"><strong>Harrowmere</strong><span class="axis">View <span class="on">Flat</span><span>Relief</span></span></div>
-      <div class="world">
-        <svg class="map" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <pattern id="grat" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#C7D0D4" stroke-width=".6"/></pattern>
-            <pattern id="wood" width="10" height="10" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.4" fill="#A9B8A3"/><circle cx="8" cy="7" r="1.2" fill="#A9B8A3"/></pattern>
-          </defs>
-          <rect width="800" height="300" fill="url(#grat)"/>
-          <!-- continental shelf -->
-          <path d="M120 250 C 60 200, 80 120, 150 80 C 210 40, 330 20, 420 40 C 500 60, 560 40, 640 70 C 720 100, 760 160, 720 220 C 690 268, 560 290, 470 262 C 420 246, 380 268, 320 270 C 240 272, 170 290, 120 250 Z" fill="#E1E8EA"/>
-          <!-- land -->
-          <path d="M150 240 C 100 200, 110 130, 170 100 C 220 72, 330 44, 415 62 C 490 78, 550 62, 620 90 C 690 118, 720 166, 690 210 C 664 250, 560 268, 480 246 C 430 232, 390 252, 330 254 C 250 256, 190 272, 150 240 Z" fill="#E6E8DE" stroke="#BFC6B8" stroke-width="1.2"/>
-          <!-- forest -->
-          <path d="M200 180 C 190 150, 230 130, 270 140 C 300 148, 300 190, 260 200 C 230 208, 208 202, 200 180 Z" fill="url(#wood)"/>
-          <path d="M560 200 C 550 176, 590 160, 620 170 C 640 178, 634 210, 600 214 C 578 216, 566 212, 560 200 Z" fill="url(#wood)"/>
-          <!-- mountains -->
-          <g fill="#C4C9BE" stroke="#8F978B" stroke-width="1" stroke-linejoin="round">
-            <path d="M330 130 l 22 -40 l 22 40 z"/><path d="M362 126 l 26 -48 l 26 48 z"/><path d="M402 132 l 20 -36 l 20 36 z"/><path d="M440 122 l 24 -44 l 24 44 z"/><path d="M484 128 l 18 -32 l 18 32 z"/>
-          </g>
-          <g fill="#F3F4F1"><path d="M352 90 l 6 10 l -12 0 z"/><path d="M388 78 l 7 12 l -14 0 z"/><path d="M464 78 l 6 11 l -12 0 z"/></g>
-          <!-- river -->
-          <path d="M392 128 C 380 160, 400 190, 380 215 C 366 232, 340 240, 330 254" fill="none" stroke="#9DB0BF" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M392 128 C 410 150, 440 165, 470 190 C 486 204, 480 230, 480 246" fill="none" stroke="#9DB0BF" stroke-width="1.8" stroke-linecap="round"/>
-          <!-- lake -->
-          <ellipse cx="640" cy="150" rx="26" ry="14" fill="#CFD9DD" stroke="#A9B9C1" stroke-width="1"/>
-          <!-- roads -->
-          <path d="M215 220 C 260 214, 300 230, 340 232 C 400 236, 440 230, 486 240 C 540 252, 600 236, 655 220" fill="none" stroke="#B8B2A4" stroke-width="1.2" stroke-dasharray="4 3"/>
-          <!-- labels -->
-          <text class="sea" x="60" y="60">The Grey Reach</text>
-          <text class="sea" x="600" y="280">Southern Sea</text>
-          <text class="place" x="300" y="70">The Saltback Mountains</text>
-          <text class="place" x="196" y="222">Harrow Wood</text>
-          <text class="place" x="612" y="132">Stillwater</text>
-          <text class="place" x="356" y="262">Whitby</text>
-          <text class="place" x="230" y="150">Dolshorn Fields</text>
-        </svg>
-        <div class="mpin" data-place="house" style="left:27%; top:74%" tabindex="0"><span class="tag">The house</span></div>
-        <div class="mpin" data-place="chapel" style="left:45%; top:86%" tabindex="0"><span class="tag">Chapel steps</span></div>
-        <div class="mpin" data-place="fair" style="left:58%; top:44%" tabindex="0"><span class="tag">Winter Fair</span></div>
-        <div class="mpin" data-place="stillwater" style="left:80%; top:52%" tabindex="0"><span class="tag">Stillwater crossing</span></div>
-      </div>
-    </div>
-    <p style="margin-top:1.5rem">The same map in relief, and this one is real: drag it. Give Oakfall a heightmap, a model, or an export from a map generator and the world stands up. Orbit with a drag, zoom with the wheel, click a pin to land in its scene, drag a pin to move it and the coordinates update in the note. An Obsidian view is a full browser surface, so all of that works inside the vault on desktop. The flat map is the fallback on mobile.</p>
-    <div class="panel" aria-label="World map, relief view">
-      <div class="bar"><strong>Harrowmere</strong><span class="axis"><span class="hint">Drag to orbit, scroll to zoom</span> View <span>Flat</span><span class="on">Relief</span></span></div>
-      <div class="world3d" id="relief">
-        <canvas id="relief-canvas" aria-label="Relief map of Harrowmere. Drag to orbit."></canvas>
-        <div class="pins3d" id="relief-pins"></div>
-        <p class="nowebgl" id="relief-fallback" hidden>This browser has no WebGL. The flat map above shows the same pins.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="feature">
-    <h2>Keep track of who is where.</h2>
-    <p>A character is a note. Scrivener gives you a sheet to fill in; Oakfall gives you the sheet and then reads the manuscript for you. Every scene that links to the character, or mentions a name or alias you have approved, counts as an appearance. The cast panel shows each character across the book in manuscript order, where they were last seen, and which thread they carry on the corkboard. Click a cell to open the scene. Nothing is typed twice: the sheet is frontmatter, the appearances are links.</p>
-    <div class="panel" aria-label="Cast panel example">
-      <div class="bar"><strong>Cast</strong><span>Part One, 12 scenes</span></div>
-      <div class="body cast">
-        <div class="hd">Character</div><div class="hd scenes"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div><div class="hd">Last seen</div>
-        <div class="who"><i class="lab red"></i>Mara<small>also "the Harrow girl"</small></div>
-        <div class="strip"><i class="on red"></i><i class="on red"></i><i class="on red"></i><i></i><i class="on red cur"></i><i class="on red"></i><i></i><i class="on red"></i><i class="on red"></i><i></i><i class="on red"></i><i class="on red"></i></div>
-        <div class="last">Return, scene 12</div>
-        <div class="who"><i class="lab blue"></i>Tom<small>also "Tomas Wray"</small></div>
-        <div class="strip"><i></i><i></i><i class="on blue"></i><i class="on blue"></i><i class="on blue cur"></i><i></i><i></i><i class="on blue"></i><i></i><i></i><i class="on blue"></i><i></i></div>
-        <div class="last">Flood, scene 11</div>
-        <div class="who"><i class="lab green"></i>Reverend Ashe<small>Whitby</small></div>
-        <div class="strip"><i></i><i class="on green"></i><i></i><i></i><i class="cur"></i><i class="on green"></i><i class="on green"></i><i></i><i></i><i class="on green"></i><i></i><i></i></div>
-        <div class="last">Stillwater, scene 10</div>
-        <div class="who"><i class="lab yellow"></i>Mother<small>never named</small></div>
-        <div class="strip"><i class="on"></i><i></i><i></i><i></i><i class="cur"></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i class="on"></i></div>
-        <div class="last">Return, scene 12</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="feature" id="gall">
-    <h2>Meet Gall.</h2>
-    <div class="gall">
-      <div class="icon"><svg class="av-g" viewBox="-6 -4 112 108" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--ink)"/><circle cx="58" cy="32" r="4.2" fill="var(--ink)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--ink)"/><path d="M50 56 V 80" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></div>
-      <div>
-        <p>Every studio has someone who knows where things are. Gall is Oakfall's. It lives in the margin, knows your manuscript, and stays out of your prose. Ask it what changed in chapter four since the June draft, where Tom was last seen, which scenes still mention the tin after you cut it, or whether a synopsis still matches its scene. It answers from your files and your history, and anything it changes lands as an ordinary edit or a snapshot you can undo.</p>
-        <p>Half of Gall needs no model at all. Where someone was last seen, what is set at a place, who is in a scene, which places have no scene yet, how long a chapter is, where a note sits on a map: those are lookups over your files, and that half of Gall is open source, works offline, and ships with the plugin and the app. The half that reads your prose is the hosted one.</p>
-        <p>Gall is free, and off until you turn it on. For the half that reads your prose, bring your own key or point it at a local model; hosted models come later as a separate tier. It sends your manuscript nowhere you did not point it, and it reports nothing back to us.</p>
-      </div>
-    </div>
-    <div class="chat" aria-label="Example conversation with Gall">
-      <div class="msg"><div class="av">You</div><div><p class="you">what changed in the tin since the june snapshot?</p></div></div>
-      <div class="msg"><div class="av n"><svg class="av-g" viewBox="-6 -4 112 108" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--ink)"/><circle cx="58" cy="32" r="4.2" fill="var(--ink)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--ink)"/><path d="M50 56 V 80" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></div><div><p>Two things in <em>02 The Tin</em> since “Second draft, 2 Oct 2021”: the dream sequence is gone, 412 words, and Mara now opens the tin in the kitchen instead of the yard. Tom is not mentioned in either version.</p><p><span class="act">Compare side by side</span><span class="act">Restore the dream sequence</span></p></div></div>
-      <div class="msg"><div class="av">You</div><div><p class="you">did i lose anything that other scenes depend on?</p></div></div>
-      <div class="msg"><div class="av n"><svg class="av-g" viewBox="-6 -4 112 108" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--ink)"/><circle cx="58" cy="32" r="4.2" fill="var(--ink)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--ink)"/><path d="M50 56 V 80" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></div><div><p>One thing. <em>08 Last Stall</em> refers to “the dream about the buttons,” which only existed in the cut passage. Nothing else in Part One or Two points at it.</p><p><span class="act">Open 08 Last Stall at that line</span></p></div></div>
-      <div class="msg"><div class="av n"><svg class="av-g" viewBox="-6 -4 112 108" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--ink)"/><circle cx="58" cy="32" r="4.2" fill="var(--ink)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--ink)"/><path d="M50 56 V 80" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></div><div><p>It looks like you're rewriting chapter four. Want the June draft beside it? That was the one joke. It will not happen again.</p></div></div>
-    </div>
-  </section>
-
-  <section class="feature">
-    <h2>What is open, and what is not.</h2>
-    <p>Anything that touches your files is open source under Apache-2.0 and always will be, because nobody should trust a writing tool that can hold a manuscript hostage. What you can pay for is sync between your devices and the editor tools.</p>
-    <div class="split2">
-      <div>
-        <h3>Open, Apache-2.0</h3>
-        <ul>
-          <li>The vault spec <small>the contract everything reads and writes</small></li>
-          <li>The importer <small>Scrivener in, vault and history out</small></li>
-          <li>The Obsidian plugin, its core, and its module and theme APIs</li>
-          <li>Snapshots, binder, inspector, corkboard and threads, research, cast, flat maps, targets</li>
-          <li>Themes and project templates <small>an open format; build your own, share them, sell them</small></li>
-        </ul>
-      </div>
-      <div>
-        <h3>Paid</h3>
-        <ul>
-          <li>Sync <small>end-to-end encrypted, between your desktop, tablet, and phone</small></li>
-          <li>The editor tools <small>focus and audit, the editor's redlines back from Word, beta-reader round trips, compile presets</small></li>
-          <li>Hosted models for Gall <small>later, as a separate tier</small></li>
-        </ul>
-        <p style="margin-top:1rem">One subscription, $5 a month or $4 a month billed annually. The app itself is free, and a whole novel can be written in it without paying. Stop paying and your files are untouched: there is nothing in them that only a paid tool can read.</p>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>What changes in Obsidian</h2>
-    <dl class="changes">
-      <div><dt>The file tree becomes a binder.</dt><dd>An ordered manuscript you drag to reorder. Folders are chapters, folder notes are chapter text.</dd></div>
-      <div><dt>The properties panel becomes an inspector.</dt><dd>Synopsis, label, status, notes, keywords, bookmarks, and attached research beside what you are writing.</dd></div>
-      <div><dt>Raw commits become named snapshots.</dt><dd>Per document, with compare and safe restore.</dd></div>
-      <div><dt>Three plugins become one board.</dt><dd>Grid, kanban columns, and label threads are arrangements of the same cards, reading the same synopsis, label, status, and date fields.</dd></div>
-      <div><dt>Research stays with the scene.</dt><dd>PDFs, images, and notes attached to the document you have open. Highlights link back.</dd></div>
-      <div><dt>Compile means a manuscript.</dt><dd>Presets for short story, novel, poem, essay. Docx, pdf, epub, or Markdown. Your files are untouched.</dd></div>
-      <div><dt>Any image becomes a map, flat or in relief.</dt><dd>Pins link places to scenes and back. Stored as frontmatter on the map's note.</dd></div>
-      <div><dt>Characters track themselves.</dt><dd>A character is a note; its appearances are the scenes that link to it or name it. The cast panel reads the book so you don't have to.</dd></div>
-      <div><dt>Every module has a switch.</dt><dd>One settings page. Turn off what you do not write with; nothing is stranded because every module reads the same fields.</dd></div>
-      <div><dt>Gall knows the book.</dt><dd>Ask what changed, who was where, what depends on what. Answers come from your files and history; changes land as edits you can undo.</dd></div>
-    </dl>
-  </section>
-
-  <section>
-    <h2>Works with how you already sync</h2>
-    <p>The plugin does not sync anything. Your vault keeps moving through iCloud, Dropbox, Obsidian Sync, Syncthing, or a git remote, whichever you use today. The Oakfall app adds its own end-to-end encrypted sync as the subscription, for writers who would rather not run one of those; the files stay plain either way. Snapshot history is stored as plain files inside the vault by default, so it travels with the vault to every device, including your phone. If you want real version control as well, turn on the git store: desktop only, and the repository is kept outside the synced folder so cloud sync never touches it.</p>
-  </section>
-
-  <section>
-    <h2>Get it</h2>
-    <div class="two">
-      <div>
-        <h3>Moving a project out of Scrivener</h3>
-        <p>Our importer reads a .scriv package and writes a vault that follows the Oakfall spec, snapshots included. The original project is never modified.</p>
-        <pre>go install github.com/oakfall/scrivener-to-obsidian/cmd/scriv2obsidian@latest
+    <pre>go install github.com/oakfall/scrivener-to-obsidian/cmd/scriv2obsidian@latest
 scriv2obsidian convert -out ~/Writing -git Novel.scriv</pre>
+  </section>
+
+  <section class="wrap" id="pricing">
+    <div class="head">
+      <span class="eyebrow">Pricing</span>
+      <h2>Free to write in. One subscription if you want more.</h2>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Oakfall</h3>
+        <div class="price">Free</div>
+        <ul>
+          <li>The whole desk: binder, page, inspector, snapshots and compare</li>
+          <li>Cast, places, maps, threads and timeline</li>
+          <li>Gall, with your own key or a local model</li>
+          <li>Every look, every layout, Focus</li>
+          <li>Your files, on your disk, forever</li>
+        </ul>
       </div>
-      <div>
-        <h3>The plugin</h3>
-        <p>In early development, and usable in a test vault. The importer is feature complete for its first release. The plugin core, the map with pins, place cards, and drawing, the New command, and Gall's offline answers build and pass their tests; nothing is published yet. The spec, the importer, the plugin, and every module that touches your files are open source and will stay that way. Sync and the editor tools are the paid part; nothing that guards your data ever will be.</p>
-        <p><a href="https://github.com/oakfall/oakfall">Follow the repo</a> to hear when there is a build to try.</p>
+      <div class="plan pro">
+        <h3>Oakfall with sync</h3>
+        <div class="price">$5<small> a month, or $4 a month billed yearly</small></div>
+        <ul>
+          <li>End-to-end encrypted sync between desktop, tablet and phone</li>
+          <li>The editor tools: focus and audit, redlines back from Word, beta-reader rounds</li>
+          <li>Compile presets</li>
+          <li>Stop paying and every file stays exactly where it is</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <footer>Oakfall is an independent project by grassclaw, published by 0xSpectra LLC under the Apache License 2.0, with no accounts, no telemetry, and no network calls. It is not affiliated with or endorsed by Literature &amp; Latte, the makers of Scrivener, or by Obsidian. Scrivener and Obsidian are trademarks of their respective owners.</footer>
-</div>
+  <section class="wrap">
+    <div class="head">
+      <span class="eyebrow">Plainly</span>
+      <h2>What Oakfall does not do.</h2>
+    </div>
+    <ul class="nots">
+      <li><b>It does not write for you.</b>Gall answers, finds, checks and proposes edits you accept. The prose is yours.</li>
+      <li><b>It does not need an account.</b>Writing, snapshots and every module work without signing in. Only sync needs one.</li>
+      <li><b>It does not phone home.</b>No telemetry. Gall sends your manuscript nowhere you did not point him.</li>
+      <li><b>It does not lock your files.</b>No database, no proprietary package. Markdown, frontmatter and images in folders.</li>
+    </ul>
+  </section>
+
+  <section class="wrap" id="download">
+    <div class="head">
+      <span class="eyebrow">Get it</span>
+      <h2>Where Oakfall runs.</h2>
+      <p class="lede">The app is in development; macOS is first. The Obsidian plugin and the Scrivener importer are open source and usable today.</p>
+    </div>
+    <div class="plats">
+      <span class="plat">macOS <span class="soon">Coming soon</span></span>
+      <span class="plat">Windows <span class="soon">Later</span></span>
+      <span class="plat">Linux <span class="soon">Later</span></span>
+      <span class="plat">iPad <span class="soon">Later</span></span>
+      <span class="plat">iPhone and Android <span class="soon">Later</span></span>
+      <a class="plat now" href="https://github.com/oakfall/oakfall">Obsidian plugin <span class="soon">Today</span></a>
+      <a class="plat now" href="https://github.com/oakfall/scrivener-to-obsidian">Scrivener importer <span class="soon">Today</span></a>
+    </div>
+    <div class="cta-band">
+      <h2>Be first to write in it.</h2>
+      <p>Write to us and we will send the macOS build when it is ready. One email, then nothing until there is something to say.</p>
+      <a class="btn" href="mailto:hello@oakfall.app?subject=Oakfall%20for%20macOS">Email hello@oakfall.app</a>
+      <p style="font-size:.9rem">Or try the desk now, in your browser: <a href="preview/" style="color:inherit">oakfall.app/preview</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="wm" href="#top" aria-label="Oakfall">Oakfa<span class="gall-l" title="Gall"><svg viewBox="10 -2 80 104" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--paper)"/><circle cx="58" cy="32" r="4.2" fill="var(--paper)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--paper)"/><path d="M50 56 V 80" stroke="var(--paper)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></span>l</a>
+    <nav aria-label="Footer">
+      <a href="faq.html">FAQ</a>
+      <a href="https://github.com/oakfall/oakfall/blob/main/docs/spec.md">Vault spec</a>
+      <a href="https://github.com/oakfall/oakfall">Plugin</a>
+      <a href="https://github.com/oakfall/scrivener-to-obsidian">Importer</a>
+      <a href="https://github.com/oakfall/oakfall-site/tree/main/brand">Brand</a>
+      <span>hello@oakfall.app</span>
+    </nav>
+    <p>Oakfall is made by grassclaw and published by 0xSpectra LLC. The spec, the importer and the plugin are open source under Apache-2.0. Oakfall is not affiliated with Literature &amp; Latte or Obsidian.</p>
+  </div>
+</footer>
+
 <script>
-  // One motion moment: the diff tints in once the page has settled.
   (function () {
-    var el = document.getElementById('compare');
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) { el.classList.remove('quiet'); return; }
-    window.setTimeout(function () { el.classList.remove('quiet'); }, 650);
-  })();
-</script>
-
-
-<script>
-(function () {
-  var PLACES = {
-    house: { name: 'The house', kind: 'Place', aliases: 'Harrow Wood cottage',
-      images: [['i1', 'Cottage, Harrow Wood'], ['i4', 'Kitchen tin, sketch']],
-      scenes: [
-        ['Part One, ch. 1', 'The Letter', 'Mara found the letter in <mark>the house</mark> she had sworn not to enter again.'],
-        ['Part One, ch. 1', 'The Tin', 'The kitchen was the only room in <mark>the house</mark> her mother had ever kept warm.'],
-        ['Part One, ch. 3', 'Return', '<mark>The house</mark> is smaller than she remembers.'],
-        ['Part Two, ch. 5', 'The Inventory', 'They counted everything in <mark>the house</mark> twice, and the tin was not there.'],
-        ['Part Two, ch. 7', 'Ashes', 'What was left of <mark>the house</mark> fitted into the cart.']
-      ] },
-    chapel: { name: 'Chapel steps', kind: 'Place', aliases: 'St Hilda’s',
-      images: [['i2', 'Chapel steps, flood mark'], ['i3', 'Order of service, 1897']],
-      scenes: [
-        ['Part One, ch. 2', 'Flood', 'The water reached the <mark>chapel steps</mark> by nightfall.'],
-        ['Part One, ch. 4', 'Sunday', 'Reverend Ashe waited on the <mark>chapel steps</mark> with the letter in his coat.'],
-        ['Part Two, ch. 6', 'The Reading', 'Every name was read from the <mark>chapel steps</mark>, and hers was not among them.']
-      ] },
-    fair: { name: 'Winter Fair', kind: 'Place', aliases: 'the fairground, Saltback meadow',
-      images: [['i4', 'Fair handbill, 1897'], ['i1', 'Meadow below the Saltbacks']],
-      scenes: [
-        ['Part One, ch. 2', 'Winter Fair', 'Tom saw the tin on the stall at the <mark>Winter Fair</mark> and said nothing.'],
-        ['Part One, ch. 3', 'Buttons', 'Mara sold the buttons one at a time so the <mark>fair</mark> would not notice.'],
-        ['Part Two, ch. 8', 'Last Stall', 'The <mark>fairground</mark> was mud and rope by the time she came back for it.'],
-        ['Part Two, ch. 8', 'Tom, Again', 'He had kept the stall at the <mark>Winter Fair</mark> for eleven years for one reason.']
-      ] },
-    stillwater: { name: 'Stillwater crossing', kind: 'Place', aliases: 'the crossing',
-      images: [['i2', 'Stillwater, from the east bank']],
-      scenes: [
-        ['Part Two, ch. 6', 'Stillwater', 'The ferryman at <mark>Stillwater</mark> would not take the letter and would not say why.'],
-        ['Part Two, ch. 9', 'The Crossing', 'She paid for <mark>the crossing</mark> with the last of the buttons.']
-      ] }
-  };
-
-  function buildCard(place) {
-    var card = document.createElement('div'); card.className = 'pcard'; card.hidden = true;
-    var imgs = place.images.map(function (im) { return '<figure><div class="ph-img ' + im[0] + '"></div><figcaption>' + im[1] + '</figcaption></figure>'; }).join('');
-    card.innerHTML = '<div class="ph"><strong>' + place.name + '</strong><span>' + place.kind + ', ' + place.scenes.length + ' scenes. Also “' + place.aliases + '”</span>' +
-      '<input type="search" placeholder="Search scenes set here" aria-label="Search scenes set at ' + place.name + '"></div>' +
-      '<div class="imgs">' + imgs + '</div><ul></ul><div class="none" hidden>No scene matches.</div>';
-    var list = card.querySelector('ul'), none = card.querySelector('.none'), input = card.querySelector('input');
-    function render(q) {
-      q = (q || '').toLowerCase(); list.innerHTML = ''; var n = 0;
-      place.scenes.forEach(function (sc) {
-        var plain = (sc[0] + ' ' + sc[1] + ' ' + sc[2]).replace(/<[^>]+>/g, '').toLowerCase();
-        if (q && plain.indexOf(q) < 0) return;
-        n++;
-        var li = document.createElement('li');
-        li.innerHTML = '<div class="ch">' + sc[0] + '</div><div class="ti">' + sc[1] + '</div><div class="ex">' + sc[2] + '</div>';
-        list.appendChild(li);
-      });
-      none.hidden = n > 0;
+    // theme: system, light, dark; remembered per browser
+    var root = document.documentElement, btn = document.getElementById('theme'), order = ['system', 'light', 'dark'];
+    var cur = 'system'; try { cur = localStorage.getItem('oakfall.theme') || 'system'; } catch (e) {}
+    var shot = document.getElementById('deskshot'), src = shot.closest('picture').querySelector('source');
+    function apply() {
+      if (cur === 'system') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', cur);
+      btn.textContent = cur.charAt(0).toUpperCase() + cur.slice(1);
+      var dark = cur === 'dark' || (cur === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+      src.media = cur === 'system' ? '(prefers-color-scheme: dark)' : (dark ? 'all' : 'not all');
     }
-    input.addEventListener('input', function () { render(input.value); });
-    render('');
-    return card;
-  }
-
-  // attach to a container: pins are elements with data-place; returns a function to reposition the open card
-  function wire(container) {
-    var open = null, timer = null, pinned = false;
-    var cards = {};
-    function place(pinEl) {
-      var card = cards[pinEl.dataset.place];
-      var cw = container.clientWidth, ch = container.clientHeight;
-      var px = pinEl.offsetLeft, py = pinEl.offsetTop;      // pin anchor (bottom centre)
-      var w = card.offsetWidth || 304, h = card.offsetHeight || 300;
-      var half = (pinEl.offsetWidth || 0) / 2 + 12;
-      var left = px + half, top = py - h / 2;
-      if (left + w > cw - 8) left = px - half - w;
-      if (left < 8) left = 8;
-      if (top < 8) top = 8;
-      if (top + h > ch - 8) top = Math.max(8, ch - h - 8);
-      card.style.left = left + 'px'; card.style.top = top + 'px';
-    }
-    function show(pinEl) {
-      clearTimeout(timer);
-      if (open && open !== pinEl) hide(true);
-      open = pinEl; var card = cards[pinEl.dataset.place]; card.hidden = false; pinEl.classList.add('open'); place(pinEl);
-    }
-    function hide(force) {
-      if (!open) return; if (pinned && !force) return;
-      var card = cards[open.dataset.place]; card.hidden = true; open.classList.remove('open'); open = null; pinned = false;
-    }
-    function scheduleHide() { clearTimeout(timer); timer = setTimeout(function () { hide(false); }, 260); }
-    Array.prototype.forEach.call(container.querySelectorAll('.mpin[data-place]'), function (pinEl) {
-      var key = pinEl.dataset.place; if (!PLACES[key]) return;
-      if (!cards[key]) { cards[key] = buildCard(PLACES[key]); container.appendChild(cards[key]);
-        cards[key].addEventListener('mouseenter', function () { clearTimeout(timer); });
-        cards[key].addEventListener('mouseleave', scheduleHide);
-        cards[key].addEventListener('pointerdown', function (e) { e.stopPropagation(); });
-        cards[key].addEventListener('wheel', function (e) { e.stopPropagation(); }, { passive: true });
-      }
-      pinEl.addEventListener('mouseenter', function () { show(pinEl); });
-      pinEl.addEventListener('mouseleave', scheduleHide);
-      pinEl.addEventListener('focus', function () { show(pinEl); });
-      pinEl.addEventListener('blur', scheduleHide);
-      pinEl.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
-      pinEl.addEventListener('click', function (e) { e.stopPropagation(); if (open === pinEl && pinned) { hide(true); } else { show(pinEl); pinned = true; } });
-    });
-    container.addEventListener('pointerdown', function () { hide(true); });
-    return function () { if (open) place(open); };
-  }
-  window.oakfallWirePlaces = wire;
-  var flat = document.querySelector('.world'); if (flat) wire(flat);
-})();
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-(function () {
-  var host = document.getElementById('relief');
-  var canvas = document.getElementById('relief-canvas');
-  var pinLayer = document.getElementById('relief-pins');
-  if (!window.THREE || !window.WebGLRenderingContext) { document.getElementById('relief-fallback').hidden = false; return; }
-  var renderer;
-  try { renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true }); }
-  catch (e) { document.getElementById('relief-fallback').hidden = false; return; }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-
-  // value noise
-  function hash(x, y) { var n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return n - Math.floor(n); }
-  function smooth(t) { return t * t * (3 - 2 * t); }
-  function noise(x, y) {
-    var xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
-    var a = hash(xi, yi), b = hash(xi + 1, yi), c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1);
-    var u = smooth(xf), v = smooth(yf);
-    return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
-  }
-  function fbm(x, y) { var s = 0, amp = 0.5, f = 1; for (var i = 0; i < 5; i++) { s += amp * noise(x * f, y * f); amp *= 0.5; f *= 2.1; } return s; }
-  // island height in world units; x,z in [-1,1]
-  function height(x, z) {
-    var r = Math.sqrt((x * 0.95) * (x * 0.95) + (z * 1.35) * (z * 1.35));
-    var island = Math.max(0, 1 - Math.pow(r, 2.6) * 0.9);
-    var n = fbm(x * 2.0 + 3.1, z * 2.0 + 7.3);
-    var ridge = Math.exp(-Math.pow((z + 0.30 - 0.22 * Math.sin(x * 2.4)) * 3.0, 2)) * Math.max(0, 1 - Math.abs(x) * 1.25);
-    var h = island * (0.62 * n + 0.40) + ridge * island * 0.85 * (0.5 + 0.7 * n);
-    return (h - 0.30) * 30;
-  }
-
-  var scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0xD6DEE2, 240, 440);
-  var camera = new THREE.PerspectiveCamera(38, 2, 1, 600);
-  var SIZE = 160, SEG = 140;
-  var geo = new THREE.PlaneGeometry(SIZE, SIZE, SEG, SEG);
-  geo.rotateX(-Math.PI / 2);
-  var pos = geo.attributes.position, colors = [];
-  var cSea = new THREE.Color(0x9FB3BC), cSand = new THREE.Color(0xD6CFB0), cLand = new THREE.Color(0xD5DBC3), cGrass = new THREE.Color(0xADBF9F), cRock = new THREE.Color(0x9EA697), cSnow = new THREE.Color(0xF3F4F1);
-  for (var i = 0; i < pos.count; i++) {
-    var x = pos.getX(i), z = pos.getZ(i);
-    var y = height(x / (SIZE / 2), z / (SIZE / 2));
-    pos.setY(i, y);
-    var c;
-    if (y < -0.3) c = cSea; else if (y < 1.0) c = cSand; else if (y < 5) c = cLand.clone().lerp(cGrass, (y - 1.0) / 4); else if (y < 12) c = cGrass.clone().lerp(cRock, (y - 5) / 7); else c = cRock.clone().lerp(cSnow, Math.min(1, (y - 12) / 5));
-    colors.push(c.r, c.g, c.b);
-  }
-  geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-  geo.computeVertexNormals();
-  var land = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ vertexColors: true, flatShading: true }));
-  scene.add(land);
-  var water = new THREE.Mesh(new THREE.CircleGeometry(SIZE * 1.1, 96), new THREE.MeshLambertMaterial({ color: 0xA3B9C4, transparent: true, opacity: 0.9 }));
-  water.rotation.x = -Math.PI / 2; water.position.y = 0; scene.add(water);
-  scene.add(new THREE.HemisphereLight(0xF3F4F1, 0x8E9A8C, 0.7));
-  var sun = new THREE.DirectionalLight(0xFFF3E0, 0.95); sun.position.set(-80, 110, 50); scene.add(sun);
-
-  // pins: normalised coordinates on the same map as the flat view
-  var pins = [
-    { name: 'The house', key: 'house', x: -0.42, z: 0.30 },
-    { name: 'Chapel steps', key: 'chapel', x: -0.08, z: 0.46 },
-    { name: 'Winter Fair', key: 'fair', x: 0.14, z: -0.02 },
-    { name: 'Stillwater crossing', key: 'stillwater', x: 0.52, z: 0.12 }
-  ];
-  pins.forEach(function (p) {
-    p.world = new THREE.Vector3(p.x * SIZE / 2, Math.max(0.5, height(p.x, p.z)) + 0.5, p.z * SIZE / 2);
-    var el = document.createElement('div'); el.className = 'mpin'; el.dataset.place = p.key; el.tabIndex = 0;
-    el.innerHTML = '<span class="tag">' + p.name + '</span><span class="stem"></span>';
-    pinLayer.appendChild(el); p.el = el;
-  });
-  var repositionCard = window.oakfallWirePlaces ? window.oakfallWirePlaces(pinLayer) : function () {};
-
-  // orbit
-  var theta = -0.35, phi = 1.0, radius = 165, target = new THREE.Vector3(0, 3, 0);
-  var dragging = false, lastX = 0, lastY = 0;
-  host.addEventListener('pointerdown', function (e) { dragging = true; lastX = e.clientX; lastY = e.clientY; host.setPointerCapture(e.pointerId); });
-  host.addEventListener('pointermove', function (e) { if (!dragging) return; theta -= (e.clientX - lastX) * 0.006; phi -= (e.clientY - lastY) * 0.005; phi = Math.max(0.35, Math.min(1.35, phi)); lastX = e.clientX; lastY = e.clientY; });
-  host.addEventListener('pointerup', function () { dragging = false; });
-  host.addEventListener('pointercancel', function () { dragging = false; });
-  host.addEventListener('wheel', function (e) { e.preventDefault(); radius = Math.max(90, Math.min(320, radius + e.deltaY * 0.25)); }, { passive: false });
-
-  function resize() {
-    var w = host.clientWidth, h = host.clientHeight;
-    if (canvas.width !== Math.floor(w * renderer.getPixelRatio()) || canvas.height !== Math.floor(h * renderer.getPixelRatio())) {
-      renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
-    }
-  }
-  var v = new THREE.Vector3();
-  function frame() {
-    resize();
-    camera.position.set(target.x + radius * Math.sin(phi) * Math.sin(theta), target.y + radius * Math.cos(phi), target.z + radius * Math.sin(phi) * Math.cos(theta));
-    camera.lookAt(target);
-    renderer.render(scene, camera);
-    var w = host.clientWidth, h = host.clientHeight;
-    pins.forEach(function (p) {
-      v.copy(p.world).project(camera);
-      if (v.z > 1) { p.el.classList.add('hidden'); return; }
-      p.el.classList.remove('hidden');
-      p.el.style.left = ((v.x + 1) / 2 * w) + 'px';
-      p.el.style.top = ((1 - v.y) / 2 * h) + 'px';
-    });
-    repositionCard();
-    requestAnimationFrame(frame);
-  }
-  frame();
-})();
-</script>
-
-<script>
-  // Gall: blinks, and turns over like a leaf now and then and when clicked.
-  (function () {
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    btn.addEventListener('click', function () { cur = order[(order.indexOf(cur) + 1) % 3]; try { localStorage.setItem('oakfall.theme', cur); } catch (e) {} apply(); });
+    apply();
+    // the compare tints in once
+    var cmp = document.getElementById('compare'), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (cmp) { if (reduce || !('IntersectionObserver' in window)) cmp.classList.remove('quiet'); else new IntersectionObserver(function (es, o) { es.forEach(function (e) { if (e.isIntersecting) { setTimeout(function () { cmp.classList.remove('quiet'); }, 300); o.disconnect(); } }); }, { threshold: .4 }).observe(cmp); }
+    // Gall: blinks, turns over like a leaf now and then and when clicked
     var ls = document.querySelectorAll('.gall-l');
     function turn(el) { el.classList.remove('turn'); void el.offsetWidth; el.classList.add('turn'); setTimeout(function () { el.classList.remove('turn'); }, 1500); }
     function blink(el) { el.classList.add('blink'); setTimeout(function () { el.classList.remove('blink'); }, 130); }
-    ls.forEach(function (el) { el.addEventListener('click', function () { turn(el); }); });
+    ls.forEach(function (el) { el.addEventListener('click', function (ev) { ev.preventDefault(); turn(el); }); });
     if (reduce) return;
-    setTimeout(function () { ls.forEach(turn); }, 900);
-    (function life() { setTimeout(function () { ls.forEach(function (el) { Math.random() < .2 ? turn(el) : blink(el); }); life(); }, 3000 + Math.random() * 3500); })();
+    setTimeout(function () { turn(ls[1]); }, 900);
+    (function life() { setTimeout(function () { ls.forEach(function (el) { Math.random() < .18 ? turn(el) : blink(el); }); life(); }, 3200 + Math.random() * 3500); })();
   })();
 </script>
 </body>
