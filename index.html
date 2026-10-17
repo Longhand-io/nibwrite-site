@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
 <style>
   :root {
     --paper: #F3F4F1;
@@ -300,12 +300,28 @@
     header nav a { margin-left: 1rem; }
   }
   @media (prefers-reduced-motion: reduce) { del, ins { transition: none; } }
+
+  /* the lockup: Plus Jakarta Sans with Gall as the l. The face never changes. */
+  .wm{font-family:"Plus Jakarta Sans","Helvetica Neue",Arial,sans-serif;font-weight:700;letter-spacing:-.04em;line-height:1;display:inline-flex;align-items:flex-end;color:var(--ink);font-style:normal}
+  .wm-s{font-size:1.7rem}.wm-l{font-size:clamp(4.5rem,13vw,9.5rem)}
+  .gall-l{display:inline-block;width:.62em;height:.98em;margin:0 -.02em 0 .02em;cursor:pointer;perspective:300px}
+  .gall-l svg{width:100%;height:100%;overflow:visible;display:block}
+  .gall-l .gl{transform-box:fill-box;transform-origin:50% 60%}
+  .gall-l.turn .gl{animation:turn 1.4s ease-in-out}
+  @keyframes turn{0%{transform:rotateY(0)}45%{transform:rotateY(180deg)}100%{transform:rotateY(360deg)}}
+  .gall-l.blink .eyes{transform:scaleY(.1);transform-box:fill-box;transform-origin:center}
+  .hero{padding:3.5rem 0 1rem}
+  .hero-note{color:var(--graphite);font-size:1rem;margin:.6rem 0 0}
+  header .name{gap:0}
+  .gall .icon svg,.av-g{width:100%;height:100%}
+  .gall .icon{color:var(--paper)}
+  @media (prefers-reduced-motion: reduce){.gall-l .gl{animation:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div class="name"><svg viewBox="0 -14 100 114" aria-hidden="true"><use href="#gall-icon"/></svg>Oakfall</div>
+    <div class="name"><span class="wm wm-s" aria-label="Oakfall">Oakfa<span class="gall-l" title="Gall"><svg class="" viewBox="10 -2 80 104" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--paper)"/><circle cx="58" cy="32" r="4.2" fill="var(--paper)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--paper)"/><path d="M50 56 V 80" stroke="var(--paper)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></span>l</span></div>
     <nav>
       <a href="https://github.com/oakfall/oakfall">Plugin</a>
       <a href="https://github.com/oakfall/scrivener-to-obsidian">Importer</a>
@@ -316,178 +332,11 @@
     </nav>
   </header>
 
-  <!-- The Nib Rider sting, from brand/exploration/nib-rider-round-4.html. ?t=<seconds> freezes a frame for capture. -->
-  <style>
-  .sting-wrap{margin:1rem 0 2.5rem;background:var(--paper)}
-  .sting-wrap .stage{display:block;width:100%;height:auto}
-  .sting-wrap .sting-bar{display:flex;gap:12px;align-items:center;justify-content:flex-end;padding:6px 0 0;font-size:.9rem;color:var(--graphite)}
-  .sting-wrap button{font:inherit;font-size:.95rem;padding:4px 12px;border:1px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:6px;cursor:pointer}
-  .sting-wrap button:hover{background:var(--ink);color:var(--paper)}
-  #sting{--ride:4.6s;--lead:.5s}
-/* the rider's point follows the same path the ink is drawn along, at the same linear rate */
-.rider{offset-path:path("M-260 362 C -200 362, -160 320, -90 346 S 20 396, 100 344 S 220 306, 300 350 S 420 398, 500 344 S 620 304, 700 350 S 820 398, 900 344 S 1020 306, 1100 350 S 1220 392, 1300 352 S 1400 330, 1460 352");offset-rotate:0deg;offset-distance:0%}
-#sting.play .rider{animation:ride var(--ride) linear var(--lead) forwards, vanish .01s linear calc(var(--ride) + var(--lead)) forwards}
-#sting.play .trail{animation:draw var(--ride) linear var(--lead) forwards, settle 1s ease-out calc(var(--ride) + var(--lead) + .2s) forwards}
-@keyframes settle{to{opacity:.3}}
-#sting.play .depth{animation:depth .98s ease-in-out infinite}
-#sting.play .shadow{animation:shadow .98s ease-in-out infinite}
-#sting.play .skate{animation:skate .33s ease-in-out infinite}
-#sting.play .plume{animation:plume .33s ease-in-out infinite}
-#sting.play .cape{animation:cape .33s ease-in-out infinite}
-#sting.play .trees-far{animation:parallax calc(var(--ride) + var(--lead)) linear forwards}
-#sting.play .trees-near{animation:parallax-near calc(var(--ride) + var(--lead)) linear forwards}
-#sting.play .trees-front{animation:parallax-front calc(var(--ride) + var(--lead)) linear forwards}
-#sting.play .word{animation:word 1.1s ease-out calc(var(--ride) + var(--lead) + .3s) forwards}
-#sting.play .stand{animation:peek 1.3s cubic-bezier(.2,.9,.3,1.2) calc(var(--ride) + var(--lead) + .9s) forwards}
-@keyframes peek{to{transform:translate(0,0) rotate(0)}}
-#sting.play .stand .blink{animation:blink 3.2s step-end calc(var(--ride) + var(--lead) + 2s) infinite}
-#sting.play .stand .tip{animation:tip .9s ease-in-out calc(var(--ride) + var(--lead) + 2s) 1}
-@keyframes ride{from{offset-distance:0%}to{offset-distance:100%}}
-@keyframes vanish{to{opacity:0}}
-@keyframes appear{to{opacity:1}}
-@keyframes draw{to{stroke-dashoffset:0}}
-@keyframes depth{0%,100%{transform:scale(.92)}50%{transform:scale(1.08)}}
-@keyframes shadow{0%,100%{transform:scale(.7);opacity:.10}50%{transform:scale(1.15);opacity:.22}}
-@keyframes skate{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-7px) rotate(3deg)}}
-@keyframes plume{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-16deg)}}
-@keyframes cape{0%,100%{transform:skewX(0) scaleX(1)}50%{transform:skewX(-12deg) scaleX(1.15)}}
-@keyframes parallax{to{transform:translateX(-90px)}}
-@keyframes parallax-near{to{transform:translateX(-260px)}}
-@keyframes parallax-front{to{transform:translateX(-620px)}}
-@keyframes word{to{opacity:1;transform:translateY(0)}}
-@keyframes blink{0%,94%{transform:scaleY(1)}95%,100%{transform:scaleY(.08)}}
-@keyframes tip{0%,100%{transform:rotate(0)}40%{transform:rotate(-24deg) translateY(-6px)}}
-.word{opacity:0;transform:translateY(10px)}
-.word-rule{stroke-dasharray:420;stroke-dashoffset:420}
-#sting.play .word-rule{animation:draw-rule .9s ease-out calc(var(--ride) + var(--lead) + .6s) forwards}
-@keyframes draw-rule{to{stroke-dashoffset:0}}
-.stand{transform:translate(0,170px) rotate(22deg)}
-.depth{transform-origin:0 0}
-.shadow{transform-origin:center;transform-box:fill-box}
-.blink{transform-origin:center;transform-box:fill-box}
-.tip{transform-origin:60% 100%;transform-box:fill-box}
-.skate,.plume,.cape{transform-box:fill-box}
-.skate{transform-origin:50% 100%}
-.plume{transform-origin:right center}
-.cape{transform-origin:right center}
-/* end state, for reduced motion: the line already drawn and faded, the word up, the icon on its line */
-#sting.done .rider{opacity:0}
-#sting.done .trail{opacity:.3;stroke-dashoffset:0!important}
-#sting.done .word{opacity:1;transform:none}
-#sting.done .word-rule{stroke-dashoffset:0}
-#sting.done .stand{transform:none}
-
-  </style>
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <!-- The mark itself, untouched. -->
-    <g id="mark-body">
-      <polygon points="28,10 50,10 50,60 39,76 28,60" fill="var(--ink)"/>
-      <circle cx="39" cy="44" r="3.5" fill="var(--paper)"/>
-      <line x1="39" y1="47" x2="39" y2="62" stroke="var(--paper)" stroke-width="3"/>
-    </g>
-    <!-- Eyes in the shoulders, above the breather hole. -->
-    <g id="mark-eyes" class="blink">
-      <circle cx="34" cy="27" r="4" fill="var(--paper)"/><circle cx="44" cy="27" r="4" fill="var(--paper)"/>
-      <circle cx="35" cy="27.6" r="1.7" fill="var(--ink)"/><circle cx="45" cy="27.6" r="1.7" fill="var(--ink)"/>
-    </g>
-    <!-- Musketeer hat on the square shoulders. -->
-    <g id="mark-hat" class="tip">
-      <path d="M18 10 C 26 4, 52 4, 60 10" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
-      <path d="M29 8 L 31 -6 L 48 -7 L 50 7 Z" fill="var(--ink)"/>
-      <g class="plume">
-        <path d="M32 -4 C 22 -12, 10 -10, 2 0" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round" fill="none"/>
-        <path d="M30 -7 C 22 -13, 14 -12, 8 -7" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round" fill="none" opacity=".6"/>
-      </g>
-    </g>
-
-    <!-- A. Gall on the move: the mark, on its own baseline, with cape, arms, rapier. viewBox -10 -20 120 120 -->
-    <symbol id="gall" viewBox="-10 -20 120 120">
-      <g class="skate">
-        <g class="cape"><path d="M30 30 C 18 26, 10 36, 0 32 C 8 44, 20 46, 30 42 Z" fill="var(--ink)" opacity=".9"/></g>
-        <use href="#mark-body"/>
-        <use href="#mark-eyes"/>
-        <!-- arms -->
-        <path d="M29 36 C 22 40, 18 46, 20 52" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
-        <path d="M49 34 C 56 32, 62 26, 66 18" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
-        <!-- rapier -->
-        <path d="M66 18 L 78 -4" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round"/>
-        <path d="M63 21 C 66 17, 69 17, 71 20" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round" fill="none"/>
-        <use href="#mark-hat"/>
-      </g>
-    </symbol>
-
-    <!-- B. The mark with eyes and hat, standing on its line. The app's assistant icon. viewBox 0 -14 100 114 -->
-    <symbol id="gall-icon" viewBox="0 -14 100 114">
-      <use href="#mark-body"/>
-      <use href="#mark-eyes"/>
-      <use href="#mark-hat"/>
-      <path d="M28 86 H 86" stroke="var(--ink)" stroke-width="9" stroke-linecap="round"/>
-    </symbol>
-
-    <!-- C. Hello: hat off, held out, standing on the line. -->
-    <symbol id="gall-bow" viewBox="-10 -14 120 114">
-      <use href="#mark-body"/>
-      <g class="blink">
-        <circle cx="34" cy="27" r="4" fill="var(--paper)"/><circle cx="44" cy="27" r="4" fill="var(--paper)"/>
-        <circle cx="34" cy="28.4" r="1.7" fill="var(--ink)"/><circle cx="44" cy="28.4" r="1.7" fill="var(--ink)"/>
-      </g>
-      <path d="M29 36 C 20 38, 14 34, 12 28" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
-      <path d="M49 36 C 58 40, 66 38, 70 32" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
-      <g transform="translate(60 14) rotate(30)">
-        <path d="M0 18 C 8 12, 34 12, 42 18" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none"/>
-        <path d="M11 16 L 13 2 L 30 1 L 32 15 Z" fill="var(--ink)"/>
-        <path d="M14 4 C 22 -4, 32 -5, 42 2" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
-      </g>
-      <path d="M28 86 H 86" stroke="var(--ink)" stroke-width="9" stroke-linecap="round"/>
-    </symbol>
-      <!-- D. Standing, no baseline: for the end card, where the rule he just drew is his line -->
-    <symbol id="gall-stand" viewBox="0 -14 100 114">
-      <use href="#mark-body"/>
-      <use href="#mark-eyes"/>
-      <use href="#mark-hat"/>
-    </symbol>
-  </defs>
-</svg>
-  <div class="sting-wrap" aria-label="Gall, the assistant, gallops through a forest drawing a line of ink; Oakfall appears">
-    <svg id="sting" class="stage" viewBox="0 0 1120 480" role="img" aria-label="Gall gallops through a forest, weaving between trees, drawing an ink line that becomes the underline of Oakfall">
-    <rect width="1120" height="480" fill="var(--paper)"/>
-    <!-- far trees, faint, slow -->
-    <g class="trees-far" fill="var(--ink)" opacity=".08">
-      <path d="M40 420 L70 300 L100 420 Z"/><path d="M130 420 L150 340 L170 420 Z"/><path d="M230 420 L270 270 L310 420 Z"/><path d="M360 420 L380 330 L400 420 Z"/><path d="M470 420 L510 280 L550 420 Z"/><path d="M620 420 L640 350 L660 420 Z"/><path d="M720 420 L760 290 L800 420 Z"/><path d="M860 420 L880 340 L900 420 Z"/><path d="M960 420 L1000 270 L1040 420 Z"/><path d="M1100 420 L1130 320 L1160 420 Z"/><path d="M1200 420 L1240 280 L1280 420 Z"/>
-    </g>
-    <!-- mid trees, behind him -->
-    <g class="trees-near" fill="var(--ink)" opacity=".18">
-      <path d="M-20 440 L30 230 L80 440 Z"/><path d="M180 440 L210 320 L240 440 Z"/><path d="M300 440 L350 220 L400 440 Z"/><path d="M520 440 L550 330 L580 440 Z"/><path d="M700 440 L750 210 L800 440 Z"/><path d="M940 440 L970 320 L1000 440 Z"/><path d="M1120 440 L1170 230 L1220 440 Z"/><path d="M1340 440 L1370 320 L1400 440 Z"/>
-    </g>
-    <path d="M0 440 H1120" stroke="var(--ink)" stroke-width="3" opacity=".25"/>
-    <!-- the ink line -->
-    <path id="trail" class="trail" d="M-260 362 C -200 362, -160 320, -90 346 S 20 396, 100 344 S 220 306, 300 350 S 420 398, 500 344 S 620 304, 700 350 S 820 398, 900 344 S 1020 306, 1100 350 S 1220 392, 1300 352 S 1400 330, 1460 352" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/>
-    <!-- Gall: the group's origin is his point; it rides the path -->
-    <g class="rider">
-      <g class="depth">
-        <ellipse class="shadow" cx="0" cy="8" rx="40" ry="7" fill="var(--ink)" opacity=".14"/>
-        <!-- 2.4x the mark; point (39,76) in a -10,-20 viewBox is (117.6, 230.4) -->
-        <svg x="-117.6" y="-230.4" width="288" height="288" viewBox="-10 -20 120 120"><use href="#gall"/></svg>
-      </g>
-    </g>
-    <!-- front trees, darkest and fastest, in front of him -->
-    <g class="trees-front" fill="var(--ink)" opacity=".34">
-      <path d="M60 470 L110 190 L160 470 Z"/><path d="M330 470 L360 300 L390 470 Z"/><path d="M620 470 L680 150 L740 470 Z"/><path d="M1000 470 L1040 260 L1080 470 Z"/><path d="M1320 470 L1380 160 L1440 470 Z"/><path d="M1620 470 L1660 280 L1700 470 Z"/>
-    </g>
-    <!-- the word rises as he starts the rule -->
-    <g class="word">
-      <text x="560" y="250" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-weight="500" font-size="112" letter-spacing="-0.02em" fill="var(--ink)">Oakfall</text>
-    </g>
-    <path class="word-rule" d="M350 282 C 420 272, 700 272, 770 282" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/>
-    <!-- the icon peeks up in the corner on its own line -->
-    <g class="stand">
-      <!-- point (39,76) in a 0,-14 viewBox at 2.4x is (93.6, 216); rule ends at (870,282) -->
-      <svg x="900" y="262" width="190" height="200" viewBox="0 -14 100 114"><use href="#gall-icon"/></svg>
-    </g>
-  </svg>
-    <div class="sting-bar"><button id="sting-play" type="button">Play again</button></div>
+  <div class="hero">
+    <div class="hero-mark"><span class="wm wm-l" aria-label="Oakfall">Oakfa<span class="gall-l" title="Gall"><svg class="" viewBox="10 -2 80 104" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--paper)"/><circle cx="58" cy="32" r="4.2" fill="var(--paper)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--paper)"/><path d="M50 56 V 80" stroke="var(--paper)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></span>l</span></div>
+    <p class="hero-note">Gall lives in the l. Click him.</p>
   </div>
+
 
   <h1>The writing studio for people who like to write.</h1>
   <p class="lede">Binder, snapshots with side-by-side compare, cast and places, corkboard, timeline, research, and compile, over a folder of plain Markdown. Today that is an Obsidian plugin and a Scrivener importer, both open. Next is the Oakfall app for desktop, tablet, and phone, with sync and the editor tools as the one subscription. Everything is stored as Markdown, frontmatter, and git commits, so <em>nothing needs Oakfall to be read.</em></p>
@@ -734,7 +583,7 @@
   <section class="feature" id="gall">
     <h2>Meet Gall.</h2>
     <div class="gall">
-      <div class="icon"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="28,10 50,10 50,60 39,76 28,60" fill="currentColor"/><circle cx="39" cy="44" r="3.5" fill="#FBFBF9"/><line x1="39" y1="47" x2="39" y2="62" stroke="#FBFBF9" stroke-width="3"/><path d="M28 86 H 86" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg></div>
+      <div class="icon"><svg class="av-g" viewBox="-6 -4 112 108" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--ink)"/><circle cx="58" cy="32" r="4.2" fill="var(--ink)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--ink)"/><path d="M50 56 V 80" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></div>
       <div>
         <p>Every studio has someone who knows where things are. Gall is Oakfall's. It lives in the margin, knows your manuscript, and stays out of your prose. Ask it what changed in chapter four since the June draft, where Tom was last seen, which scenes still mention the tin after you cut it, or whether a synopsis still matches its scene. It answers from your files and your history, and anything it changes lands as an ordinary edit or a snapshot you can undo.</p>
         <p>Half of Gall needs no model at all. Where someone was last seen, what is set at a place, who is in a scene, which places have no scene yet, how long a chapter is, where a note sits on a map: those are lookups over your files, and that half of Gall is open source, works offline, and ships with the plugin and the app. The half that reads your prose is the hosted one.</p>
@@ -743,10 +592,10 @@
     </div>
     <div class="chat" aria-label="Example conversation with Gall">
       <div class="msg"><div class="av">You</div><div><p class="you">what changed in the tin since the june snapshot?</p></div></div>
-      <div class="msg"><div class="av n"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="28,10 50,10 50,60 39,76 28,60" fill="currentColor"/><circle cx="39" cy="44" r="3.5" fill="#FBFBF9"/><line x1="39" y1="47" x2="39" y2="62" stroke="#FBFBF9" stroke-width="3"/><path d="M28 86 H 86" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg></div><div><p>Two things in <em>02 The Tin</em> since “Second draft, 2 Oct 2021”: the dream sequence is gone, 412 words, and Mara now opens the tin in the kitchen instead of the yard. Tom is not mentioned in either version.</p><p><span class="act">Compare side by side</span><span class="act">Restore the dream sequence</span></p></div></div>
+      <div class="msg"><div class="av n"><svg class="av-g" viewBox="-6 -4 112 108" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--ink)"/><circle cx="58" cy="32" r="4.2" fill="var(--ink)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--ink)"/><path d="M50 56 V 80" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></div><div><p>Two things in <em>02 The Tin</em> since “Second draft, 2 Oct 2021”: the dream sequence is gone, 412 words, and Mara now opens the tin in the kitchen instead of the yard. Tom is not mentioned in either version.</p><p><span class="act">Compare side by side</span><span class="act">Restore the dream sequence</span></p></div></div>
       <div class="msg"><div class="av">You</div><div><p class="you">did i lose anything that other scenes depend on?</p></div></div>
-      <div class="msg"><div class="av n"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="28,10 50,10 50,60 39,76 28,60" fill="currentColor"/><circle cx="39" cy="44" r="3.5" fill="#FBFBF9"/><line x1="39" y1="47" x2="39" y2="62" stroke="#FBFBF9" stroke-width="3"/><path d="M28 86 H 86" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg></div><div><p>One thing. <em>08 Last Stall</em> refers to “the dream about the buttons,” which only existed in the cut passage. Nothing else in Part One or Two points at it.</p><p><span class="act">Open 08 Last Stall at that line</span></p></div></div>
-      <div class="msg"><div class="av n"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="28,10 50,10 50,60 39,76 28,60" fill="currentColor"/><circle cx="39" cy="44" r="3.5" fill="#FBFBF9"/><line x1="39" y1="47" x2="39" y2="62" stroke="#FBFBF9" stroke-width="3"/><path d="M28 86 H 86" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg></div><div><p>It looks like you're rewriting chapter four. Want the June draft beside it? That was the one joke. It will not happen again.</p></div></div>
+      <div class="msg"><div class="av n"><svg class="av-g" viewBox="-6 -4 112 108" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--ink)"/><circle cx="58" cy="32" r="4.2" fill="var(--ink)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--ink)"/><path d="M50 56 V 80" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></div><div><p>One thing. <em>08 Last Stall</em> refers to “the dream about the buttons,” which only existed in the cut passage. Nothing else in Part One or Two points at it.</p><p><span class="act">Open 08 Last Stall at that line</span></p></div></div>
+      <div class="msg"><div class="av n"><svg class="av-g" viewBox="-6 -4 112 108" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--ink)"/><circle cx="58" cy="32" r="4.2" fill="var(--ink)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--ink)"/><path d="M50 56 V 80" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g></svg></div><div><p>It looks like you're rewriting chapter four. Want the June draft beside it? That was the one joke. It will not happen again.</p></div></div>
     </div>
   </section>
 
@@ -1042,19 +891,19 @@ scriv2obsidian convert -out ~/Writing -git Novel.scriv</pre>
   frame();
 })();
 </script>
-<script>
-const s=document.getElementById('sting');
-const trail=document.getElementById('trail');
-const L=trail.getTotalLength();
-trail.style.strokeDasharray=L;trail.style.strokeDashoffset=L;
-const play=()=>{s.classList.remove('play');void s.getBoundingClientRect();s.classList.add('play')};
-document.getElementById('sting-play').onclick=play;
 
-const t=new URLSearchParams(location.search).get('t');
-const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(t!==null){s.classList.add('play');requestAnimationFrame(()=>{for(const a of document.getAnimations()){a.pause();a.currentTime=parseFloat(t)*1000;}});}
-else if(reduce){s.classList.add('done');}
-else setTimeout(play,400);
+<script>
+  // Gall: blinks, and turns over like a leaf now and then and when clicked.
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ls = document.querySelectorAll('.gall-l');
+    function turn(el) { el.classList.remove('turn'); void el.offsetWidth; el.classList.add('turn'); setTimeout(function () { el.classList.remove('turn'); }, 1500); }
+    function blink(el) { el.classList.add('blink'); setTimeout(function () { el.classList.remove('blink'); }, 130); }
+    ls.forEach(function (el) { el.addEventListener('click', function () { turn(el); }); });
+    if (reduce) return;
+    setTimeout(function () { ls.forEach(turn); }, 900);
+    (function life() { setTimeout(function () { ls.forEach(function (el) { Math.random() < .2 ? turn(el) : blink(el); }); life(); }, 3000 + Math.random() * 3500); })();
+  })();
 </script>
 </body>
 </html>
