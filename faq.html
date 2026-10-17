@@ -2,352 +2,35 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Oakfall FAQ</title>
-<meta name="description" content="Binder, snapshots with side-by-side compare, inspector, corkboard, timeline, research, and compile for Obsidian. Files you own, git underneath.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FAQ · Oakfall</title>
+<meta name="description" content="Questions writers ask after importing a project.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="Oakfall FAQ">
-<meta property="og:description" content="Binder, snapshots with side-by-side compare, inspector, corkboard, research, and compile. Files you own.">
+<link rel="canonical" href="https://oakfall.app/faq.html">
+<meta property="og:title" content="FAQ · Oakfall">
+<meta property="og:description" content="Questions writers ask after importing a project.">
 <meta property="og:image" content="https://oakfall.app/brand/social/social-preview.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --paper: #F3F4F1;
-    --paper-deep: #E9EBE6;
-    --ink: #1E2432;
-    --graphite: #676B72;
-    --rule: #CFD2CC;
-    --removed: #A8322B;
-    --removed-wash: #F4DEDC;
-    --added: #2F6F4E;
-    --added-wash: #DCEBE2;
-    --measure: 66ch;
-  }
-  * { box-sizing: border-box; }
-  html { background: var(--paper); color: var(--ink); }
-  body {
-    margin: 0;
-    font-family: "Newsreader", Georgia, "Times New Roman", serif;
-    font-optical-sizing: auto;
-    font-size: 1.125rem;
-    line-height: 1.55;
-  }
-  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-  .wrap { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; }
-  header {
-    display: flex; justify-content: space-between; align-items: baseline;
-    padding: 1.5rem 0 1rem; border-bottom: 1px solid var(--rule);
-  }
-  header .name { display: flex; align-items: center; gap: .5rem; font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; }
-  header .name svg { width: 1.6rem; height: 1.6rem; }
-  header nav a { margin-left: 1.5rem; color: var(--graphite); }
-  h1 {
-    font-size: clamp(2.4rem, 6vw, 4.5rem);
-    line-height: 1.02; font-weight: 500; letter-spacing: -0.02em;
-    margin: 2.5rem 0 1rem; max-width: 18ch;
-  }
-  .lede { font-size: 1.35rem; max-width: var(--measure); margin: 0 0 2rem; color: var(--ink); }
-  .lede em { font-style: italic; }
-
-  /* the compare panel */
-  .compare {
-    border: 1px solid var(--rule); background: #FBFBF9;
-    margin: 0 0 4rem;
-  }
-  .compare .bar {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-    border-bottom: 1px solid var(--rule); color: var(--graphite); font-size: 1rem;
-  }
-  .compare .bar div { padding: .7rem 1.25rem; }
-  .compare .bar div + div { border-left: 1px solid var(--rule); }
-  .compare .bar strong { color: var(--ink); font-weight: 500; }
-  .compare .panes { display: grid; grid-template-columns: 1fr 1fr; }
-  .compare .pane { padding: 1.5rem 1.25rem 1.75rem; }
-  .compare .pane + .pane { border-left: 1px solid var(--rule); }
-  .compare p { margin: 0 0 1rem; max-width: 40ch; }
-  .compare p:last-child { margin-bottom: 0; }
-  del, ins { text-decoration: none; padding: 0 .08em; border-radius: 2px; transition: background-color .6s ease, color .6s ease; }
-  del { color: var(--removed); background: var(--removed-wash); }
-  ins { color: var(--added); background: var(--added-wash); }
-  .compare.quiet del, .compare.quiet ins { background: transparent; color: inherit; }
-  .compare .foot {
-    border-top: 1px solid var(--rule); padding: .7rem 1.25rem;
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .85rem; color: var(--graphite);
-    white-space: nowrap; overflow-x: auto;
-  }
-  .compare .foot span { color: var(--ink); }
-
-  section { padding: 0 0 3.5rem; }
-  h2 { font-size: 1.9rem; font-weight: 500; letter-spacing: -0.01em; margin: 0 0 1rem; }
-  section > p { max-width: var(--measure); margin: 0 0 1rem; }
-  dl.changes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem 3rem; margin: 1.5rem 0 0; max-width: 60rem; }
-  dl.changes div { border-top: 1px solid var(--rule); padding-top: .75rem; }
-  dl.changes dt { font-weight: 600; margin: 0 0 .2rem; }
-  dl.changes dd { margin: 0; color: var(--graphite); }
-  ul.plain { list-style: none; padding: 0; margin: 1rem 0 0; max-width: var(--measure); }
-  ul.plain li { padding: .55rem 0; border-top: 1px solid var(--rule); }
-  ul.plain li:first-child { border-top: 0; padding-top: 0; }
-  pre {
-    background: var(--paper-deep); padding: 1rem 1.25rem; overflow-x: auto;
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .92rem; line-height: 1.5;
-    max-width: 60rem; margin: 1rem 0;
-  }
-  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 60rem; }
-  .two > div { min-width: 0; }
-  .two h3 { font-size: 1.25rem; font-weight: 600; margin: 0 0 .5rem; }
-  .two p { margin: 0 0 .75rem; color: var(--graphite); }
-  footer { border-top: 1px solid var(--rule); padding: 1.5rem 0 3rem; color: var(--graphite); font-size: 1rem; }
-
-  /* feature panels */
-  .panel { border: 1px solid var(--rule); background: #FBFBF9; margin: 1.5rem 0 0; }
-  .panel .bar { display: flex; justify-content: space-between; gap: 1rem; padding: .7rem 1.25rem; border-bottom: 1px solid var(--rule); color: var(--graphite); font-size: 1rem; }
-  .panel .bar strong { color: var(--ink); font-weight: 500; }
-  .panel .body { padding: 1.25rem; }
-  .feature { padding: 0 0 3.5rem; }
-  .feature > p { max-width: var(--measure); margin: 0 0 .5rem; }
-  .split { display: grid; grid-template-columns: 1.2fr 1fr; }
-  .split > div + div { border-left: 1px solid var(--rule); }
-  .split > div { padding: 1.25rem; }
-  .tag { display: inline-block; border: 1px solid var(--rule); border-radius: 3px; padding: .05rem .45rem; font-size: .9rem; color: var(--ink); background: #fff; white-space: nowrap; }
-  .lab { display: inline-block; width: .7rem; height: .7rem; border-radius: 50%; vertical-align: -1px; margin-right: .35rem; }
-  .red { background: #B65A52; } .blue { background: #4C6A9A; } .green { background: #5E8A5C; } .yellow { background: #C9A24A; }
-
-  /* timeline */
-  .tl { position: relative; padding: .5rem 0 0; }
-  .tl .ruler { display: flex; justify-content: space-between; border-bottom: 1px solid var(--ink); padding-bottom: .3rem; font-size: .9rem; color: var(--graphite); }
-  .tl .track { position: relative; height: 4.6rem; }
-  .tl .track + .track { border-top: 1px dashed var(--rule); }
-  .tl .track .name { position: absolute; left: 0; top: .5rem; font-size: .85rem; color: var(--graphite); }
-  .tl .pin { position: absolute; top: 1.9rem; transform: translateX(-50%); }
-  .tl .pin::before { content: ""; position: absolute; left: 50%; top: -1.35rem; width: 1px; height: 1.3rem; background: var(--ink); }
-  .tl .pin.event .tag { border-style: dashed; color: var(--graphite); }
-  .tl .dot { position: absolute; top: 1.3rem; width: .55rem; height: .55rem; border-radius: 50%; background: var(--ink); transform: translateX(-50%); }
-  .tl .dot.small { width: .4rem; height: .4rem; background: var(--graphite); }
-
-
-  /* threads (corkboard arranged by label) */
-  .threads { display: grid; grid-template-columns: 3rem repeat(3, 1fr); column-gap: 1.25rem; row-gap: .9rem; position: relative; }
-  .threads .th { font-size: .95rem; color: var(--graphite); padding-bottom: .4rem; border-bottom: 1px solid var(--rule); }
-  .threads .th.first { grid-column: 1; }
-  .threads .ord { font-size: .85rem; color: var(--graphite); align-self: center; }
-  .threads .lane { position: relative; }
-  .threads .lane::before { content: ""; position: absolute; left: 50%; top: -.9rem; bottom: -.9rem; width: 3px; background: var(--rule); }
-  .threads .lane.mara::before { background: #E3C6C3; }
-  .threads .lane.tom::before { background: #C9D2E2; }
-  .threads .lane.town::before { background: #CFDCCF; }
-  .threads .lane.last::before { bottom: 0; }
-  .threads .card { position: relative; margin: 0; border-left: 3px solid var(--rule); }
-  .threads .card.mara { border-left-color: #B65A52; }
-  .threads .card.tom { border-left-color: #4C6A9A; }
-  .threads .card.town { border-left-color: #5E8A5C; }
-  .threads .card.ghost { border-style: dashed; background: transparent; box-shadow: none; color: var(--graphite); }
-  .axis { display: flex; gap: 1rem; align-items: center; font-size: .95rem; color: var(--graphite); }
-  .axis span { border: 1px solid var(--rule); border-radius: 3px; padding: .05rem .5rem; background: #fff; }
-  .axis span.on { color: var(--ink); border-color: var(--ink); }
-
-  /* research */
-  .excerpt p { margin: 0 0 .9rem; max-width: 42ch; }
-  .excerpt p:last-child { margin: 0; }
-  .excerpt mark { background: var(--added-wash); color: inherit; padding: 0 .08em; }
-  .pins { list-style: none; margin: 0; padding: 0; }
-  .pins li { display: grid; grid-template-columns: 2.6rem 1fr; gap: .8rem; padding: .7rem 0; border-top: 1px solid var(--rule); }
-  .pins li:first-child { border-top: 0; padding-top: 0; }
-  .pins .thumb { width: 2.6rem; height: 3.2rem; border: 1px solid var(--rule); background: #fff; font-size: .7rem; color: var(--graphite); display: flex; align-items: flex-end; justify-content: center; padding-bottom: .2rem; }
-  .pins .thumb.img { background: linear-gradient(160deg, #D7DACF, #B9BFB3); }
-  .pins .thumb.note { background: repeating-linear-gradient(#fff 0 .35rem, var(--rule) .35rem .38rem); }
-  .pins .what { font-weight: 600; }
-  .pins .why { color: var(--graphite); font-size: .95rem; }
-  .pins q { quotes: "\201C" "\201D"; }
-
-  /* corkboard */
-  .cork { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-  .cork .col h4 { margin: 0 0 .6rem; font-weight: 500; font-size: 1rem; color: var(--graphite); }
-  .card { background: #fff; border: 1px solid var(--rule); padding: .75rem .9rem .8rem; margin-bottom: .75rem; box-shadow: 0 1px 0 var(--rule); }
-  .card .t { font-weight: 600; margin-bottom: .2rem; }
-  .card .s { color: var(--graphite); font-size: .95rem; }
-  .card .n { font-size: .8rem; color: var(--graphite); margin-top: .5rem; }
-
-  /* binder + inspector */
-  .tree { list-style: none; margin: 0; padding: 0; }
-  .tree li { display: flex; justify-content: space-between; padding: .3rem 0; }
-  .tree li.dir { font-weight: 600; }
-  .tree li.in { padding-left: 1.25rem; }
-  .tree li.sel { background: var(--paper-deep); margin: 0 -.5rem; padding-left: 1.75rem; padding-right: .5rem; }
-  .tree .wc { color: var(--graphite); font-size: .9rem; }
-  .insp dl { margin: 0; }
-  .insp dt { font-size: .85rem; color: var(--graphite); margin-top: .8rem; }
-  .insp dt:first-child { margin-top: 0; }
-  .insp dd { margin: .1rem 0 0; }
-  .insp .tabs { display: flex; gap: 1.25rem; border-bottom: 1px solid var(--rule); margin: 0 0 1rem; font-size: .95rem; color: var(--graphite); }
-  .insp .tabs span:first-child { color: var(--ink); border-bottom: 2px solid var(--ink); padding-bottom: .35rem; margin-bottom: -1px; }
-  .snaps { list-style: none; margin: .5rem 0 0; padding: 0; font-size: .95rem; }
-  .snaps li { display: flex; justify-content: space-between; padding: .35rem 0; border-top: 1px solid var(--rule); }
-  .snaps li span:last-child { color: var(--graphite); }
-
-  /* map */
-  .map { position: relative; height: 18rem; background:
-      radial-gradient(ellipse at 20% 30%, #C9CFC0 0 18%, transparent 19%),
-      radial-gradient(ellipse at 70% 65%, #C2C9B8 0 26%, transparent 27%),
-      radial-gradient(ellipse at 55% 20%, #D5DACC 0 12%, transparent 13%),
-      linear-gradient(#E3E6DD, #DADED4); }
-  .map .river { position: absolute; left: 0; right: 0; top: 52%; height: 2px; background: #9DB0BF; transform: rotate(-8deg); }
-  .map .mpin { position: absolute; transform: translate(-50%, -100%); }
-  .map .mpin::after { content: ""; position: absolute; left: 50%; bottom: -.5rem; width: .5rem; height: .5rem; background: var(--ink); border-radius: 50%; transform: translateX(-50%); }
-  .map .mpin .tag { display: block; margin-bottom: .3rem; }
-
-  @media (max-width: 720px) {
-    .split, .cork { grid-template-columns: 1fr; }
-    .split > div + div { border-left: 0; border-top: 1px solid var(--rule); }
-    .tl .track { height: 5.4rem; }
-    .threads { grid-template-columns: 2rem repeat(3, 1fr); column-gap: .5rem; }
-  }
-
-  /* world map */
-  .world { position: relative; height: 22rem; overflow: hidden; background: radial-gradient(ellipse at 60% 40%, #DDE4E6, #D3DBDE 70%); }
-  .world svg.map { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .world .mpin { position: absolute; transform: translate(-50%, -100%); }
-  .world .mpin::after { content: ""; position: absolute; left: 50%; bottom: -.45rem; width: .5rem; height: .5rem; background: var(--ink); border-radius: 50%; transform: translateX(-50%); box-shadow: 0 0 0 2px #FBFBF9; }
-  .world .mpin .tag { display: block; margin-bottom: .35rem; }
-  .world3d { position: relative; height: 26rem; overflow: hidden; background: linear-gradient(#E3E9EB, #C9D3D8); cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
-  .world3d:active { cursor: grabbing; }
-  .world3d canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-  .world3d .pins3d { position: absolute; inset: 0; pointer-events: none; }
-  .world3d .pins3d .pcard { pointer-events: auto; }
-  .world3d .mpin { position: absolute; transform: translate(-50%, -100%); pointer-events: auto; cursor: pointer; }
-  .world3d .mpin .tag { display: block; box-shadow: 0 1px 0 var(--rule); }
-  .world3d .mpin .stem { display: block; width: 2px; height: 26px; background: var(--ink); margin: 0 auto; }
-  .world3d .mpin::after { content: ""; position: absolute; left: 50%; bottom: -.28rem; width: .5rem; height: .5rem; background: var(--ink); border-radius: 50%; transform: translateX(-50%); box-shadow: 0 0 0 2px #FBFBF9; }
-  .world3d .mpin.hidden { display: none; }
-  .world3d .nowebgl { position: absolute; inset: auto 1.25rem 1rem; margin: 0; color: var(--graphite); }
-  .axis .hint { border: 0; background: transparent; color: var(--graphite); padding: 0; margin-right: .5rem; }
-  .place { font-family: "Newsreader", Georgia, serif; font-style: italic; font-size: 11px; fill: #4F5560; }
-  .sea { font-family: "Newsreader", Georgia, serif; font-style: italic; font-size: 12px; fill: #7E8A94; letter-spacing: .12em; }
-
-  /* cast */
-  .cast { display: grid; grid-template-columns: 11rem 1fr 9rem; gap: .6rem 1.25rem; align-items: center; }
-  .cast .hd { font-size: .9rem; color: var(--graphite); padding-bottom: .4rem; border-bottom: 1px solid var(--rule); }
-  .cast .who { font-weight: 600; }
-  .cast .who small { display: block; font-weight: 400; color: var(--graphite); font-size: .85rem; }
-  .cast .strip { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; }
-  .cast .strip i { display: block; height: 1.15rem; border: 1px solid var(--rule); background: #fff; border-radius: 2px; }
-  .cast .strip i.on { background: var(--ink); border-color: var(--ink); }
-  .cast .strip i.on.red { background: #B65A52; border-color: #B65A52; }
-  .cast .strip i.on.blue { background: #4C6A9A; border-color: #4C6A9A; }
-  .cast .strip i.on.green { background: #5E8A5C; border-color: #5E8A5C; }
-  .cast .strip i.cur { box-shadow: 0 0 0 2px var(--ink); }
-  .cast .last { color: var(--graphite); font-size: .95rem; }
-  .cast .scenes { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; font-size: .7rem; color: var(--graphite); text-align: center; }
-  @media (max-width: 720px) { .cast { grid-template-columns: 1fr; } .cast .hd, .cast .last { display: none; } .world3d { height: 18rem; } }
-
-
-  /* place cards */
-  .pcard { position: absolute; z-index: 5; width: 19rem; max-height: calc(100% - 16px); overflow-y: auto; overscroll-behavior: contain; background: #FBFBF9; border: 1px solid var(--rule); box-shadow: 0 6px 18px rgba(30,36,50,.10); font-size: .95rem; pointer-events: auto; }
-  .pcard[hidden] { display: none; }
-  .pcard .ph { position: sticky; top: 0; z-index: 1; background: #FBFBF9; padding: .7rem .9rem .5rem; border-bottom: 1px solid var(--rule); }
-  .pcard .ph strong { display: block; font-weight: 600; font-size: 1.05rem; }
-  .pcard .ph span { color: var(--graphite); font-size: .85rem; }
-  .pcard input { width: 100%; box-sizing: border-box; margin: .55rem 0 0; padding: .3rem .5rem; border: 1px solid var(--rule); background: #fff; font: inherit; font-size: .9rem; color: var(--ink); }
-  .pcard input:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
-  .pcard .imgs { display: flex; gap: .4rem; padding: .6rem .9rem 0; overflow-x: auto; }
-  .pcard .imgs figure { margin: 0; flex: 0 0 5.2rem; }
-  .pcard .imgs .ph-img { height: 3.4rem; border: 1px solid var(--rule); border-radius: 2px; }
-  .pcard .imgs figcaption { font-size: .72rem; color: var(--graphite); margin-top: .2rem; line-height: 1.2; }
-  .i1 { background: linear-gradient(160deg, #D7DACF, #B9BFB3); }
-  .i2 { background: linear-gradient(200deg, #CFD9DD 40%, #9DB0BF); }
-  .i3 { background: repeating-linear-gradient(135deg, #E6E8DE 0 6px, #D5DBC3 6px 12px); }
-  .i4 { background: radial-gradient(circle at 30% 30%, #F3F4F1, #C4C9BE 70%); }
-  .pcard ul { list-style: none; margin: .5rem 0 0; padding: 0 .9rem .6rem; }
-  .pcard li { padding: .45rem 0; border-top: 1px solid var(--rule); }
-  .pcard li:first-child { border-top: 0; }
-  .pcard li .ch { color: var(--graphite); font-size: .8rem; }
-  .pcard li .ti { font-weight: 600; }
-  .pcard li .ex { color: var(--graphite); font-size: .88rem; }
-  .pcard li .ex mark { background: var(--added-wash); color: inherit; }
-  .pcard .none { color: var(--graphite); padding: .5rem .9rem .7rem; }
-  .world .mpin, .world3d .mpin { cursor: pointer; }
-  .world .mpin .tag:hover, .world3d .mpin .tag:hover, .mpin.open .tag { border-color: var(--ink); }
-
-
-  /* gall */
-  .gall { display: grid; grid-template-columns: 7rem 1fr; gap: 2rem; align-items: start; max-width: 60rem; }
-  .gall .icon { width: 7rem; height: 7rem; border-radius: 1.4rem; background: var(--ink); color: var(--paper); display: grid; place-items: center; }
-  .gall .icon svg { width: 5rem; height: 5rem; }
-  .gall p { margin: 0 0 1rem; }
-  .chat { border: 1px solid var(--rule); background: #FBFBF9; max-width: 60rem; margin: 1.5rem 0 0; }
-  .chat .msg { display: grid; grid-template-columns: 2rem 1fr; gap: .8rem; padding: .9rem 1.1rem; border-top: 1px solid var(--rule); }
-  .chat .msg:first-child { border-top: 0; }
-  .chat .msg .av { width: 2rem; height: 2rem; border-radius: .5rem; display: grid; place-items: center; font-size: .8rem; color: var(--graphite); border: 1px solid var(--rule); }
-  .chat .msg .av.n { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-  .chat .msg .av svg { width: 1.3rem; height: 1.3rem; }
-  .chat .msg p { margin: 0 0 .4rem; }
-  .chat .msg p:last-child { margin: 0; }
-  .chat .msg .act { display: inline-block; border: 1px solid var(--ink); border-radius: 3px; padding: .05rem .5rem; margin-right: .4rem; font-size: .9rem; }
-  .chat .you { color: var(--ink); }
-  .split2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 60rem; }
-  .split2 h3 { font-size: 1.25rem; font-weight: 600; margin: 0 0 .5rem; }
-  .split2 ul { margin: 0; padding-left: 1.1rem; }
-  .split2 li { margin: .25rem 0; }
-  .split2 li small { color: var(--graphite); }
-  @media (max-width: 720px) { .gall, .split2 { grid-template-columns: 1fr; } }
-
-
-  /* faq */
-  .faq { max-width: 44rem; }
-  .faq h2 { font-size: 1.45rem; font-weight: 600; margin: 2.6rem 0 .6rem; letter-spacing: -0.005em; }
-  .faq h2:first-of-type { margin-top: 1rem; }
-  .faq p { margin: 0 0 .8rem; }
-  .faq code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .9em; background: var(--paper-deep); padding: .05em .35em; border-radius: 3px; }
-  .faq .toc { list-style: none; padding: 0; margin: 1rem 0 2rem; columns: 2; column-gap: 2rem; }
-  .faq .toc li { padding: .3rem 0; border-top: 1px solid var(--rule); break-inside: avoid; }
-  .faq .toc a { color: var(--ink); text-decoration: none; }
-  .faq .toc a:hover { text-decoration: underline; }
-  .figure { display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; align-items: center; margin: 1rem 0 1.2rem; padding: 1rem 1.25rem; border: 1px solid var(--rule); background: #FBFBF9; }
-  .figure .cap { color: var(--graphite); font-size: .95rem; }
-  .obs { background: #202020; border-radius: 8px; padding: 1.4rem 1.6rem 1.4rem 4rem; position: relative; overflow: hidden; }
-  .obs::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2.6rem; background: #262626; border-right: 1px solid #333; }
-  .obs::after { content: ""; position: absolute; left: 3.2rem; top: 0; bottom: 0; width: 1.2rem; background: #f4f4f2; }
-  .chip { display: inline-flex; align-items: center; gap: .6rem; background: #2b2b2b; color: #cfcfcf; border: 1px solid #3a3a3a; border-radius: 6px; padding: .35rem .7rem; font: 500 1rem/1 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; position: relative; }
-  .chip svg { width: 1.1rem; height: 1.1rem; }
-  @media (max-width: 720px) { .faq .toc { columns: 1; } .figure { grid-template-columns: 1fr; } }
-
-  @media (max-width: 720px) {
-    .compare .bar, .compare .panes, dl.changes, .two { grid-template-columns: 1fr; }
-    .compare .bar div + div, .compare .pane + .pane { border-left: 0; border-top: 1px solid var(--rule); }
-    header nav a { margin-left: 1rem; }
-  }
-  @media (prefers-reduced-motion: reduce) { del, ins { transition: none; } }
-
-  /* the lockup: Plus Jakarta Sans with Gall as the l. The face never changes. */
-  .wm{font-family:"Plus Jakarta Sans","Helvetica Neue",Arial,sans-serif;font-weight:700;letter-spacing:-.04em;line-height:1;display:inline-flex;align-items:flex-end;color:var(--ink);font-style:normal}
-  .wm-s{font-size:1.7rem}.wm-l{font-size:clamp(4.5rem,13vw,9.5rem)}
-  .gall-l{display:inline-block;width:.62em;height:.98em;margin:0 -.02em 0 .02em;cursor:pointer;perspective:300px}
-  .gall-l svg{width:100%;height:100%;overflow:visible;display:block}
-  .gall-l .gl{transform-box:fill-box;transform-origin:50% 60%}
-  .gall-l.turn .gl{animation:turn 1.4s ease-in-out}
-  @keyframes turn{0%{transform:rotateY(0)}45%{transform:rotateY(180deg)}100%{transform:rotateY(360deg)}}
-  .gall-l.blink .eyes{transform:scaleY(.1);transform-box:fill-box;transform-origin:center}
-    header .name{gap:0}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <a class="name" href="index.html" style="text-decoration:none"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="28,10 50,10 50,60 39,76 28,60" fill="currentColor"/><circle cx="34" cy="27" r="4" fill="var(--paper)"/><circle cx="44" cy="27" r="4" fill="var(--paper)"/><circle cx="35" cy="27.6" r="1.7" fill="currentColor"/><circle cx="45" cy="27.6" r="1.7" fill="currentColor"/><path d="M18 10 C 26 4, 52 4, 60 10" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M29 8 L 31 -6 L 48 -7 L 50 7 Z" fill="currentColor"/><path d="M28 86 H 86" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg>Oakfall</a>
-    <nav>
-      <a href="https://github.com/oakfall/oakfall">Plugin</a>
-      <a href="https://github.com/oakfall/scrivener-to-obsidian">Importer</a>
-      <a href="https://github.com/oakfall/oakfall/blob/main/docs/spec.md">Spec</a>
-      <a href="index.html#gall">Gall</a>
-      <a href="faq.html">FAQ</a>
-      <a href="https://github.com/oakfall/oakfall-site/tree/main/brand">Brand</a>
-    </nav>
-  </header>
-
-  <h1>Questions from the first week.</h1>
+<header class="bar">
+  <div class="wrap">
+    <a class="wm" href="index.html" aria-label="Oakfall home">Oakfa<span class="gall-l" title="Gall"><svg viewBox="10 -2 80 104" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--paper)"/><circle cx="58" cy="32" r="4.2" fill="var(--paper)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--paper)"/><path d="M50 56 V 80" stroke="var(--paper)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g><path class="ghost" transform="rotate(-10 50 50)" d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="4 4"/></svg></span>l</a>
+    <nav class="tabs" aria-label="Pages"><a href="index.html">Home</a><a href="features.html">Features</a><a href="gall.html">Gall</a><a href="pricing.html">Pricing</a><a href="download.html">Download</a><a href="faq.html" aria-current="page">FAQ</a></nav>
+    <div class="right">
+      <button class="theme" id="theme" type="button">Dark</button>
+      <a class="btn sm primary" href="download.html">Download <span class="soon">Soon</span></a>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head faq-page"><span class="eyebrow">FAQ</span><h1>Questions from the first week.</h1></div>
+  <section class="wrap" style="padding-top:24px">
 <!-- faq:start -->
   <p class="lede">Things writers notice after importing a project, most of them not bugs. If yours is not here, ask in <a href="https://github.com/oakfall/oakfall/discussions">Discussions</a>.</p>
   <div class="faq">
@@ -407,8 +90,21 @@
   <p>Yes, into an empty folder. Reimporting into an existing vault and merging only what is new is on the roadmap, keyed on each document's <code>id</code>. The source package is never modified, so there is no risk in running it as often as you like.</p>
   </div>
 <!-- faq:end -->
+  </section>
+</main>
+<footer>
+  <div class="wrap">
+    <a class="wm" href="index.html" aria-label="Oakfall home">Oakfa<span class="gall-l" title="Gall"><svg viewBox="10 -2 80 104" aria-hidden="true"><g class="gl"><g transform="rotate(-10 50 50)"><path d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="currentColor"/><g class="eyes"><circle cx="42" cy="32" r="4.2" fill="var(--paper)"/><circle cx="58" cy="32" r="4.2" fill="var(--paper)"/><circle cx="43" cy="32.6" r="1.8" fill="currentColor"/><circle cx="59" cy="32.6" r="1.8" fill="currentColor"/></g><circle cx="50" cy="52" r="3.2" fill="var(--paper)"/><path d="M50 56 V 80" stroke="var(--paper)" stroke-width="2.4" stroke-linecap="round"/><path d="M50 92 V 99" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></g></g><path class="ghost" transform="rotate(-10 50 50)" d="M50 4 C 74 14, 84 40, 72 66 C 66 78, 58 84, 50 92 C 42 84, 34 78, 28 66 C 16 40, 26 14, 50 4Z" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="4 4"/></svg></span>l</a>
+    <nav aria-label="Footer">
+      <a href="features.html">Features</a><a href="gall.html">Gall</a><a href="pricing.html">Pricing</a><a href="download.html">Download</a><a href="faq.html">FAQ</a>
+      <a href="https://github.com/oakfall/oakfall/blob/main/docs/spec.md">Vault spec</a>
+      <a href="https://github.com/oakfall">GitHub</a>
+      <span>hello@oakfall.app</span>
+    </nav>
+    <p>Oakfall is made by grassclaw and published by 0xSpectra LLC. The spec, the importer and the plugin are open source under Apache-2.0. Product names belong to their owners.</p>
+  </div>
+</footer>
 
-  <footer>Oakfall is an independent project by grassclaw, published by 0xSpectra LLC under the Apache License 2.0, with no accounts, no telemetry, and no network calls. It is not affiliated with or endorsed by Literature &amp; Latte, the makers of Scrivener, or by Obsidian. Scrivener and Obsidian are trademarks of their respective owners.</footer>
-</div>
+<script src="assets/site.js" defer></script>
 </body>
 </html>
