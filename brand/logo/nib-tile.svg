@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="Gall, the Oakfall mark">
-  <rect width="100" height="100" rx="22" fill="#1E2432"/>
-  <polygon points="28,10 50,10 50,60 39,76 28,60" fill="#F3F4F1"/>
-  <circle cx="39" cy="44" r="3.5" fill="#1E2432"/>
-  <line x1="39" y1="47" x2="39" y2="62" stroke="#1E2432" stroke-width="3"/>
-  <path d="M28 86 H 86" stroke="#F3F4F1" stroke-width="9" stroke-linecap="round"/>
-</svg>

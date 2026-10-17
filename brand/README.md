@@ -61,3 +61,7 @@ Oakfall is independent. It is not affiliated with or endorsed by Literature & La
 ## 2026-10-16: the leaf
 
 Gall is now a leaf that is a nib (`gall-leaf.svg`): eyes in the shoulders, breather hole, slit, stem, tilted a little; he smiles now and then. The wordmark is Plus Jakarta Sans bold, tight, with the leaf as the first l (set live in the app, not yet drawn to outlines). The nib-shaped l wordmark from earlier today is withdrawn.
+
+## 2026-10-16: cleanup
+
+Retired and removed: the Longhand cursive-ℓ set (`longhand-*.svg`) and `nib-tile.svg`. `nib-mark.svg` stays only because the Nib Rider exploration pages draw it. Current marks: `gall-leaf.svg` (Gall, the leaf that is a nib) and `favicon.svg` (Gall on ink, also the site favicon). The wordmark is Plus Jakarta Sans 700 with Gall as the l; it is set live in the app and not yet drawn to outlines here. The landing page still shows the old Nib Rider sting and needs a pass in the new brand.
